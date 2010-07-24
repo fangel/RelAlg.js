@@ -35,7 +35,7 @@ project = (function() {
 		
 		var mapping = createMapping( relation, projectionList );
 		
-		var headerPrime = projectionList.list;
+		var headerPrime = projectionList.list.slice(); // Slice to create a copy..
 		var dataPrime = relation.data.map( mapping );
 		
 		return new Relation( headerPrime, dataPrime );
