@@ -1,5 +1,6 @@
 /*
- * 
+ * This function will evaluate a criteria against a relation, returning a new
+ * relation with only the rows living up to the criteria present.
  */
 
 selection = (function() {
