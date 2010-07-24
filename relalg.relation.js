@@ -3,24 +3,29 @@
  */
 
 function Relation( header, data ) {
-	this.header = header;
-	this.data   = data;
+	this.header = header.slice(); // We use slice to copy-by-value instead of by-reference
+	this.data = [];
+	for( var i=0; i < data.length; i++ ) this.push( data[i] );
 }
 Relation.prototype.header = null;
 Relation.prototype.data   = null;
-
 /*
- * Static functions to serve as a storage-mechanism
- * for relations
+ * Adds a new row to the relation. Does duplicate-checking to maintain the set-properties
  */
-Relation.storage = {};
-Relation.add = function( name, relation ) {
-	Relation.storage[name] = relation;
-}
-Relation.get = function( name ) {
-	if( Relation.storage[name] == undefined )
-		throw "Unknown relation: " + name;
-	return Relation.storage[name];
+Relation.prototype.push = function( newRow ) {
+	var rowsEqual = function( row1, row2 ) {
+		if( row1.length != row2.length ) return false;
+		for( var i=0; i < row1.length; i++ )
+			if( row1[i] != row2[i] ) 
+				return false;
+		return true;
+	}
+	
+	if( this.data.some(function(existingRow) { return rowsEqual( newRow, existingRow ); } ) )
+		return false;
+	
+	this.data.push( newRow.slice() ); // Same. We want by-value..
+	return true;
 }
 
 /*
@@ -66,4 +71,18 @@ Relation.prototype.toString = function() {
 	    rtn += delim;
 		
 	return rtn;
+}
+
+/*
+ * Static functions to serve as a storage-mechanism
+ * for relations
+ */
+Relation.storage = {};
+Relation.add = function( name, relation ) {
+	Relation.storage[name] = relation;
+}
+Relation.get = function( name ) {
+	if( Relation.storage[name] == undefined )
+		throw "Unknown relation: " + name;
+	return Relation.storage[name];
 }
