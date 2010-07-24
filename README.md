@@ -1,5 +1,6 @@
 # RelAlg.js - A JavaScript Relational Algebra evaluator
 
+This [Relational Algebra][relalg] evaluator is written by Morten Fangel (fangel@sevengoslings.net, twitter.com/fangel). Feel free to contact me if you have any issues or ideas for further work.
 
 ## Usage
 
@@ -60,5 +61,6 @@ running JS/CC on `relalg.par` and replacing `relalg.parser.js` with the output f
 
 
 
+[relalg]: http://www.wikipedia.org/wiki/Relational_Algebra
 [sm]: http://www.mozilla.org/js/spidermonkey/
 [jscc]: http://jscc.jmksf.com/
