@@ -5,20 +5,23 @@ A Relational Algebra parser. Returns a tree of Tree-subinstances
 /~ Whitespace tokens ~/
 !	' |\r|\n|\t'
 	;
-	
-/~ Real tokens ~/
+
+/~ Left associate tokens, normal precedence ~/
+<	'\|\|'
+	;
+
+/~ Left associative tokens, high precedence ~/
+<	'&&'
+	;
+
+/~ Other tokens ~/
 	'Project'
 	'Rename'
 	'Select'
 	'Union'
 	'->'
 	','
-	'=='
-	'!='
-	'<='
-	'>='
-	'>'
-	'<'
+	'==|!=|<=|>=|<|>'				Comparison
 	'\('
 	'\)'
 	'\['
@@ -41,6 +44,7 @@ Stmt:			Identifier											[* %% = new Tree.Relation( %1 ); *]
 				| '(' Stmt ')'										[* %% = %2 *]
 				| 'Project' '[' ProjectionList ']' '(' Stmt ')' 	[* %% = new Tree.Projection( %3, %6 ); *]
 				| 'Rename' '[' RenameList ']' '(' Stmt ')'			[* %% = new Tree.Rename( %3, %6 ); *]
+				| 'Select' '[' Criteria ']' '(' Stmt ')'			[* %% = new Tree.Selection( %3, %6 ); *]
 				;
 
 ProjectionList: Identifier											[* %% = new Tree.ProjectionList( %1 ); *]
@@ -50,7 +54,18 @@ ProjectionList: Identifier											[* %% = new Tree.ProjectionList( %1 ); *]
 RenameList:		Identifier '->' Identifier							[* %% = new Tree.RenameList( [%1, %3] ); *]
 				| RenameList ',' Identifier '->' Identifier			[* %% = %1.add( [%3, %5] ); *]
 				;
-
+				
+Criteria:		Value Comparison Value								[* %% = new Tree.Criteria(%1, %2, %3); *]
+				| Criteria '&&' Criteria							[* %% = new Tree.CriteriaComposition(%1, 'AND', %3); *]
+				| Criteria '||' Criteria							[* %% = new Tree.CriteriaComposition(%1, 'OR', %3); *]
+				| '(' Criteria ')'									[* %% = %2; *]
+				;
+				
+Value:			Identifier											[* %% = new Tree.Attribute( %1 ); *]
+				| String											[* %% = new Tree.Value( %1 ); *]
+				| Integer											[* %% = new Tree.Value( %1 ); *]
+				| Float												[* %% = new Tree.Value( %1 ); *]
+				;
 
 /~ Parser instructions ~/
 [*

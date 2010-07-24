@@ -25,6 +25,12 @@ Tree = (function() {
 	Rename.prototype.renameList = null;
 	Rename.prototype.relation   = null;
 
+	function Selection( criteria, relation ) {
+		this.criteria = criteria;
+		this.relation = relation;
+	}
+	Selection.prototype.criteria = null;
+	Selection.prototype.relation = null;
 
 	function ProjectionList( initial ) {
 		this.list = (initial instanceof Array) ? initial : [initial];
@@ -56,12 +62,45 @@ Tree = (function() {
 	Union.prototype.left  = null;
 	Union.prototype.right = null;
 	
+	function Attribute( name ) {
+		this.name = name;
+	}
+	Attribute.prototype.name = null;
+	
+	function Value( value ) {
+		this.value = value;
+	}
+	Value.prototype.value = null;
+	
+	function Criteria( left, op, right ) {
+		this.left  = left;
+		this.op    = op;
+		this.right = right;
+	}
+	Criteria.prototype.left  = null;
+	Criteria.prototype.op    = null;
+	Criteria.prototype.right = null;
+	
+	function CriteriaComposition( left, comp, right ) {
+			this.left  = left;
+			this.comp  = comp;
+			this.right = right;
+	}
+	CriteriaComposition.prototype.left  = null;
+	CriteriaComposition.prototype.comp  = null;
+	CriteriaComposition.prototype.right = null;
+	
 	return {
 		Relation: Relation,
 		Projection: Projection,
 		Rename: Rename,
+		Selection: Selection,
 		ProjectionList: ProjectionList,
 		RenameList: RenameList,
-		Union: Union
+		Union: Union,
+		Attribute: Attribute,
+		Value: Value,
+		Criteria: Criteria,
+		CriteriaComposition: CriteriaComposition
 	}
 })();

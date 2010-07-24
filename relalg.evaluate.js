@@ -4,6 +4,7 @@
 
 load('operations/relalg.project.js');
 load('operations/relalg.rename.js');
+load('operations/relalg.selection.js');
 load('operations/relalg.union.js');
 
 function evaluate( item ) {
@@ -14,6 +15,8 @@ function evaluate( item ) {
 			return project( evaluate(item.relation), item.projectionList );
 		case item instanceof Tree.Rename:
 			return rename( evaluate(item.relation), item.renameList );
+		case item instanceof Tree.Selection:
+			return selection( item.criteria, evaluate(item.relation) );
 		case item instanceof Tree.Union:
 			return union( evaluate(item.left), evaluate(item.right) );
 	}

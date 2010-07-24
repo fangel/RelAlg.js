@@ -24,6 +24,12 @@ function inspect( item, indent ) {
 			       inspect( item.renameList, indent + 1) + ',' + "\n" + 
 			       inspect( item.relation, indent + 1 ) + "\n" + 
 			       is + ')';	
+
+		case item instanceof Tree.Selection:
+			return is + 'Selection(' + "\n" + 
+			       inspect( item.criteria, indent + 1) + ',' + "\n" + 
+			       inspect( item.relation, indent + 1 ) + "\n" + 
+			       is + ')';	
 		
 			
 		case item instanceof Tree.ProjectionList:
@@ -44,6 +50,22 @@ function inspect( item, indent ) {
 			       inspect( item.right, indent + 1 ) + "\n" + 
 			       is + ')';
 
+		case item instanceof Tree.Attribute:
+			return is + 'Attribute(' + item.name + ')';
+			
+		case item instanceof Tree.Value:
+			var value = (typeof(item.value) == 'string') ? '"' + item.value + '"' : item.value;
+			return is + 'Value(' + value + ')';
+
+		case item instanceof Tree.Criteria:
+			return is + 'Criteria(' + inspect( item.left, -1) + ' ' + item.op + ' ' + inspect( item.right, -1) + ')';
+			
+		case item instanceof Tree.CriteriaComposition:
+			return is + 'CriteriaComposition(' + "\n" +
+			       inspect( item.left, indent + 1) + "\n" + 
+			       is + ic + item.comp + "\n" + 
+			       inspect( item.right, indent + 1) + "\n" + 
+			       is + ')';
 
 		default:
 			return 'Whoa?';
