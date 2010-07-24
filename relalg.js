@@ -4,14 +4,31 @@ load('relalg.inspect.js');
 load('relalg.relation.js');
 load('relalg.evaluate.js');
 
-Relation.add('Test', new Relation(
+Relation.add('Foo', new Relation(
 	['alpha', 'b', 'c'],
 	[[1, 2, 3],
 	 [4, 5, 6],
 	 [7, 8, 99]]
 ));
 
-var str  = arguments[0];
-var tree = parser(str);
-var res  = evaluate( tree );
-print( res );
+Relation.add('Bar', new Relation(
+	['a', 'bravo', 'c'],
+	[[1, 2, 3],
+	 [44, 5, 6],
+	 [7, 8, 9]]
+));
+
+Relation.add('Baz', new Relation(
+	['a', 'b', 'charlie'],
+	[[1, 22, 3],
+	 [4, 5, 6],
+	 [7, 8, 9]]
+));
+
+
+var statement  = arguments[0];
+
+var tree       = parser( statement );
+var result     = evaluate( tree );
+
+print( result );
