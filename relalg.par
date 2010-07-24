@@ -1,0 +1,75 @@
+/~
+A Relational Algebra parser. Returns a tree of Tree-subinstances
+~/
+
+/~ Whitespace tokens ~/
+!	' |\r|\n|\t'
+	;
+	
+/~ Real tokens ~/
+	'Project'
+	'Rename'
+	'Select'
+	'Union'
+	'->'
+	','
+	'=='
+	'!='
+	'<='
+	'>='
+	'>'
+	'<'
+	'\('
+	'\)'
+	'\['
+	'\]'
+	'[A-Za-z_][A-Za-z0-9_]*'		Identifier
+	'\'([^\']|\'\')*\''				String							[* %match = %match.substr( 1, %match.length - 2 );
+																   	   %match = %match.replace( /''/g, "\'" );		*]
+	'[0-9]+'						Integer							[* %match = parseInt(%match); *]
+	'[0-9]+\.[0-9]*|[0-9]*\.[0-9]+'	Float							[* %match = parseFloat(%match); *]
+	;
+
+##
+
+/~ Grammar ~/
+Algebra:		Stmt												[* algebra = %1; *]
+				;
+
+Stmt:			Identifier											[* %% = new Tree.Relation( %1 ); *]
+				| Stmt 'Union' Stmt									[* %% = new Tree.Union( %1, %3 ); *]
+				| '(' Stmt ')'										[* %% = %2 *]
+				| 'Project' '[' ProjectionList ']' '(' Stmt ')' 	[* %% = new Tree.Projection( %3, %6 ); *]
+				| 'Rename' '[' RenameList ']' '(' Stmt ')'			[* %% = new Tree.Rename( %3, %6 ); *]
+				;
+
+ProjectionList: Identifier											[* %% = new Tree.ProjectionList( %1 ); *]
+				| ProjectionList ',' Identifier						[* %% = %1.add(%3); *]
+				;
+				
+RenameList:		Identifier '->' Identifier							[* %% = new Tree.RenameList( [%1, %3] ); *]
+				| RenameList ',' Identifier '->' Identifier			[* %% = %1.add( [%3, %5] ); *]
+				;
+
+
+/~ Parser instructions ~/
+[*
+var error_offsets = new Array();
+var error_lookaheads = new Array();
+var error_count = 0;
+
+function parser( input ) {
+	algebra = null;
+	
+	error_count = __##PREFIX##parse( input, error_offsets, error_lookaheads );
+	if( error_count > 0 ) {
+		var error = '';
+		for( var i = 0; i < error_count; i++ )
+			error += "Parse error near '" 	+ str.substr( error_offsets[i] ) +	"', expecting '" + error_lookaheads[i].join() + "'\n";
+		throw error;
+  	}
+  
+	return algebra;
+}
+
+*]
