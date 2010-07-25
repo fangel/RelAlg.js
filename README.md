@@ -81,7 +81,7 @@ Example:
 
 	Relation1 X Relation2
 	
-**Warning**: If the two relations both have an attribute with the same name, there is a _naming conflict_. This is indicated by the attributes being listed in attributes to highlight the conflict. You should use position-based renaming to rename both of the offending attributes!
+**Warning**: If the two relations both have an attribute with the same name, there is a _naming conflict_. This is indicated by the attributes being listed in parenthesis to highlight the conflict. You should use position-based renaming to rename both of the offending attributes!
 
 ## Extending the grammar
 
