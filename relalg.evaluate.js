@@ -7,6 +7,7 @@ load('operations/relalg.rename.js');
 load('operations/relalg.selection.js');
 load('operations/relalg.union.js');
 load('operations/relalg.intersection.js');
+load('operations/relalg.difference.js');
 
 function evaluate( item ) {
 	switch( true ) {
@@ -22,5 +23,7 @@ function evaluate( item ) {
 			return union( evaluate(item.left), evaluate(item.right) );
 		case item instanceof Tree.Intersection:
 			return intersection( evaluate(item.left), evaluate(item.right) );
+		case item instanceof Tree.Difference:
+			return difference( evaluate(item.left), evaluate(item.right) );
 	}
 }

@@ -69,6 +69,14 @@ Tree = (function() {
 	Intersection.prototype.left  = null;
 	Intersection.prototype.right = null;
 	
+	function Difference( left, right ) {
+		this.left  = left;
+		this.right = right;
+	}
+	Difference.prototype.left  = null;
+	Difference.prototype.right = null;
+	
+	
 	function Attribute( name ) {
 		this.name = name;
 	}
@@ -106,6 +114,7 @@ Tree = (function() {
 		RenameList: RenameList,
 		Union: Union,
 		Intersection: Intersection,
+		Difference: Difference,
 		Attribute: Attribute,
 		Value: Value,
 		Criteria: Criteria,

@@ -49,9 +49,23 @@ Strings are represented quoted in `'`-s, ie `'this is a string'`. If you want to
 ### Union
 
 Unions are made using the `Union` binary operation. Note that the two relations must have the same attributes, _NOTE:_ in the same order!.  
-Example
+Example:
 
 	Relation1 Union Relation2
+	
+### Intersection
+
+Intersections are calculated with the `Intersect` binary operations. Note that the two relations must have the same attributes, _NOTE:_ in the same order!.  
+Example:
+
+	Relation1 Intersection Relation2
+
+### Set difference
+
+Set differences are calculated using the `-` binary operations. Note that the two relations must have the same attributes, _NOTE:_ in the same order!.  
+Example:
+
+	Relation1 - Relation2
 
 ## Extending the grammar
 

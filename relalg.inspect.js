@@ -55,6 +55,12 @@ function inspect( item, indent ) {
 			       inspect( item.left,  indent + 1 ) + ',' + "\n" +
 			       inspect( item.right, indent + 1 ) + "\n" + 
 			       is + ')';
+
+		case item instanceof Tree.Difference:
+			return is + 'Difference(' + "\n" +
+			       inspect( item.left,  indent + 1 ) + ',' + "\n" +
+			       inspect( item.right, indent + 1 ) + "\n" + 
+			       is + ')';
 		
 		
 		case item instanceof Tree.Attribute:

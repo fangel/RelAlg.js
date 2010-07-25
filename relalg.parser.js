@@ -39,7 +39,7 @@ function __lex( info )
 		start = pos;
 
 		if( info.src.length <= start )
-			return 26;
+			return 27;
 
 		do
 		{
@@ -51,17 +51,17 @@ switch( state )
 		else if( info.src.charCodeAt( pos ) == 40 ) state = 2;
 		else if( info.src.charCodeAt( pos ) == 41 ) state = 3;
 		else if( info.src.charCodeAt( pos ) == 44 ) state = 4;
-		else if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 5;
-		else if( info.src.charCodeAt( pos ) == 60 || info.src.charCodeAt( pos ) == 62 ) state = 6;
-		else if( ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 72 ) || ( info.src.charCodeAt( pos ) >= 74 && info.src.charCodeAt( pos ) <= 79 ) || info.src.charCodeAt( pos ) == 81 || info.src.charCodeAt( pos ) == 84 || ( info.src.charCodeAt( pos ) >= 86 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 91 ) state = 8;
-		else if( info.src.charCodeAt( pos ) == 93 ) state = 9;
-		else if( info.src.charCodeAt( pos ) == 33 || info.src.charCodeAt( pos ) == 61 ) state = 20;
-		else if( info.src.charCodeAt( pos ) == 38 ) state = 23;
-		else if( info.src.charCodeAt( pos ) == 39 ) state = 25;
-		else if( info.src.charCodeAt( pos ) == 45 ) state = 27;
-		else if( info.src.charCodeAt( pos ) == 46 ) state = 29;
-		else if( info.src.charCodeAt( pos ) == 124 ) state = 31;
+		else if( info.src.charCodeAt( pos ) == 45 ) state = 5;
+		else if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 6;
+		else if( info.src.charCodeAt( pos ) == 60 || info.src.charCodeAt( pos ) == 62 ) state = 7;
+		else if( ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 72 ) || ( info.src.charCodeAt( pos ) >= 74 && info.src.charCodeAt( pos ) <= 79 ) || info.src.charCodeAt( pos ) == 81 || info.src.charCodeAt( pos ) == 84 || ( info.src.charCodeAt( pos ) >= 86 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 91 ) state = 9;
+		else if( info.src.charCodeAt( pos ) == 93 ) state = 10;
+		else if( info.src.charCodeAt( pos ) == 33 || info.src.charCodeAt( pos ) == 61 ) state = 21;
+		else if( info.src.charCodeAt( pos ) == 38 ) state = 24;
+		else if( info.src.charCodeAt( pos ) == 39 ) state = 26;
+		else if( info.src.charCodeAt( pos ) == 46 ) state = 28;
+		else if( info.src.charCodeAt( pos ) == 124 ) state = 30;
 		else if( info.src.charCodeAt( pos ) == 85 ) state = 42;
 		else if( info.src.charCodeAt( pos ) == 82 ) state = 47;
 		else if( info.src.charCodeAt( pos ) == 83 ) state = 48;
@@ -78,47 +78,48 @@ switch( state )
 
 	case 2:
 		state = -1;
-		match = 12;
+		match = 13;
 		match_pos = pos;
 		break;
 
 	case 3:
 		state = -1;
-		match = 13;
+		match = 14;
 		match_pos = pos;
 		break;
 
 	case 4:
 		state = -1;
-		match = 10;
-		match_pos = pos;
-		break;
-
-	case 5:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 5;
-		else if( info.src.charCodeAt( pos ) == 46 ) state = 13;
-		else state = -1;
-		match = 18;
-		match_pos = pos;
-		break;
-
-	case 6:
-		if( info.src.charCodeAt( pos ) == 61 ) state = 21;
-		else state = -1;
 		match = 11;
 		match_pos = pos;
 		break;
 
-	case 7:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+	case 5:
+		if( info.src.charCodeAt( pos ) == 62 ) state = 13;
 		else state = -1;
-		match = 16;
+		match = 9;
+		match_pos = pos;
+		break;
+
+	case 6:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 6;
+		else if( info.src.charCodeAt( pos ) == 46 ) state = 14;
+		else state = -1;
+		match = 19;
+		match_pos = pos;
+		break;
+
+	case 7:
+		if( info.src.charCodeAt( pos ) == 61 ) state = 22;
+		else state = -1;
+		match = 12;
 		match_pos = pos;
 		break;
 
 	case 8:
-		state = -1;
-		match = 14;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else state = -1;
+		match = 17;
 		match_pos = pos;
 		break;
 
@@ -130,329 +131,330 @@ switch( state )
 
 	case 10:
 		state = -1;
-		match = 3;
+		match = 16;
 		match_pos = pos;
 		break;
 
 	case 11:
-		if( info.src.charCodeAt( pos ) == 39 ) state = 25;
-		else state = -1;
-		match = 17;
+		state = -1;
+		match = 3;
 		match_pos = pos;
 		break;
 
 	case 12:
-		state = -1;
-		match = 9;
+		if( info.src.charCodeAt( pos ) == 39 ) state = 26;
+		else state = -1;
+		match = 18;
 		match_pos = pos;
 		break;
 
 	case 13:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 13;
-		else state = -1;
-		match = 19;
+		state = -1;
+		match = 10;
 		match_pos = pos;
 		break;
 
 	case 14:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 14;
+		else state = -1;
+		match = 20;
+		match_pos = pos;
+		break;
+
+	case 15:
 		state = -1;
 		match = 2;
 		match_pos = pos;
 		break;
 
-	case 15:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+	case 16:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else state = -1;
 		match = 7;
 		match_pos = pos;
 		break;
 
-	case 16:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+	case 17:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else state = -1;
 		match = 5;
 		match_pos = pos;
 		break;
 
-	case 17:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+	case 18:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else state = -1;
 		match = 6;
 		match_pos = pos;
 		break;
 
-	case 18:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+	case 19:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else state = -1;
 		match = 4;
 		match_pos = pos;
 		break;
 
-	case 19:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+	case 20:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else state = -1;
 		match = 8;
 		match_pos = pos;
 		break;
 
-	case 20:
-		if( info.src.charCodeAt( pos ) == 61 ) state = 21;
-		else state = -1;
-		break;
-
 	case 21:
-		state = -1;
-		match = 11;
-		match_pos = pos;
+		if( info.src.charCodeAt( pos ) == 61 ) state = 22;
+		else state = -1;
 		break;
 
 	case 22:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 110 ) state = 15;
-		else state = -1;
-		match = 16;
+		state = -1;
+		match = 12;
 		match_pos = pos;
 		break;
 
 	case 23:
-		if( info.src.charCodeAt( pos ) == 38 ) state = 10;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 110 ) state = 16;
 		else state = -1;
+		match = 17;
+		match_pos = pos;
 		break;
 
 	case 24:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 101 ) state = 16;
+		if( info.src.charCodeAt( pos ) == 38 ) state = 11;
 		else state = -1;
-		match = 16;
-		match_pos = pos;
 		break;
 
 	case 25:
-		if( info.src.charCodeAt( pos ) == 39 ) state = 11;
-		else if( ( info.src.charCodeAt( pos ) >= 0 && info.src.charCodeAt( pos ) <= 38 ) || ( info.src.charCodeAt( pos ) >= 40 && info.src.charCodeAt( pos ) <= 254 ) ) state = 25;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 101 ) state = 17;
 		else state = -1;
+		match = 17;
+		match_pos = pos;
 		break;
 
 	case 26:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 116 ) state = 17;
+		if( info.src.charCodeAt( pos ) == 39 ) state = 12;
+		else if( ( info.src.charCodeAt( pos ) >= 0 && info.src.charCodeAt( pos ) <= 38 ) || ( info.src.charCodeAt( pos ) >= 40 && info.src.charCodeAt( pos ) <= 254 ) ) state = 26;
 		else state = -1;
-		match = 16;
-		match_pos = pos;
 		break;
 
 	case 27:
-		if( info.src.charCodeAt( pos ) == 62 ) state = 12;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 116 ) state = 18;
 		else state = -1;
+		match = 17;
+		match_pos = pos;
 		break;
 
 	case 28:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 116 ) state = 18;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 14;
 		else state = -1;
-		match = 16;
-		match_pos = pos;
 		break;
 
 	case 29:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) ) state = 13;
-		else state = -1;
-		break;
-
-	case 30:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 116 ) state = 19;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
-	case 31:
-		if( info.src.charCodeAt( pos ) == 124 ) state = 14;
+	case 30:
+		if( info.src.charCodeAt( pos ) == 124 ) state = 15;
 		else state = -1;
 		break;
 
-	case 32:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 110 ) || ( info.src.charCodeAt( pos ) >= 112 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 111 ) state = 22;
+	case 31:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 116 ) state = 20;
 		else state = -1;
-		match = 16;
+		match = 17;
+		match_pos = pos;
+		break;
+
+	case 32:
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 110 ) || ( info.src.charCodeAt( pos ) >= 112 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 111 ) state = 23;
+		else state = -1;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 33:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 108 ) || ( info.src.charCodeAt( pos ) >= 110 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 109 ) state = 24;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 108 ) || ( info.src.charCodeAt( pos ) >= 110 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 109 ) state = 25;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 34:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 98 ) || ( info.src.charCodeAt( pos ) >= 100 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 99 ) state = 26;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 98 ) || ( info.src.charCodeAt( pos ) >= 100 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 99 ) state = 27;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 35:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 98 ) || ( info.src.charCodeAt( pos ) >= 100 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 99 ) state = 28;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 98 ) || ( info.src.charCodeAt( pos ) >= 100 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 99 ) state = 29;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 36:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 98 ) || ( info.src.charCodeAt( pos ) >= 100 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
-		else if( info.src.charCodeAt( pos ) == 99 ) state = 30;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 98 ) || ( info.src.charCodeAt( pos ) >= 100 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
+		else if( info.src.charCodeAt( pos ) == 99 ) state = 31;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 37:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 104 ) || ( info.src.charCodeAt( pos ) >= 106 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 104 ) || ( info.src.charCodeAt( pos ) >= 106 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 105 ) state = 32;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 38:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 98 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 98 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 97 ) state = 33;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 39:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 101 ) state = 34;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 40:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 101 ) state = 35;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 41:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 101 ) state = 36;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 42:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 110 ) state = 37;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 43:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 110 ) state = 38;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 44:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 107 ) || ( info.src.charCodeAt( pos ) >= 109 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 107 ) || ( info.src.charCodeAt( pos ) >= 109 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 108 ) state = 39;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 45:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 105 ) || ( info.src.charCodeAt( pos ) >= 107 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 105 ) || ( info.src.charCodeAt( pos ) >= 107 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 106 ) state = 40;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 46:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 114 ) || ( info.src.charCodeAt( pos ) >= 116 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 114 ) || ( info.src.charCodeAt( pos ) >= 116 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 115 ) state = 41;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 47:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 101 ) state = 43;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 48:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 101 ) state = 44;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 49:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 110 ) || ( info.src.charCodeAt( pos ) >= 112 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 110 ) || ( info.src.charCodeAt( pos ) >= 112 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 111 ) state = 45;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 50:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 113 ) || ( info.src.charCodeAt( pos ) >= 115 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 113 ) || ( info.src.charCodeAt( pos ) >= 115 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 114 ) state = 46;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 51:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 113 ) || ( info.src.charCodeAt( pos ) >= 115 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 113 ) || ( info.src.charCodeAt( pos ) >= 115 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 114 ) state = 49;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 52:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 100 ) || ( info.src.charCodeAt( pos ) >= 102 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 101 ) state = 50;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 53:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 115 ) || ( info.src.charCodeAt( pos ) >= 117 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 116 ) state = 52;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
 	case 54:
-		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 7;
+		if( ( info.src.charCodeAt( pos ) >= 48 && info.src.charCodeAt( pos ) <= 57 ) || ( info.src.charCodeAt( pos ) >= 65 && info.src.charCodeAt( pos ) <= 90 ) || info.src.charCodeAt( pos ) == 95 || ( info.src.charCodeAt( pos ) >= 97 && info.src.charCodeAt( pos ) <= 109 ) || ( info.src.charCodeAt( pos ) >= 111 && info.src.charCodeAt( pos ) <= 122 ) ) state = 8;
 		else if( info.src.charCodeAt( pos ) == 110 ) state = 53;
 		else state = -1;
-		match = 16;
+		match = 17;
 		match_pos = pos;
 		break;
 
@@ -474,20 +476,20 @@ switch( state )
 		
 switch( match )
 {
-	case 17:
+	case 18:
 		{
 		 info.att = info.att.substr( 1, info.att.length - 2 );
 																   	   info.att = info.att.replace( /''/g, "\'" );		
 		}
 		break;
 
-	case 18:
+	case 19:
 		{
 		 info.att = parseInt(info.att); 
 		}
 		break;
 
-	case 19:
+	case 20:
 		{
 		 info.att = parseFloat(info.att); 
 		}
@@ -528,105 +530,108 @@ function __parse( src, err_off, err_la )
 /* Pop-Table */
 var pop_tab = new Array(
 	new Array( 0/* Algebra' */, 1 ),
-	new Array( 21/* Algebra */, 1 ),
-	new Array( 20/* Stmt */, 1 ),
-	new Array( 20/* Stmt */, 3 ),
-	new Array( 20/* Stmt */, 3 ),
-	new Array( 20/* Stmt */, 3 ),
-	new Array( 20/* Stmt */, 7 ),
-	new Array( 20/* Stmt */, 7 ),
-	new Array( 20/* Stmt */, 7 ),
-	new Array( 22/* ProjectionList */, 1 ),
-	new Array( 22/* ProjectionList */, 3 ),
-	new Array( 23/* RenameList */, 3 ),
-	new Array( 23/* RenameList */, 5 ),
-	new Array( 24/* Criteria */, 3 ),
-	new Array( 24/* Criteria */, 3 ),
-	new Array( 24/* Criteria */, 3 ),
-	new Array( 24/* Criteria */, 3 ),
-	new Array( 25/* Value */, 1 ),
-	new Array( 25/* Value */, 1 ),
-	new Array( 25/* Value */, 1 ),
-	new Array( 25/* Value */, 1 )
+	new Array( 22/* Algebra */, 1 ),
+	new Array( 21/* Stmt */, 1 ),
+	new Array( 21/* Stmt */, 3 ),
+	new Array( 21/* Stmt */, 3 ),
+	new Array( 21/* Stmt */, 3 ),
+	new Array( 21/* Stmt */, 3 ),
+	new Array( 21/* Stmt */, 7 ),
+	new Array( 21/* Stmt */, 7 ),
+	new Array( 21/* Stmt */, 7 ),
+	new Array( 23/* ProjectionList */, 1 ),
+	new Array( 23/* ProjectionList */, 3 ),
+	new Array( 24/* RenameList */, 3 ),
+	new Array( 24/* RenameList */, 5 ),
+	new Array( 25/* Criteria */, 3 ),
+	new Array( 25/* Criteria */, 3 ),
+	new Array( 25/* Criteria */, 3 ),
+	new Array( 25/* Criteria */, 3 ),
+	new Array( 26/* Value */, 1 ),
+	new Array( 26/* Value */, 1 ),
+	new Array( 26/* Value */, 1 ),
+	new Array( 26/* Value */, 1 )
 );
 
 /* Action-Table */
 var act_tab = new Array(
-	/* State 0 */ new Array( 16/* "Identifier" */,3 , 12/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 1 */ new Array( 26/* "$" */,0 ),
-	/* State 2 */ new Array( 8/* "Intersect" */,8 , 7/* "Union" */,9 , 26/* "$" */,-1 ),
-	/* State 3 */ new Array( 26/* "$" */,-2 , 7/* "Union" */,-2 , 8/* "Intersect" */,-2 , 13/* ")" */,-2 ),
-	/* State 4 */ new Array( 16/* "Identifier" */,3 , 12/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 5 */ new Array( 14/* "[" */,11 ),
-	/* State 6 */ new Array( 14/* "[" */,12 ),
-	/* State 7 */ new Array( 14/* "[" */,13 ),
-	/* State 8 */ new Array( 16/* "Identifier" */,3 , 12/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 9 */ new Array( 16/* "Identifier" */,3 , 12/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 10 */ new Array( 8/* "Intersect" */,8 , 7/* "Union" */,9 , 13/* ")" */,16 ),
-	/* State 11 */ new Array( 16/* "Identifier" */,18 ),
-	/* State 12 */ new Array( 16/* "Identifier" */,20 ),
-	/* State 13 */ new Array( 12/* "(" */,23 , 16/* "Identifier" */,24 , 17/* "String" */,25 , 18/* "Integer" */,26 , 19/* "Float" */,27 ),
-	/* State 14 */ new Array( 8/* "Intersect" */,8 , 7/* "Union" */,9 , 26/* "$" */,-4 , 13/* ")" */,-4 ),
-	/* State 15 */ new Array( 8/* "Intersect" */,8 , 7/* "Union" */,9 , 26/* "$" */,-3 , 13/* ")" */,-3 ),
-	/* State 16 */ new Array( 26/* "$" */,-5 , 7/* "Union" */,-5 , 8/* "Intersect" */,-5 , 13/* ")" */,-5 ),
-	/* State 17 */ new Array( 10/* "," */,28 , 15/* "]" */,29 ),
-	/* State 18 */ new Array( 15/* "]" */,-9 , 10/* "," */,-9 ),
-	/* State 19 */ new Array( 10/* "," */,30 , 15/* "]" */,31 ),
-	/* State 20 */ new Array( 9/* "->" */,32 ),
-	/* State 21 */ new Array( 2/* "||" */,33 , 3/* "&&" */,34 , 15/* "]" */,35 ),
-	/* State 22 */ new Array( 11/* "Comparison" */,36 ),
-	/* State 23 */ new Array( 12/* "(" */,23 , 16/* "Identifier" */,24 , 17/* "String" */,25 , 18/* "Integer" */,26 , 19/* "Float" */,27 ),
-	/* State 24 */ new Array( 11/* "Comparison" */,-17 , 15/* "]" */,-17 , 3/* "&&" */,-17 , 2/* "||" */,-17 , 13/* ")" */,-17 ),
-	/* State 25 */ new Array( 11/* "Comparison" */,-18 , 15/* "]" */,-18 , 3/* "&&" */,-18 , 2/* "||" */,-18 , 13/* ")" */,-18 ),
-	/* State 26 */ new Array( 11/* "Comparison" */,-19 , 15/* "]" */,-19 , 3/* "&&" */,-19 , 2/* "||" */,-19 , 13/* ")" */,-19 ),
-	/* State 27 */ new Array( 11/* "Comparison" */,-20 , 15/* "]" */,-20 , 3/* "&&" */,-20 , 2/* "||" */,-20 , 13/* ")" */,-20 ),
-	/* State 28 */ new Array( 16/* "Identifier" */,38 ),
-	/* State 29 */ new Array( 12/* "(" */,39 ),
-	/* State 30 */ new Array( 16/* "Identifier" */,40 ),
-	/* State 31 */ new Array( 12/* "(" */,41 ),
-	/* State 32 */ new Array( 16/* "Identifier" */,42 ),
-	/* State 33 */ new Array( 12/* "(" */,23 , 16/* "Identifier" */,24 , 17/* "String" */,25 , 18/* "Integer" */,26 , 19/* "Float" */,27 ),
-	/* State 34 */ new Array( 12/* "(" */,23 , 16/* "Identifier" */,24 , 17/* "String" */,25 , 18/* "Integer" */,26 , 19/* "Float" */,27 ),
-	/* State 35 */ new Array( 12/* "(" */,45 ),
-	/* State 36 */ new Array( 16/* "Identifier" */,24 , 17/* "String" */,25 , 18/* "Integer" */,26 , 19/* "Float" */,27 ),
-	/* State 37 */ new Array( 2/* "||" */,33 , 3/* "&&" */,34 , 13/* ")" */,47 ),
-	/* State 38 */ new Array( 15/* "]" */,-10 , 10/* "," */,-10 ),
-	/* State 39 */ new Array( 16/* "Identifier" */,3 , 12/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 40 */ new Array( 9/* "->" */,49 ),
-	/* State 41 */ new Array( 16/* "Identifier" */,3 , 12/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 42 */ new Array( 15/* "]" */,-11 , 10/* "," */,-11 ),
-	/* State 43 */ new Array( 2/* "||" */,-15 , 3/* "&&" */,34 , 15/* "]" */,-15 , 13/* ")" */,-15 ),
-	/* State 44 */ new Array( 2/* "||" */,-14 , 3/* "&&" */,-14 , 15/* "]" */,-14 , 13/* ")" */,-14 ),
-	/* State 45 */ new Array( 16/* "Identifier" */,3 , 12/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 46 */ new Array( 15/* "]" */,-13 , 3/* "&&" */,-13 , 2/* "||" */,-13 , 13/* ")" */,-13 ),
-	/* State 47 */ new Array( 15/* "]" */,-16 , 3/* "&&" */,-16 , 2/* "||" */,-16 , 13/* ")" */,-16 ),
-	/* State 48 */ new Array( 8/* "Intersect" */,8 , 7/* "Union" */,9 , 13/* ")" */,52 ),
-	/* State 49 */ new Array( 16/* "Identifier" */,53 ),
-	/* State 50 */ new Array( 8/* "Intersect" */,8 , 7/* "Union" */,9 , 13/* ")" */,54 ),
-	/* State 51 */ new Array( 8/* "Intersect" */,8 , 7/* "Union" */,9 , 13/* ")" */,55 ),
-	/* State 52 */ new Array( 26/* "$" */,-6 , 7/* "Union" */,-6 , 8/* "Intersect" */,-6 , 13/* ")" */,-6 ),
-	/* State 53 */ new Array( 15/* "]" */,-12 , 10/* "," */,-12 ),
-	/* State 54 */ new Array( 26/* "$" */,-7 , 7/* "Union" */,-7 , 8/* "Intersect" */,-7 , 13/* ")" */,-7 ),
-	/* State 55 */ new Array( 26/* "$" */,-8 , 7/* "Union" */,-8 , 8/* "Intersect" */,-8 , 13/* ")" */,-8 )
+	/* State 0 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 1 */ new Array( 27/* "$" */,0 ),
+	/* State 2 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 27/* "$" */,-1 ),
+	/* State 3 */ new Array( 27/* "$" */,-2 , 7/* "Union" */,-2 , 8/* "Intersect" */,-2 , 9/* "-" */,-2 , 14/* ")" */,-2 ),
+	/* State 4 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 5 */ new Array( 15/* "[" */,12 ),
+	/* State 6 */ new Array( 15/* "[" */,13 ),
+	/* State 7 */ new Array( 15/* "[" */,14 ),
+	/* State 8 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 9 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 10 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 11 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 14/* ")" */,18 ),
+	/* State 12 */ new Array( 17/* "Identifier" */,20 ),
+	/* State 13 */ new Array( 17/* "Identifier" */,22 ),
+	/* State 14 */ new Array( 13/* "(" */,25 , 17/* "Identifier" */,26 , 18/* "String" */,27 , 19/* "Integer" */,28 , 20/* "Float" */,29 ),
+	/* State 15 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 27/* "$" */,-5 , 14/* ")" */,-5 ),
+	/* State 16 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 27/* "$" */,-4 , 14/* ")" */,-4 ),
+	/* State 17 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 27/* "$" */,-3 , 14/* ")" */,-3 ),
+	/* State 18 */ new Array( 27/* "$" */,-6 , 7/* "Union" */,-6 , 8/* "Intersect" */,-6 , 9/* "-" */,-6 , 14/* ")" */,-6 ),
+	/* State 19 */ new Array( 11/* "," */,30 , 16/* "]" */,31 ),
+	/* State 20 */ new Array( 16/* "]" */,-10 , 11/* "," */,-10 ),
+	/* State 21 */ new Array( 11/* "," */,32 , 16/* "]" */,33 ),
+	/* State 22 */ new Array( 10/* "->" */,34 ),
+	/* State 23 */ new Array( 2/* "||" */,35 , 3/* "&&" */,36 , 16/* "]" */,37 ),
+	/* State 24 */ new Array( 12/* "Comparison" */,38 ),
+	/* State 25 */ new Array( 13/* "(" */,25 , 17/* "Identifier" */,26 , 18/* "String" */,27 , 19/* "Integer" */,28 , 20/* "Float" */,29 ),
+	/* State 26 */ new Array( 12/* "Comparison" */,-18 , 16/* "]" */,-18 , 3/* "&&" */,-18 , 2/* "||" */,-18 , 14/* ")" */,-18 ),
+	/* State 27 */ new Array( 12/* "Comparison" */,-19 , 16/* "]" */,-19 , 3/* "&&" */,-19 , 2/* "||" */,-19 , 14/* ")" */,-19 ),
+	/* State 28 */ new Array( 12/* "Comparison" */,-20 , 16/* "]" */,-20 , 3/* "&&" */,-20 , 2/* "||" */,-20 , 14/* ")" */,-20 ),
+	/* State 29 */ new Array( 12/* "Comparison" */,-21 , 16/* "]" */,-21 , 3/* "&&" */,-21 , 2/* "||" */,-21 , 14/* ")" */,-21 ),
+	/* State 30 */ new Array( 17/* "Identifier" */,40 ),
+	/* State 31 */ new Array( 13/* "(" */,41 ),
+	/* State 32 */ new Array( 17/* "Identifier" */,42 ),
+	/* State 33 */ new Array( 13/* "(" */,43 ),
+	/* State 34 */ new Array( 17/* "Identifier" */,44 ),
+	/* State 35 */ new Array( 13/* "(" */,25 , 17/* "Identifier" */,26 , 18/* "String" */,27 , 19/* "Integer" */,28 , 20/* "Float" */,29 ),
+	/* State 36 */ new Array( 13/* "(" */,25 , 17/* "Identifier" */,26 , 18/* "String" */,27 , 19/* "Integer" */,28 , 20/* "Float" */,29 ),
+	/* State 37 */ new Array( 13/* "(" */,47 ),
+	/* State 38 */ new Array( 17/* "Identifier" */,26 , 18/* "String" */,27 , 19/* "Integer" */,28 , 20/* "Float" */,29 ),
+	/* State 39 */ new Array( 2/* "||" */,35 , 3/* "&&" */,36 , 14/* ")" */,49 ),
+	/* State 40 */ new Array( 16/* "]" */,-11 , 11/* "," */,-11 ),
+	/* State 41 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 42 */ new Array( 10/* "->" */,51 ),
+	/* State 43 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 44 */ new Array( 16/* "]" */,-12 , 11/* "," */,-12 ),
+	/* State 45 */ new Array( 2/* "||" */,-16 , 3/* "&&" */,36 , 16/* "]" */,-16 , 14/* ")" */,-16 ),
+	/* State 46 */ new Array( 2/* "||" */,-15 , 3/* "&&" */,-15 , 16/* "]" */,-15 , 14/* ")" */,-15 ),
+	/* State 47 */ new Array( 17/* "Identifier" */,3 , 13/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 48 */ new Array( 16/* "]" */,-14 , 3/* "&&" */,-14 , 2/* "||" */,-14 , 14/* ")" */,-14 ),
+	/* State 49 */ new Array( 16/* "]" */,-17 , 3/* "&&" */,-17 , 2/* "||" */,-17 , 14/* ")" */,-17 ),
+	/* State 50 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 14/* ")" */,54 ),
+	/* State 51 */ new Array( 17/* "Identifier" */,55 ),
+	/* State 52 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 14/* ")" */,56 ),
+	/* State 53 */ new Array( 9/* "-" */,8 , 8/* "Intersect" */,9 , 7/* "Union" */,10 , 14/* ")" */,57 ),
+	/* State 54 */ new Array( 27/* "$" */,-7 , 7/* "Union" */,-7 , 8/* "Intersect" */,-7 , 9/* "-" */,-7 , 14/* ")" */,-7 ),
+	/* State 55 */ new Array( 16/* "]" */,-13 , 11/* "," */,-13 ),
+	/* State 56 */ new Array( 27/* "$" */,-8 , 7/* "Union" */,-8 , 8/* "Intersect" */,-8 , 9/* "-" */,-8 , 14/* ")" */,-8 ),
+	/* State 57 */ new Array( 27/* "$" */,-9 , 7/* "Union" */,-9 , 8/* "Intersect" */,-9 , 9/* "-" */,-9 , 14/* ")" */,-9 )
 );
 
 /* Goto-Table */
 var goto_tab = new Array(
-	/* State 0 */ new Array( 21/* Algebra */,1 , 20/* Stmt */,2 ),
+	/* State 0 */ new Array( 22/* Algebra */,1 , 21/* Stmt */,2 ),
 	/* State 1 */ new Array(  ),
 	/* State 2 */ new Array(  ),
 	/* State 3 */ new Array(  ),
-	/* State 4 */ new Array( 20/* Stmt */,10 ),
+	/* State 4 */ new Array( 21/* Stmt */,11 ),
 	/* State 5 */ new Array(  ),
 	/* State 6 */ new Array(  ),
 	/* State 7 */ new Array(  ),
-	/* State 8 */ new Array( 20/* Stmt */,14 ),
-	/* State 9 */ new Array( 20/* Stmt */,15 ),
-	/* State 10 */ new Array(  ),
-	/* State 11 */ new Array( 22/* ProjectionList */,17 ),
-	/* State 12 */ new Array( 23/* RenameList */,19 ),
-	/* State 13 */ new Array( 24/* Criteria */,21 , 25/* Value */,22 ),
-	/* State 14 */ new Array(  ),
+	/* State 8 */ new Array( 21/* Stmt */,15 ),
+	/* State 9 */ new Array( 21/* Stmt */,16 ),
+	/* State 10 */ new Array( 21/* Stmt */,17 ),
+	/* State 11 */ new Array(  ),
+	/* State 12 */ new Array( 23/* ProjectionList */,19 ),
+	/* State 13 */ new Array( 24/* RenameList */,21 ),
+	/* State 14 */ new Array( 25/* Criteria */,23 , 26/* Value */,24 ),
 	/* State 15 */ new Array(  ),
 	/* State 16 */ new Array(  ),
 	/* State 17 */ new Array(  ),
@@ -635,9 +640,9 @@ var goto_tab = new Array(
 	/* State 20 */ new Array(  ),
 	/* State 21 */ new Array(  ),
 	/* State 22 */ new Array(  ),
-	/* State 23 */ new Array( 24/* Criteria */,37 , 25/* Value */,22 ),
+	/* State 23 */ new Array(  ),
 	/* State 24 */ new Array(  ),
-	/* State 25 */ new Array(  ),
+	/* State 25 */ new Array( 25/* Criteria */,39 , 26/* Value */,24 ),
 	/* State 26 */ new Array(  ),
 	/* State 27 */ new Array(  ),
 	/* State 28 */ new Array(  ),
@@ -645,21 +650,21 @@ var goto_tab = new Array(
 	/* State 30 */ new Array(  ),
 	/* State 31 */ new Array(  ),
 	/* State 32 */ new Array(  ),
-	/* State 33 */ new Array( 24/* Criteria */,43 , 25/* Value */,22 ),
-	/* State 34 */ new Array( 24/* Criteria */,44 , 25/* Value */,22 ),
-	/* State 35 */ new Array(  ),
-	/* State 36 */ new Array( 25/* Value */,46 ),
+	/* State 33 */ new Array(  ),
+	/* State 34 */ new Array(  ),
+	/* State 35 */ new Array( 25/* Criteria */,45 , 26/* Value */,24 ),
+	/* State 36 */ new Array( 25/* Criteria */,46 , 26/* Value */,24 ),
 	/* State 37 */ new Array(  ),
-	/* State 38 */ new Array(  ),
-	/* State 39 */ new Array( 20/* Stmt */,48 ),
+	/* State 38 */ new Array( 26/* Value */,48 ),
+	/* State 39 */ new Array(  ),
 	/* State 40 */ new Array(  ),
-	/* State 41 */ new Array( 20/* Stmt */,50 ),
+	/* State 41 */ new Array( 21/* Stmt */,50 ),
 	/* State 42 */ new Array(  ),
-	/* State 43 */ new Array(  ),
+	/* State 43 */ new Array( 21/* Stmt */,52 ),
 	/* State 44 */ new Array(  ),
-	/* State 45 */ new Array( 20/* Stmt */,51 ),
+	/* State 45 */ new Array(  ),
 	/* State 46 */ new Array(  ),
-	/* State 47 */ new Array(  ),
+	/* State 47 */ new Array( 21/* Stmt */,53 ),
 	/* State 48 */ new Array(  ),
 	/* State 49 */ new Array(  ),
 	/* State 50 */ new Array(  ),
@@ -667,7 +672,9 @@ var goto_tab = new Array(
 	/* State 52 */ new Array(  ),
 	/* State 53 */ new Array(  ),
 	/* State 54 */ new Array(  ),
-	/* State 55 */ new Array(  )
+	/* State 55 */ new Array(  ),
+	/* State 56 */ new Array(  ),
+	/* State 57 */ new Array(  )
 );
 
 
@@ -683,6 +690,7 @@ var labels = new Array(
 	"Select" /* Terminal symbol */,
 	"Union" /* Terminal symbol */,
 	"Intersect" /* Terminal symbol */,
+	"-" /* Terminal symbol */,
 	"->" /* Terminal symbol */,
 	"," /* Terminal symbol */,
 	"Comparison" /* Terminal symbol */,
@@ -721,7 +729,7 @@ var labels = new Array(
 			
 	while( true )
 	{
-		act = 57;
+		act = 59;
 		for( var i = 0; i < act_tab[sstack[sstack.length-1]].length; i+=2 )
 		{
 			if( act_tab[sstack[sstack.length-1]][i] == la )
@@ -750,7 +758,7 @@ var labels = new Array(
 		
 			
 		//Panic-mode: Try recovery when parse-error occurs!
-		if( act == 57 )
+		if( act == 59 )
 		{
 			if( _dbg_withtrace )
 				__dbg_print( "Error detected: There is no reduce or shift on the symbol " + labels[la] );
@@ -770,7 +778,7 @@ var labels = new Array(
 				rvstack[i] = vstack[i];
 			}
 			
-			while( act == 57 && la != 26 )
+			while( act == 59 && la != 27 )
 			{
 				if( _dbg_withtrace )
 					__dbg_print( "\tError recovery\n" +
@@ -779,7 +787,7 @@ var labels = new Array(
 				if( la == -1 )
 					info.offset++;
 					
-				while( act == 57 && sstack.length > 0 )
+				while( act == 59 && sstack.length > 0 )
 				{
 					sstack.pop();
 					vstack.pop();
@@ -787,7 +795,7 @@ var labels = new Array(
 					if( sstack.length == 0 )
 						break;
 						
-					act = 57;
+					act = 59;
 					for( var i = 0; i < act_tab[sstack[sstack.length-1]].length; i+=2 )
 					{
 						if( act_tab[sstack[sstack.length-1]][i] == la )
@@ -798,7 +806,7 @@ var labels = new Array(
 					}
 				}
 				
-				if( act != 57 )
+				if( act != 59 )
 					break;
 				
 				for( var i = 0; i < rsstack.length; i++ )
@@ -810,7 +818,7 @@ var labels = new Array(
 				la = __lex( info );
 			}
 			
-			if( act == 57 )
+			if( act == 59 )
 			{
 				if( _dbg_withtrace )
 					__dbg_print( "\tError recovery failed, terminating parse process..." );
@@ -823,7 +831,7 @@ var labels = new Array(
 		}
 		
 		/*
-		if( act == 57 )
+		if( act == 59 )
 			break;
 		*/
 		
@@ -895,72 +903,72 @@ switch( act )
 	break;
 	case 5:
 	{
-		 rval = vstack[ vstack.length - 2 ] 
+		 rval = new Tree.Difference( vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ] ); 
 	}
 	break;
 	case 6:
 	{
-		 rval = new Tree.Projection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
+		 rval = vstack[ vstack.length - 2 ] 
 	}
 	break;
 	case 7:
 	{
-		 rval = new Tree.Rename( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
+		 rval = new Tree.Projection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
 	}
 	break;
 	case 8:
 	{
-		 rval = new Tree.Selection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
+		 rval = new Tree.Rename( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
 	}
 	break;
 	case 9:
 	{
-		 rval = new Tree.ProjectionList( vstack[ vstack.length - 1 ] ); 
+		 rval = new Tree.Selection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
 	}
 	break;
 	case 10:
 	{
-		 rval = vstack[ vstack.length - 3 ].add(vstack[ vstack.length - 1 ]); 
+		 rval = new Tree.ProjectionList( vstack[ vstack.length - 1 ] ); 
 	}
 	break;
 	case 11:
 	{
-		 rval = new Tree.RenameList( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
+		 rval = vstack[ vstack.length - 3 ].add(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 12:
 	{
-		 rval = vstack[ vstack.length - 5 ].add( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
+		 rval = new Tree.RenameList( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
 	}
 	break;
 	case 13:
 	{
-		 rval = new Tree.Criteria(vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 rval = vstack[ vstack.length - 5 ].add( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
 	}
 	break;
 	case 14:
 	{
-		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'AND', vstack[ vstack.length - 1 ]); 
+		 rval = new Tree.Criteria(vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 15:
 	{
-		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'OR', vstack[ vstack.length - 1 ]); 
+		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'AND', vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 16:
 	{
-		 rval = vstack[ vstack.length - 2 ]; 
+		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'OR', vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 17:
 	{
-		 rval = new Tree.Attribute( vstack[ vstack.length - 1 ] ); 
+		 rval = vstack[ vstack.length - 2 ]; 
 	}
 	break;
 	case 18:
 	{
-		 rval = new Tree.Value( vstack[ vstack.length - 1 ] ); 
+		 rval = new Tree.Attribute( vstack[ vstack.length - 1 ] ); 
 	}
 	break;
 	case 19:
@@ -969,6 +977,11 @@ switch( act )
 	}
 	break;
 	case 20:
+	{
+		 rval = new Tree.Value( vstack[ vstack.length - 1 ] ); 
+	}
+	break;
+	case 21:
 	{
 		 rval = new Tree.Value( vstack[ vstack.length - 1 ] ); 
 	}
