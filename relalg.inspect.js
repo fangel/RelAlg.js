@@ -61,7 +61,12 @@ function inspect( item, indent ) {
 			       inspect( item.left,  indent + 1 ) + ',' + "\n" +
 			       inspect( item.right, indent + 1 ) + "\n" + 
 			       is + ')';
-		
+
+		case item instanceof Tree.Cartesian:
+			return is + 'Cartesian(' + "\n" +
+			       inspect( item.left,  indent + 1 ) + ',' + "\n" +
+			       inspect( item.right, indent + 1 ) + "\n" + 
+			       is + ')';
 		
 		case item instanceof Tree.Attribute:
 			return is + 'Attribute(' + item.name + ')';

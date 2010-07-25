@@ -69,10 +69,19 @@ Example:
 
 ### Set difference
 
-Set differences are calculated using the `-` binary operations. Note that the two relations must have the same attributes, _NOTE:_ in the same order!.  
+Set differences are calculated using the `-` binary operations. Note that the two relations must have the same attributes, _NOTE_: in the same order!.  
 Example:
 
 	Relation1 - Relation2
+	
+### Cartesian product (Cross-product)
+
+The Cartesian product of two relations is created with the `X` binary operator.  
+Example:
+
+	Relation1 X Relation2
+	
+**Warning**: If the two relations both have an attribute with the same name, there is a _naming conflict_. This is indicated by the attributes being listed in attributes to highlight the conflict. You should use position-based renaming to rename both of the offending attributes!
 
 ## Extending the grammar
 

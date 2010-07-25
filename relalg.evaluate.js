@@ -8,6 +8,7 @@ load('operations/relalg.selection.js');
 load('operations/relalg.union.js');
 load('operations/relalg.intersection.js');
 load('operations/relalg.difference.js');
+load('operations/relalg.cartesian.js');
 
 function evaluate( item ) {
 	switch( true ) {
@@ -25,5 +26,8 @@ function evaluate( item ) {
 			return intersection( evaluate(item.left), evaluate(item.right) );
 		case item instanceof Tree.Difference:
 			return difference( evaluate(item.left), evaluate(item.right) );
+		case item instanceof Tree.Cartesian:
+			return cartesian( evaluate(item.left), evaluate(item.right) );
+		
 	}
 }

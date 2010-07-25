@@ -76,6 +76,12 @@ Tree = (function() {
 	Difference.prototype.left  = null;
 	Difference.prototype.right = null;
 	
+	function Cartesian( left, right ) {
+		this.left  = left;
+		this.right = right;
+	}
+	Cartesian.prototype.left  = null;
+	Cartesian.prototype.right = null;
 	
 	function Attribute( name ) {
 		this.name = name;
@@ -110,6 +116,7 @@ Tree = (function() {
 		Projection: Projection,
 		Rename: Rename,
 		Selection: Selection,
+		Cartesian: Cartesian,
 		ProjectionList: ProjectionList,
 		RenameList: RenameList,
 		Union: Union,
