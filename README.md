@@ -31,7 +31,7 @@ Renaming are done with the `Rename` operation. If you want to rename the attribu
 	
 ### Selection
 
-Selection are done with the `Select` operation. It takes a boolean expression its arguments, like so
+Selection are done with the `Select` operation. It takes a boolean expression as its arguments, ie
 
 	Select[a == 2 && b <= 3]( Relation )
 	
