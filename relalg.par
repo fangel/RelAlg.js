@@ -56,7 +56,9 @@ ProjectionList: Identifier											[* %% = new Tree.ProjectionList( %1 ); *]
 				;
 				
 RenameList:		Identifier '->' Identifier							[* %% = new Tree.RenameList( [%1, %3] ); *]
+				| Integer '->' Identifier							[* %% = new Tree.RenameList( [%1, %3] ); *]
 				| RenameList ',' Identifier '->' Identifier			[* %% = %1.add( [%3, %5] ); *]
+				| RenameList ',' Integer '->' Identifier			[* %% = %1.add( [%3, %5] ); *]
 				;
 				
 Criteria:		Value Comparison Value								[* %% = new Tree.Criteria(%1, %2, %3); *]

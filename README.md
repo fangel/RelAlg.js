@@ -29,6 +29,13 @@ Renaming are done with the `Rename` operation. If you want to rename the attribu
 
 	Rename[alpha->a, bravo->b]( Relation )
 	
+You can also rename fields by position. If you have the relation _C(a,b,c)_ and you want to rename the second attribute to _bravo_, you can use
+
+	Rename[2->bravo](C)
+	
+The resulting schema will then be _C'(a,bravo,c)_.  
+_Note_: Positions are not zero indexed - the first attribute is the one on position 1.
+	
 ### Selection
 
 Selection are done with the `Select` operation. It takes a boolean expression as its arguments, ie
