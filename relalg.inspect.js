@@ -50,6 +50,13 @@ function inspect( item, indent ) {
 			       inspect( item.right, indent + 1 ) + "\n" + 
 			       is + ')';
 
+		case item instanceof Tree.Intersection:
+			return is + 'Intersection(' + "\n" +
+			       inspect( item.left,  indent + 1 ) + ',' + "\n" +
+			       inspect( item.right, indent + 1 ) + "\n" + 
+			       is + ')';
+		
+		
 		case item instanceof Tree.Attribute:
 			return is + 'Attribute(' + item.name + ')';
 			

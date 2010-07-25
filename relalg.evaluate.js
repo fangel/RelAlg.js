@@ -6,6 +6,7 @@ load('operations/relalg.project.js');
 load('operations/relalg.rename.js');
 load('operations/relalg.selection.js');
 load('operations/relalg.union.js');
+load('operations/relalg.intersection.js');
 
 function evaluate( item ) {
 	switch( true ) {
@@ -19,5 +20,7 @@ function evaluate( item ) {
 			return selection( item.criteria, evaluate(item.relation) );
 		case item instanceof Tree.Union:
 			return union( evaluate(item.left), evaluate(item.right) );
+		case item instanceof Tree.Intersection:
+			return intersection( evaluate(item.left), evaluate(item.right) );
 	}
 }

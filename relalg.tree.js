@@ -62,6 +62,13 @@ Tree = (function() {
 	Union.prototype.left  = null;
 	Union.prototype.right = null;
 	
+	function Intersection( left, right ) {
+		this.left  = left;
+		this.right = right;
+	}
+	Intersection.prototype.left  = null;
+	Intersection.prototype.right = null;
+	
 	function Attribute( name ) {
 		this.name = name;
 	}
@@ -98,6 +105,7 @@ Tree = (function() {
 		ProjectionList: ProjectionList,
 		RenameList: RenameList,
 		Union: Union,
+		Intersection: Intersection,
 		Attribute: Attribute,
 		Value: Value,
 		Criteria: Criteria,
