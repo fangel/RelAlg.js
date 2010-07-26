@@ -8,10 +8,13 @@ function cartesian(left, right) {
 		return right.header.some(function( rightName ) { return rightName == leftName; })
 	});
 
+	if( duplicates.length )
+		throw "Cartesian fail. Both relations have the attribute(s): '" + duplicates.join("', '") + "' " +
+		      "in common. Because of this naming conflict the cartesian product can't be " +
+		      "calculated. You must rename the attributes in, or project the attributes out " +
+		      "from at least on of the relations."
+
 	var headerPrime = left.header.concat(right.header);
-	for( var i in headerPrime )
-		if( duplicates.some( function( duplicate )  { return headerPrime[i] == duplicate }))
-			headerPrime[i] = '(' + headerPrime[i] + ')';
 
 	var relation = new Relation( headerPrime, [] );
 	for( var i in left.data )

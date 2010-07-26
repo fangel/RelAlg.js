@@ -29,8 +29,7 @@ function inspect( item, indent ) {
 			return is + 'Selection(' + "\n" + 
 			       inspect( item.criteria, indent + 1) + ',' + "\n" + 
 			       inspect( item.relation, indent + 1 ) + "\n" + 
-			       is + ')';	
-		
+			       is + ')';			
 			
 		case item instanceof Tree.ProjectionList:
 		 	return is + 'ProjectionList(' + item.list.join(', ') + ')';
@@ -42,7 +41,6 @@ function inspect( item, indent ) {
 				rtn += is + ic + item.list[i][0] + ' -> ' + item.list[i][1] + ',' + "\n";
 			}
 			return rtn.substr(0, rtn.length -2 ) + "\n" + is + ')';
-			
 		
 		case item instanceof Tree.Union:
 			return is + 'Union(' + "\n" +
@@ -67,6 +65,13 @@ function inspect( item, indent ) {
 			       inspect( item.left,  indent + 1 ) + ',' + "\n" +
 			       inspect( item.right, indent + 1 ) + "\n" + 
 			       is + ')';
+		
+		case item instanceof Tree.Join:
+			return is + 'Join(' + "\n" + 
+			       inspect( item.left, indent + 1) + ',' + "\n" + 
+			       inspect( item.criteria, indent + 1) + ',' + "\n" + 
+			       inspect( item.right, indent + 1 ) + "\n" + 
+			       is + ')';	
 		
 		case item instanceof Tree.Attribute:
 			return is + 'Attribute(' + item.name + ')';

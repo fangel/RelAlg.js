@@ -9,6 +9,7 @@ load('operations/relalg.union.js');
 load('operations/relalg.intersection.js');
 load('operations/relalg.difference.js');
 load('operations/relalg.cartesian.js');
+load('operations/relalg.join.js');
 
 function evaluate( item ) {
 	switch( true ) {
@@ -28,6 +29,9 @@ function evaluate( item ) {
 			return difference( evaluate(item.left), evaluate(item.right) );
 		case item instanceof Tree.Cartesian:
 			return cartesian( evaluate(item.left), evaluate(item.right) );
-		
+		case item instanceof Tree.Join:
+			return join( evaluate(item.left), item.criteria, evaluate(item.right) );
+		default:
+			throw "Unsupported operation!";
 	}
 }

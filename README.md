@@ -1,6 +1,7 @@
 # RelAlg.js - A JavaScript Relational Algebra evaluator
 
-This [Relational Algebra][relalg] evaluator is written by Morten Fangel (fangel@sevengoslings.net, twitter.com/fangel). Feel free to contact me if you have any issues or ideas for further work.
+This [Relational Algebra][relalg] evaluator is written by me, Morten Fangel (fangel@sevengoslings.net, twitter.com/fangel). Assistant Professer, Ph.D. Henrik Bulskov from Roskilde University has been a tremendous help with his great inputs and thoughts on the project.  
+Feel free to contact me if you have any issues or ideas for further work.
 
 ## Usage
 
@@ -81,7 +82,36 @@ Example:
 
 	Relation1 X Relation2
 	
-**Warning**: If the two relations both have an attribute with the same name, there is a _naming conflict_. This is indicated by the attributes being listed in parenthesis to highlight the conflict. You should use position-based renaming to rename both of the offending attributes!
+**Warning**: If the two relations both have an attribute with the same name, there is a _naming conflict_. 
+This will cause the calculations to fail. You must ensure no duplicate attributes.
+
+### Joins
+
+Joins are created using the `Join` binary operation. 
+
+#### Theta-joins (conditional joins)
+
+If you wish to create a theta-join, you provide the join-condition like this:
+
+	Relation1 Join[attribute1 == attribute2] Relation2
+	
+**Warning**: If both relations have attributes with the same name, and you do _not_ have a criteria equalling 
+both attributes (in other words, a _explicit_ natural-join) to each other, the calculation will fail. If 
+your intent wasn't to join on those conditions, you must rename an attribute from, or project the attribute out
+of the at least one of the relations.
+
+_Example_: Say you have the schemas R(id, name) and S(id, place), you _must_ have the join-condition _id == id_,
+when joining. You can also have a condition on say _name == 'foo'_, so the join-conditions need not the 
+only conditions.
+
+There is no specific notation for creating _Equi-joins_, just create a all-AND, all-equality condition and
+your Theta-join will classify as a Equi-join.
+
+#### Natural-join
+
+Natural-joins are currently not supported. When they are, the syntax for creating them will be the following:
+
+	Relation1 Join Relation2
 
 ## Extending the grammar
 

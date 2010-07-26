@@ -83,6 +83,15 @@ Tree = (function() {
 	Cartesian.prototype.left  = null;
 	Cartesian.prototype.right = null;
 	
+	function Join( left, criteria, right ) {
+		this.left     = left;
+		this.criteria = criteria;
+		this.right    = right;
+	}
+	Join.prototype.left     = null;
+	Join.prototype.criteria = null;
+	Join.prototype.right    = null; 
+	
 	function Attribute( name ) {
 		this.name = name;
 	}
@@ -116,12 +125,13 @@ Tree = (function() {
 		Projection: Projection,
 		Rename: Rename,
 		Selection: Selection,
-		Cartesian: Cartesian,
 		ProjectionList: ProjectionList,
 		RenameList: RenameList,
 		Union: Union,
 		Intersection: Intersection,
 		Difference: Difference,
+		Cartesian: Cartesian,
+		Join: Join,
 		Attribute: Attribute,
 		Value: Value,
 		Criteria: Criteria,
