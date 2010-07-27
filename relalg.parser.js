@@ -578,6 +578,7 @@ var pop_tab = new Array(
 	new Array( 23/* Stmt */, 3 ),
 	new Array( 23/* Stmt */, 6 ),
 	new Array( 23/* Stmt */, 3 ),
+	new Array( 23/* Stmt */, 3 ),
 	new Array( 23/* Stmt */, 7 ),
 	new Array( 23/* Stmt */, 7 ),
 	new Array( 23/* Stmt */, 7 ),
@@ -607,69 +608,70 @@ var act_tab = new Array(
 	/* State 5 */ new Array( 17/* "[" */,14 ),
 	/* State 6 */ new Array( 17/* "[" */,15 ),
 	/* State 7 */ new Array( 17/* "[" */,16 ),
-	/* State 8 */ new Array( 17/* "[" */,17 ),
+	/* State 8 */ new Array( 17/* "[" */,17 , 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
 	/* State 9 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
 	/* State 10 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
 	/* State 11 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
 	/* State 12 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 13 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 16/* ")" */,22 ),
-	/* State 14 */ new Array( 19/* "Identifier" */,24 ),
-	/* State 15 */ new Array( 19/* "Identifier" */,26 , 21/* "Integer" */,27 ),
-	/* State 16 */ new Array( 15/* "(" */,30 , 19/* "Identifier" */,31 , 20/* "String" */,32 , 21/* "Integer" */,33 , 22/* "Float" */,34 ),
-	/* State 17 */ new Array( 15/* "(" */,30 , 19/* "Identifier" */,31 , 20/* "String" */,32 , 21/* "Integer" */,33 , 22/* "Float" */,34 ),
-	/* State 18 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-6 , 16/* ")" */,-6 ),
-	/* State 19 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-5 , 16/* ")" */,-5 ),
-	/* State 20 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-4 , 16/* ")" */,-4 ),
-	/* State 21 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-3 , 16/* ")" */,-3 ),
-	/* State 22 */ new Array( 29/* "$" */,-8 , 7/* "Union" */,-8 , 8/* "Intersect" */,-8 , 9/* "-" */,-8 , 10/* "X" */,-8 , 11/* "Join" */,-8 , 16/* ")" */,-8 ),
-	/* State 23 */ new Array( 13/* "," */,36 , 18/* "]" */,37 ),
-	/* State 24 */ new Array( 18/* "]" */,-12 , 13/* "," */,-12 ),
-	/* State 25 */ new Array( 13/* "," */,38 , 18/* "]" */,39 ),
-	/* State 26 */ new Array( 12/* "->" */,40 ),
+	/* State 13 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 16/* ")" */,23 ),
+	/* State 14 */ new Array( 19/* "Identifier" */,25 ),
+	/* State 15 */ new Array( 19/* "Identifier" */,27 , 21/* "Integer" */,28 ),
+	/* State 16 */ new Array( 15/* "(" */,31 , 19/* "Identifier" */,32 , 20/* "String" */,33 , 21/* "Integer" */,34 , 22/* "Float" */,35 ),
+	/* State 17 */ new Array( 15/* "(" */,31 , 19/* "Identifier" */,32 , 20/* "String" */,33 , 21/* "Integer" */,34 , 22/* "Float" */,35 ),
+	/* State 18 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-8 , 16/* ")" */,-8 ),
+	/* State 19 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-6 , 16/* ")" */,-6 ),
+	/* State 20 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-5 , 16/* ")" */,-5 ),
+	/* State 21 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-4 , 16/* ")" */,-4 ),
+	/* State 22 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-3 , 16/* ")" */,-3 ),
+	/* State 23 */ new Array( 29/* "$" */,-9 , 7/* "Union" */,-9 , 8/* "Intersect" */,-9 , 9/* "-" */,-9 , 10/* "X" */,-9 , 11/* "Join" */,-9 , 16/* ")" */,-9 ),
+	/* State 24 */ new Array( 13/* "," */,37 , 18/* "]" */,38 ),
+	/* State 25 */ new Array( 18/* "]" */,-13 , 13/* "," */,-13 ),
+	/* State 26 */ new Array( 13/* "," */,39 , 18/* "]" */,40 ),
 	/* State 27 */ new Array( 12/* "->" */,41 ),
-	/* State 28 */ new Array( 2/* "||" */,42 , 3/* "&&" */,43 , 18/* "]" */,44 ),
-	/* State 29 */ new Array( 14/* "Comparison" */,45 ),
-	/* State 30 */ new Array( 15/* "(" */,30 , 19/* "Identifier" */,31 , 20/* "String" */,32 , 21/* "Integer" */,33 , 22/* "Float" */,34 ),
-	/* State 31 */ new Array( 14/* "Comparison" */,-22 , 18/* "]" */,-22 , 3/* "&&" */,-22 , 2/* "||" */,-22 , 16/* ")" */,-22 ),
+	/* State 28 */ new Array( 12/* "->" */,42 ),
+	/* State 29 */ new Array( 2/* "||" */,43 , 3/* "&&" */,44 , 18/* "]" */,45 ),
+	/* State 30 */ new Array( 14/* "Comparison" */,46 ),
+	/* State 31 */ new Array( 15/* "(" */,31 , 19/* "Identifier" */,32 , 20/* "String" */,33 , 21/* "Integer" */,34 , 22/* "Float" */,35 ),
 	/* State 32 */ new Array( 14/* "Comparison" */,-23 , 18/* "]" */,-23 , 3/* "&&" */,-23 , 2/* "||" */,-23 , 16/* ")" */,-23 ),
 	/* State 33 */ new Array( 14/* "Comparison" */,-24 , 18/* "]" */,-24 , 3/* "&&" */,-24 , 2/* "||" */,-24 , 16/* ")" */,-24 ),
 	/* State 34 */ new Array( 14/* "Comparison" */,-25 , 18/* "]" */,-25 , 3/* "&&" */,-25 , 2/* "||" */,-25 , 16/* ")" */,-25 ),
-	/* State 35 */ new Array( 2/* "||" */,42 , 3/* "&&" */,43 , 18/* "]" */,47 ),
-	/* State 36 */ new Array( 19/* "Identifier" */,48 ),
-	/* State 37 */ new Array( 15/* "(" */,49 ),
-	/* State 38 */ new Array( 19/* "Identifier" */,50 , 21/* "Integer" */,51 ),
-	/* State 39 */ new Array( 15/* "(" */,52 ),
-	/* State 40 */ new Array( 19/* "Identifier" */,53 ),
+	/* State 35 */ new Array( 14/* "Comparison" */,-26 , 18/* "]" */,-26 , 3/* "&&" */,-26 , 2/* "||" */,-26 , 16/* ")" */,-26 ),
+	/* State 36 */ new Array( 2/* "||" */,43 , 3/* "&&" */,44 , 18/* "]" */,48 ),
+	/* State 37 */ new Array( 19/* "Identifier" */,49 ),
+	/* State 38 */ new Array( 15/* "(" */,50 ),
+	/* State 39 */ new Array( 19/* "Identifier" */,51 , 21/* "Integer" */,52 ),
+	/* State 40 */ new Array( 15/* "(" */,53 ),
 	/* State 41 */ new Array( 19/* "Identifier" */,54 ),
-	/* State 42 */ new Array( 15/* "(" */,30 , 19/* "Identifier" */,31 , 20/* "String" */,32 , 21/* "Integer" */,33 , 22/* "Float" */,34 ),
-	/* State 43 */ new Array( 15/* "(" */,30 , 19/* "Identifier" */,31 , 20/* "String" */,32 , 21/* "Integer" */,33 , 22/* "Float" */,34 ),
-	/* State 44 */ new Array( 15/* "(" */,57 ),
-	/* State 45 */ new Array( 19/* "Identifier" */,31 , 20/* "String" */,32 , 21/* "Integer" */,33 , 22/* "Float" */,34 ),
-	/* State 46 */ new Array( 2/* "||" */,42 , 3/* "&&" */,43 , 16/* ")" */,59 ),
-	/* State 47 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 48 */ new Array( 18/* "]" */,-13 , 13/* "," */,-13 ),
-	/* State 49 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 50 */ new Array( 12/* "->" */,62 ),
+	/* State 42 */ new Array( 19/* "Identifier" */,55 ),
+	/* State 43 */ new Array( 15/* "(" */,31 , 19/* "Identifier" */,32 , 20/* "String" */,33 , 21/* "Integer" */,34 , 22/* "Float" */,35 ),
+	/* State 44 */ new Array( 15/* "(" */,31 , 19/* "Identifier" */,32 , 20/* "String" */,33 , 21/* "Integer" */,34 , 22/* "Float" */,35 ),
+	/* State 45 */ new Array( 15/* "(" */,58 ),
+	/* State 46 */ new Array( 19/* "Identifier" */,32 , 20/* "String" */,33 , 21/* "Integer" */,34 , 22/* "Float" */,35 ),
+	/* State 47 */ new Array( 2/* "||" */,43 , 3/* "&&" */,44 , 16/* ")" */,60 ),
+	/* State 48 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 49 */ new Array( 18/* "]" */,-14 , 13/* "," */,-14 ),
+	/* State 50 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
 	/* State 51 */ new Array( 12/* "->" */,63 ),
-	/* State 52 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 53 */ new Array( 18/* "]" */,-14 , 13/* "," */,-14 ),
+	/* State 52 */ new Array( 12/* "->" */,64 ),
+	/* State 53 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
 	/* State 54 */ new Array( 18/* "]" */,-15 , 13/* "," */,-15 ),
-	/* State 55 */ new Array( 2/* "||" */,-20 , 3/* "&&" */,43 , 18/* "]" */,-20 , 16/* ")" */,-20 ),
-	/* State 56 */ new Array( 2/* "||" */,-19 , 3/* "&&" */,-19 , 18/* "]" */,-19 , 16/* ")" */,-19 ),
-	/* State 57 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
-	/* State 58 */ new Array( 18/* "]" */,-18 , 3/* "&&" */,-18 , 2/* "||" */,-18 , 16/* ")" */,-18 ),
-	/* State 59 */ new Array( 18/* "]" */,-21 , 3/* "&&" */,-21 , 2/* "||" */,-21 , 16/* ")" */,-21 ),
-	/* State 60 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-7 , 16/* ")" */,-7 ),
-	/* State 61 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 16/* ")" */,66 ),
-	/* State 62 */ new Array( 19/* "Identifier" */,67 ),
+	/* State 55 */ new Array( 18/* "]" */,-16 , 13/* "," */,-16 ),
+	/* State 56 */ new Array( 2/* "||" */,-21 , 3/* "&&" */,44 , 18/* "]" */,-21 , 16/* ")" */,-21 ),
+	/* State 57 */ new Array( 2/* "||" */,-20 , 3/* "&&" */,-20 , 18/* "]" */,-20 , 16/* ")" */,-20 ),
+	/* State 58 */ new Array( 19/* "Identifier" */,3 , 15/* "(" */,4 , 4/* "Project" */,5 , 5/* "Rename" */,6 , 6/* "Select" */,7 ),
+	/* State 59 */ new Array( 18/* "]" */,-19 , 3/* "&&" */,-19 , 2/* "||" */,-19 , 16/* ")" */,-19 ),
+	/* State 60 */ new Array( 18/* "]" */,-22 , 3/* "&&" */,-22 , 2/* "||" */,-22 , 16/* ")" */,-22 ),
+	/* State 61 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 29/* "$" */,-7 , 16/* ")" */,-7 ),
+	/* State 62 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 16/* ")" */,67 ),
 	/* State 63 */ new Array( 19/* "Identifier" */,68 ),
-	/* State 64 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 16/* ")" */,69 ),
+	/* State 64 */ new Array( 19/* "Identifier" */,69 ),
 	/* State 65 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 16/* ")" */,70 ),
-	/* State 66 */ new Array( 29/* "$" */,-9 , 7/* "Union" */,-9 , 8/* "Intersect" */,-9 , 9/* "-" */,-9 , 10/* "X" */,-9 , 11/* "Join" */,-9 , 16/* ")" */,-9 ),
-	/* State 67 */ new Array( 18/* "]" */,-16 , 13/* "," */,-16 ),
+	/* State 66 */ new Array( 11/* "Join" */,8 , 10/* "X" */,9 , 9/* "-" */,10 , 8/* "Intersect" */,11 , 7/* "Union" */,12 , 16/* ")" */,71 ),
+	/* State 67 */ new Array( 29/* "$" */,-10 , 7/* "Union" */,-10 , 8/* "Intersect" */,-10 , 9/* "-" */,-10 , 10/* "X" */,-10 , 11/* "Join" */,-10 , 16/* ")" */,-10 ),
 	/* State 68 */ new Array( 18/* "]" */,-17 , 13/* "," */,-17 ),
-	/* State 69 */ new Array( 29/* "$" */,-10 , 7/* "Union" */,-10 , 8/* "Intersect" */,-10 , 9/* "-" */,-10 , 10/* "X" */,-10 , 11/* "Join" */,-10 , 16/* ")" */,-10 ),
-	/* State 70 */ new Array( 29/* "$" */,-11 , 7/* "Union" */,-11 , 8/* "Intersect" */,-11 , 9/* "-" */,-11 , 10/* "X" */,-11 , 11/* "Join" */,-11 , 16/* ")" */,-11 )
+	/* State 69 */ new Array( 18/* "]" */,-18 , 13/* "," */,-18 ),
+	/* State 70 */ new Array( 29/* "$" */,-11 , 7/* "Union" */,-11 , 8/* "Intersect" */,-11 , 9/* "-" */,-11 , 10/* "X" */,-11 , 11/* "Join" */,-11 , 16/* ")" */,-11 ),
+	/* State 71 */ new Array( 29/* "$" */,-12 , 7/* "Union" */,-12 , 8/* "Intersect" */,-12 , 9/* "-" */,-12 , 10/* "X" */,-12 , 11/* "Join" */,-12 , 16/* ")" */,-12 )
 );
 
 /* Goto-Table */
@@ -682,16 +684,16 @@ var goto_tab = new Array(
 	/* State 5 */ new Array(  ),
 	/* State 6 */ new Array(  ),
 	/* State 7 */ new Array(  ),
-	/* State 8 */ new Array(  ),
-	/* State 9 */ new Array( 23/* Stmt */,18 ),
-	/* State 10 */ new Array( 23/* Stmt */,19 ),
-	/* State 11 */ new Array( 23/* Stmt */,20 ),
-	/* State 12 */ new Array( 23/* Stmt */,21 ),
+	/* State 8 */ new Array( 23/* Stmt */,18 ),
+	/* State 9 */ new Array( 23/* Stmt */,19 ),
+	/* State 10 */ new Array( 23/* Stmt */,20 ),
+	/* State 11 */ new Array( 23/* Stmt */,21 ),
+	/* State 12 */ new Array( 23/* Stmt */,22 ),
 	/* State 13 */ new Array(  ),
-	/* State 14 */ new Array( 26/* ProjectionList */,23 ),
-	/* State 15 */ new Array( 27/* RenameList */,25 ),
-	/* State 16 */ new Array( 25/* Criteria */,28 , 28/* Value */,29 ),
-	/* State 17 */ new Array( 25/* Criteria */,35 , 28/* Value */,29 ),
+	/* State 14 */ new Array( 26/* ProjectionList */,24 ),
+	/* State 15 */ new Array( 27/* RenameList */,26 ),
+	/* State 16 */ new Array( 25/* Criteria */,29 , 28/* Value */,30 ),
+	/* State 17 */ new Array( 25/* Criteria */,36 , 28/* Value */,30 ),
 	/* State 18 */ new Array(  ),
 	/* State 19 */ new Array(  ),
 	/* State 20 */ new Array(  ),
@@ -704,8 +706,8 @@ var goto_tab = new Array(
 	/* State 27 */ new Array(  ),
 	/* State 28 */ new Array(  ),
 	/* State 29 */ new Array(  ),
-	/* State 30 */ new Array( 25/* Criteria */,46 , 28/* Value */,29 ),
-	/* State 31 */ new Array(  ),
+	/* State 30 */ new Array(  ),
+	/* State 31 */ new Array( 25/* Criteria */,47 , 28/* Value */,30 ),
 	/* State 32 */ new Array(  ),
 	/* State 33 */ new Array(  ),
 	/* State 34 */ new Array(  ),
@@ -716,23 +718,23 @@ var goto_tab = new Array(
 	/* State 39 */ new Array(  ),
 	/* State 40 */ new Array(  ),
 	/* State 41 */ new Array(  ),
-	/* State 42 */ new Array( 25/* Criteria */,55 , 28/* Value */,29 ),
-	/* State 43 */ new Array( 25/* Criteria */,56 , 28/* Value */,29 ),
-	/* State 44 */ new Array(  ),
-	/* State 45 */ new Array( 28/* Value */,58 ),
-	/* State 46 */ new Array(  ),
-	/* State 47 */ new Array( 23/* Stmt */,60 ),
-	/* State 48 */ new Array(  ),
-	/* State 49 */ new Array( 23/* Stmt */,61 ),
-	/* State 50 */ new Array(  ),
+	/* State 42 */ new Array(  ),
+	/* State 43 */ new Array( 25/* Criteria */,56 , 28/* Value */,30 ),
+	/* State 44 */ new Array( 25/* Criteria */,57 , 28/* Value */,30 ),
+	/* State 45 */ new Array(  ),
+	/* State 46 */ new Array( 28/* Value */,59 ),
+	/* State 47 */ new Array(  ),
+	/* State 48 */ new Array( 23/* Stmt */,61 ),
+	/* State 49 */ new Array(  ),
+	/* State 50 */ new Array( 23/* Stmt */,62 ),
 	/* State 51 */ new Array(  ),
-	/* State 52 */ new Array( 23/* Stmt */,64 ),
-	/* State 53 */ new Array(  ),
+	/* State 52 */ new Array(  ),
+	/* State 53 */ new Array( 23/* Stmt */,65 ),
 	/* State 54 */ new Array(  ),
 	/* State 55 */ new Array(  ),
 	/* State 56 */ new Array(  ),
-	/* State 57 */ new Array( 23/* Stmt */,65 ),
-	/* State 58 */ new Array(  ),
+	/* State 57 */ new Array(  ),
+	/* State 58 */ new Array( 23/* Stmt */,66 ),
 	/* State 59 */ new Array(  ),
 	/* State 60 */ new Array(  ),
 	/* State 61 */ new Array(  ),
@@ -744,7 +746,8 @@ var goto_tab = new Array(
 	/* State 67 */ new Array(  ),
 	/* State 68 */ new Array(  ),
 	/* State 69 */ new Array(  ),
-	/* State 70 */ new Array(  )
+	/* State 70 */ new Array(  ),
+	/* State 71 */ new Array(  )
 );
 
 
@@ -801,7 +804,7 @@ var labels = new Array(
 			
 	while( true )
 	{
-		act = 72;
+		act = 73;
 		for( var i = 0; i < act_tab[sstack[sstack.length-1]].length; i+=2 )
 		{
 			if( act_tab[sstack[sstack.length-1]][i] == la )
@@ -830,7 +833,7 @@ var labels = new Array(
 		
 			
 		//Panic-mode: Try recovery when parse-error occurs!
-		if( act == 72 )
+		if( act == 73 )
 		{
 			if( _dbg_withtrace )
 				__dbg_print( "Error detected: There is no reduce or shift on the symbol " + labels[la] );
@@ -850,7 +853,7 @@ var labels = new Array(
 				rvstack[i] = vstack[i];
 			}
 			
-			while( act == 72 && la != 29 )
+			while( act == 73 && la != 29 )
 			{
 				if( _dbg_withtrace )
 					__dbg_print( "\tError recovery\n" +
@@ -859,7 +862,7 @@ var labels = new Array(
 				if( la == -1 )
 					info.offset++;
 					
-				while( act == 72 && sstack.length > 0 )
+				while( act == 73 && sstack.length > 0 )
 				{
 					sstack.pop();
 					vstack.pop();
@@ -867,7 +870,7 @@ var labels = new Array(
 					if( sstack.length == 0 )
 						break;
 						
-					act = 72;
+					act = 73;
 					for( var i = 0; i < act_tab[sstack[sstack.length-1]].length; i+=2 )
 					{
 						if( act_tab[sstack[sstack.length-1]][i] == la )
@@ -878,7 +881,7 @@ var labels = new Array(
 					}
 				}
 				
-				if( act != 72 )
+				if( act != 73 )
 					break;
 				
 				for( var i = 0; i < rsstack.length; i++ )
@@ -890,7 +893,7 @@ var labels = new Array(
 				la = __lex( info );
 			}
 			
-			if( act == 72 )
+			if( act == 73 )
 			{
 				if( _dbg_withtrace )
 					__dbg_print( "\tError recovery failed, terminating parse process..." );
@@ -903,7 +906,7 @@ var labels = new Array(
 		}
 		
 		/*
-		if( act == 72 )
+		if( act == 73 )
 			break;
 		*/
 		
@@ -990,37 +993,37 @@ switch( act )
 	break;
 	case 8:
 	{
-		 rval = vstack[ vstack.length - 2 ] 
+		 rval = new Tree.NaturalJoin( vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ] ); 
 	}
 	break;
 	case 9:
 	{
-		 rval = new Tree.Projection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
+		 rval = vstack[ vstack.length - 2 ] 
 	}
 	break;
 	case 10:
 	{
-		 rval = new Tree.Rename( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
+		 rval = new Tree.Projection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
 	}
 	break;
 	case 11:
 	{
-		 rval = new Tree.Selection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
+		 rval = new Tree.Rename( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
 	}
 	break;
 	case 12:
 	{
-		 rval = new Tree.ProjectionList( vstack[ vstack.length - 1 ] ); 
+		 rval = new Tree.Selection( vstack[ vstack.length - 5 ], vstack[ vstack.length - 2 ] ); 
 	}
 	break;
 	case 13:
 	{
-		 rval = vstack[ vstack.length - 3 ].add(vstack[ vstack.length - 1 ]); 
+		 rval = new Tree.ProjectionList( vstack[ vstack.length - 1 ] ); 
 	}
 	break;
 	case 14:
 	{
-		 rval = new Tree.RenameList( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
+		 rval = vstack[ vstack.length - 3 ].add(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 15:
@@ -1030,7 +1033,7 @@ switch( act )
 	break;
 	case 16:
 	{
-		 rval = vstack[ vstack.length - 5 ].add( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
+		 rval = new Tree.RenameList( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
 	}
 	break;
 	case 17:
@@ -1040,32 +1043,32 @@ switch( act )
 	break;
 	case 18:
 	{
-		 rval = new Tree.Criteria(vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 rval = vstack[ vstack.length - 5 ].add( [vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]] ); 
 	}
 	break;
 	case 19:
 	{
-		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'AND', vstack[ vstack.length - 1 ]); 
+		 rval = new Tree.Criteria(vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 20:
 	{
-		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'OR', vstack[ vstack.length - 1 ]); 
+		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'AND', vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 21:
 	{
-		 rval = vstack[ vstack.length - 2 ]; 
+		 rval = new Tree.CriteriaComposition(vstack[ vstack.length - 3 ], 'OR', vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 22:
 	{
-		 rval = new Tree.Attribute( vstack[ vstack.length - 1 ] ); 
+		 rval = vstack[ vstack.length - 2 ]; 
 	}
 	break;
 	case 23:
 	{
-		 rval = new Tree.Value( vstack[ vstack.length - 1 ] ); 
+		 rval = new Tree.Attribute( vstack[ vstack.length - 1 ] ); 
 	}
 	break;
 	case 24:
@@ -1074,6 +1077,11 @@ switch( act )
 	}
 	break;
 	case 25:
+	{
+		 rval = new Tree.Value( vstack[ vstack.length - 1 ] ); 
+	}
+	break;
+	case 26:
 	{
 		 rval = new Tree.Value( vstack[ vstack.length - 1 ] ); 
 	}
@@ -1179,7 +1187,7 @@ function parser( input ) {
 	if( error_count > 0 ) {
 		var error = '';
 		for( var i = 0; i < error_count; i++ )
-			error += "Parse error near '" 	+ input.substr( error_offsets[i] ) +	"', expecting '" + error_lookaheads[i].join() + "'\n";
+			error += "Parse error near '" 	+ str.substr( error_offsets[i] ) +	"', expecting '" + error_lookaheads[i].join() + "'\n";
 		throw error;
   	}
   

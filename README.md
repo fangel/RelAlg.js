@@ -109,7 +109,8 @@ your Theta-join will classify as a Equi-join.
 
 #### Natural-join
 
-Natural-joins are currently not supported. When they are, the syntax for creating them will be the following:
+If you do not give a condition as an argument to the `Join` operator, it will be treated as a natural join. 
+In other words, natural joins are created like this:
 
 	Relation1 Join Relation2
 

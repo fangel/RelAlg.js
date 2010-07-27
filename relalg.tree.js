@@ -92,6 +92,13 @@ Tree = (function() {
 	Join.prototype.criteria = null;
 	Join.prototype.right    = null; 
 	
+	function NaturalJoin( left, right ) {
+		this.left  = left;
+		this.right = right;
+	}
+	NaturalJoin.prototype.left  = null;
+	NaturalJoin.prototype.right = null;
+	
 	function Attribute( name ) {
 		this.name = name;
 	}
@@ -132,6 +139,7 @@ Tree = (function() {
 		Difference: Difference,
 		Cartesian: Cartesian,
 		Join: Join,
+		NaturalJoin: NaturalJoin,
 		Attribute: Attribute,
 		Value: Value,
 		Criteria: Criteria,

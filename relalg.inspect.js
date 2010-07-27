@@ -73,6 +73,12 @@ function inspect( item, indent ) {
 			       inspect( item.right, indent + 1 ) + "\n" + 
 			       is + ')';	
 		
+		case item instanceof Tree.NaturalJoin:
+			return is + 'NaturalJoin(' + "\n" + 
+			       inspect( item.left, indent + 1) + ',' + "\n" + 
+			       inspect( item.right, indent + 1 ) + "\n" + 
+			       is + ')';
+			
 		case item instanceof Tree.Attribute:
 			return is + 'Attribute(' + item.name + ')';
 			
