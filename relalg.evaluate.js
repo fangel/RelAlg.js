@@ -11,6 +11,7 @@ load('operations/relalg.difference.js');
 load('operations/relalg.cartesian.js');
 load('operations/relalg.join.js');
 load('operations/relalg.naturaljoin.js');
+load('operations/relalg.division.js');
 
 function evaluate( item ) {
 	switch( true ) {
@@ -33,7 +34,9 @@ function evaluate( item ) {
 		case item instanceof Tree.Join:
 			return join( evaluate(item.left), item.criteria, evaluate(item.right) );
 		case item instanceof Tree.NaturalJoin:
-			return naturaljoin( evaluate(item.left), evaluate(item.right));
+			return naturaljoin( evaluate(item.left), evaluate(item.right) );
+		case item instanceof Tree.Division:
+			return division( evaluate(item.left), evaluate(item.right) );
 		default:
 			throw "Unsupported operation!";
 	}

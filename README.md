@@ -113,6 +113,13 @@ If you do not give a condition as an argument to the `Join` operator, it will be
 In other words, natural joins are created like this:
 
 	Relation1 Join Relation2
+	
+### Division
+
+The standard operator for divisions (`/`) is used to calculate the division between two relations.
+An example would be
+
+	Relation1 / Relation2
 
 ## Extending the grammar
 
