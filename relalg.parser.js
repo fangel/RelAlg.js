@@ -1204,8 +1204,11 @@ function parser( input ) {
 	error_count = __parse( input, error_offsets, error_lookaheads );
 	if( error_count > 0 ) {
 		var error = '';
-		for( var i = 0; i < error_count; i++ )
-			error += "Parse error near '" 	+ input.substr( error_offsets[i] ) +	"', expecting '" + error_lookaheads[i].join() + "'\n";
+		for( var i = 0; i < error_count; i++ ) {
+			error += "Parse error near '" 	+ input.substr( error_offsets[i], 10 ) +	"', expecting one of '" + error_lookaheads[i].join("', '") + "'\n";
+			//error += input + "\n";
+			//error += (new Array(error_offsets[i]+1).join('-')) + '^' + "\n";
+		}
 		throw error;
   	}
   
