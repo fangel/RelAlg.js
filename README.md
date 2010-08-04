@@ -5,15 +5,15 @@ Feel free to contact me if you have any issues or ideas for further work.
 
 ## Usage
 
-Right now there is only a CLI interface for RelAlg.js. It's been developed using [SpiderMonkey][sm],
-because of the lexer/parser generator used ([JS/CC][jscc]). I believe the only thing used that's SpiderMonkey specific is
+Right now there is only a SpiderMonkey CLI interface for RelAlg.js. The CLI is located in the `relalg.sm-cli.js` file. It's been developed for [SpiderMonkey][sm],
+because of the lexer/parser generator used ([JS/CC][jscc]). I believe the only thing that's SpiderMonkey specific is
 the use of `load` to include multiple files, so porting to different javascript evaluators shouldn't be that
 big of a deal..
 
-Relations are currently defined statically, in relalg.js. After you've defined your relations,
+Relations for the CLI are currently defined statically, in `relalg.demo-relations.js`. After you've defined your relations,
 you can query them like so
 
-	$> js relalg.js "Project[a,b]( Rename[alpha->a]( Test ) )"
+	$> js relalg.sm-cli.js "Project[a,b]( Rename[alpha->a]( Test ) )"
 
 All the available functions takes input like this `Operation[arguments](Relation)`. Binary operations are 
 preformed using `Relation1 Operation Relation2`.
