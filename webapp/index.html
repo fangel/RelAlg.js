@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>RelAlg.js</title>
+	<script type="text/javascript" src="relalg.webloader.js"></script>
+	<script type="text/javascript">
+		load = relalgLoader('/~fangel/relalg');
+		load('relalg.js');
+	</script>
+	<script type="text/javascript" src="relalg.draw-graph.js"></script>
+</head>
+
+<body>
+
+<canvas height="200" width="200" style="border: 1px solid black" id="canvas"></canvas>
+
+<div>
+	<b>Intepreted expression: </b><span id="prettyExpr">..</span>
+</div>
+
+<hr />
+
+<div>
+	<b>Input</b>: <input type="text" id="expr" value="Foo" size="100">
+	<button onclick="drawGraph('canvas', window.document.getElementById('expr').value)">Draw</button>
+</div>
+
+</body>
+</html>
