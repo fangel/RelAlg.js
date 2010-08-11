@@ -4,7 +4,7 @@
  */
 
 function rename( relation, renameList ) {
-	var headerPrime = relation.header;
+	var headerPrime = relation.header.slice();
 	for( var i=0; i < renameList.list.length; i++ ) {
 		if( typeof(renameList.list[i][0]) == 'number' ) {
 			// Rename by positon
