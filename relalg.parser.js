@@ -1194,9 +1194,11 @@ function __dbg_parsetree( indent, nodes, tree )
 }
 
 
+
 var error_offsets = new Array();
 var error_lookaheads = new Array();
 var error_count = 0;
+var algebra = null;
 
 function RAParseError( input, errors ) {
 	this.input = input;
@@ -1217,16 +1219,24 @@ RAParseError.prototype.toString = function() {
 }
 
 function parser( input ) {
+	// Reset state
+	error_offsets = new Array();
+	error_lookaheads = new Array();
+	error_count = 0;
 	algebra = null;
 	
 	error_count = __parse( input, error_offsets, error_lookaheads );
 	if( error_count > 0 ) {
 		var errors = [];
+		
+		// This regexp tries to find the token in the beginning of the string.. Not pretty..
 		var regexp = /^(->|\(|\)|\[|\]|&&|\|\||\/|[a-z]+|\'([^\']|\'\')*\'|[0-9]+(\.[0-9]+)?)/i
+
 		for( var i = 0; i < error_count; i++ ) {
 			var likelyToken = input.substring( error_offsets[i]).match( regexp )[0];
 			errors.push({token: likelyToken, offset: error_offsets[i], lookahead: error_lookaheads[i]});
 		}
+		
 		throw new RAParseError(input, errors);
   	}
   
