@@ -1207,9 +1207,11 @@ RAParseError.prototype.errors = [];
 RAParseError.prototype.toString = function() {
 	var error = '';
 	for( var i in this.errors ) {
-		error += "Parse error near '" 	+ this.errors[i].token +	"', expecting one of '" + this.errors[i].lookahead.join("', '") + "'\n";
-		error += this.input + "\n";
-		error += (new Array(this.errors[i].offset+1).join('-')) + new Array(this.errors[i].token.length+1).join('^') + "\n\n";
+		error += "Parse error: Unexpected '" + this.errors[i].token + "', expecting one of '" + this.errors[i].lookahead.join("', '") + "'\n";
+		if( this.errors[i].offset ) {
+			error += this.input + "\n";
+			error += (new Array(this.errors[i].offset+1).join('-')) + new Array(this.errors[i].token.length+1).join('^') + "\n\n";
+		}
 	}
 	return error.substr(0, error.length-2);
 }
