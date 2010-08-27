@@ -5,6 +5,7 @@
 load('relalg.tree.js');
 load('relalg.parser.js');
 load('relalg.inspect.js');
+load('relalg.stringify.js');
 load('relalg.htmlify.js');
 load('relalg.relation.js');
 load('relalg.evaluate.js');
