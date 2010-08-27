@@ -1198,18 +1198,34 @@ var error_offsets = new Array();
 var error_lookaheads = new Array();
 var error_count = 0;
 
+function RAParseError( input, errors ) {
+	this.input = input;
+	this.errors = errors;
+}
+RAParseError.prototype.input = '';
+RAParseError.prototype.errors = [];
+RAParseError.prototype.toString = function() {
+	var error = '';
+	for( var i in this.errors ) {
+		error += "Parse error near '" 	+ this.errors[i].token +	"', expecting one of '" + this.errors[i].lookahead.join("', '") + "'\n";
+		error += this.input + "\n";
+		error += (new Array(this.errors[i].offset+1).join('-')) + new Array(this.errors[i].token.length+1).join('^') + "\n\n";
+	}
+	return error.substr(0, error.length-2);
+}
+
 function parser( input ) {
 	algebra = null;
 	
 	error_count = __parse( input, error_offsets, error_lookaheads );
 	if( error_count > 0 ) {
-		var error = '';
+		var errors = [];
+		var regexp = /^(->|\(|\)|\[|\]|&&|\|\||\/|[a-z]+|\'([^\']|\'\')*\'|[0-9]+(\.[0-9]+)?)/i
 		for( var i = 0; i < error_count; i++ ) {
-			error += "Parse error near '" 	+ input.substr( error_offsets[i], 10 ) +	"', expecting one of '" + error_lookaheads[i].join("', '") + "'\n";
-			//error += input + "\n";
-			//error += (new Array(error_offsets[i]+1).join('-')) + '^' + "\n";
+			var likelyToken = input.substring( error_offsets[i]).match( regexp )[0];
+			errors.push({token: likelyToken, offset: error_offsets[i], lookahead: error_lookaheads[i]});
 		}
-		throw error;
+		throw new RAParseError(input, errors);
   	}
   
 	return algebra;

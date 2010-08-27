@@ -7,8 +7,12 @@ load('relalg.demo-relations.js');
 
 var statement  = arguments[0];
 
-var tree       = parser( statement );
-var result     = evaluate( tree );
-
-//print( inspect( tree ) + "\n");
-print( result );
+try {
+	var tree       = parser( statement );
+	var result     = evaluate( tree );
+	
+	//print( inspect( tree ) + "\n");
+	print( result );
+} catch( e ) {
+	print( e );
+}
