@@ -1,0 +1,65 @@
+table.sgTableEdit {
+	empty-cells: show;
+}
+table.sgTableEdit tbody td {
+	padding: 3px;
+	border: 1px solid #d6d6d6;
+	border-width: 0 0 1px 1px;
+	text-align: right;
+	font: 10px Helvetica;
+	height: 12px;
+}
+table.sgTableEdit tbody td:last-child {
+	border-bottom: 0px;
+}
+table.sgTableEdit tbody td .selected {
+	outline: #439ADC inset 2px;
+	outline: -webkit-focus-ring-color auto thick;
+	margin: -2px;
+	height: 12px;
+	padding: 2px;
+	width: 100px;
+}
+table.sgTableEdit tbody td input {
+	border: 0px;
+	font: 10px Helvetica;
+	width: 100px;
+	padding-top: 0px;
+	padding-right: 0px;
+	text-align: right;
+}
+table.sgTableEdit tbody td input:focus {
+	outline: none
+}
+
+table.sgTableEdit thead th {
+	padding: 3px;
+	border: 1px solid #a4a4a4;
+	border-width: 1px 0px 0px 1px;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+	font-weight: normal;
+	font: 10px Helvetica;
+	width: 100px;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e1e1e1), to(#d4d4d4));
+	background-image: -moz-linear-gradient(top, #e1e1e1, #d4d4d4);
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+table.sgTableEdit thead th:last-child {
+	width: 9px;
+	padding: 0px;
+	color: #666;
+	letter-spacing: -1px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	cursor: default;
+}
+
+table.sgTableEdit thead th input {
+	margin: -3px;
+	padding-width: 0px 1px 0px 1px;
+	font: 10px Helvetica;
+	height: 12px;
+	text-align: center;
+	width: 100px;
+}

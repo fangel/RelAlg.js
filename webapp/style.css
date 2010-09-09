@@ -1,0 +1,343 @@
+body {
+	background-color: #ddd;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+.container {
+	margin: 20px auto;
+	-webkit-box-shadow: 1px 1px 15px rgba(0,0,0,0.7);
+	-moz-box-shadow: 1px 1px 15px rgba(0,0,0,0.7);
+	background-color: white;
+	position:relative;
+	width: 800px;
+	height: 500px;
+	min-height:500px;
+}
+
+.editor {
+	width: 800px;
+	height: 400px;
+}
+
+.editor .sidebar {
+	position: relative;
+	height: 400px;
+	width: 140px;
+	float: left;
+	border-right: 1px solid #9e9e9e;
+	background-color: #dae1e9;
+}
+
+.editor .sidebar h3 {
+	margin: 0px;
+	padding: 3px 3px 2px 10px;
+	font-size: 13px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #566f89;
+	text-shadow: 1px 1px 0px #e4f1ff;
+}
+
+.editor .sidebar .list ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+.editor .sidebar .list ul li {
+	cursor: pointer;
+	list-style-type: none;
+	padding: 3px 10px 3px 20px;
+	font-size: 12px;
+}
+
+.editor .sidebar .list ul li.active {
+	padding: 2px 10px 2px 20px;
+	border-top: 1px solid #7a8caa;
+	border-bottom: 1px solid #5a6b8c;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#aebeda), to(#8097bd));
+	background-image: -moz-linear-gradient(top, #aebeda, #8097bd);
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 0px 1px 1px rgba(0,0,0,0.5);	
+}
+
+.editor .sidebar .list ul li.active input {
+	margin: -2px -9px -2px -19px;
+	padding-left: 18px;
+	width: 116px;
+	padding-top: 0px;
+}
+
+.editor .sidebar .buttonbar {
+	position: absolute;
+	bottom: 0px;
+	width: 140px;
+	height: 18px;
+	border-top: 1px solid #bdbdbd;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9),
+	                    color-stop(0.5, #f9f9f9),
+	                    color-stop(0.5, #ebebeb),
+	                    to(#ebebeb));
+	background-image: -moz-linear-gradient(top, #f9f9f9 0%,
+						                    #f9f9f9 50%,
+						                    #ebebeb 50%,
+						                    #ebebeb);
+}
+
+.editor .sidebar .buttonbar div {
+	display: inline-block;
+	padding: 0px 10px;
+	font-weight: bold;
+	color: #484848;
+	border-right: 1px solid #bdbdbd;
+	height: 18px;
+	line-height: 18px;
+	cursor: pointer;
+}
+
+.editor .data {
+	width: 659px;
+	height: 400px;
+	float: left;
+}
+
+.editor .data .table {
+	height: 380px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-bottom: 1px;
+}
+
+.editor .data .tabs {
+	height: 19px;
+}
+
+.editor .data .tabs ul {
+	margin: 0;
+	padding: 0;
+}
+
+.editor .data .tabs li {
+	padding: 0;
+	font-size: 10px;
+	color: #484848;
+	font-weight: bold;
+	text-align: center;
+	line-height: 13px;
+	height: 14px;
+	list-style-type: none;
+	display: inline-block;
+	padding: 2px 7px 2px 5px;
+	margin-left: -4px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9),
+	                    color-stop(0.5, #f9f9f9),
+	                    color-stop(0.5, #ebebeb),
+	                    to(#ebebeb));
+	background-image: -moz-linear-gradient(top, #f9f9f9 0%,
+					                    	#f9f9f9 50%,
+					                    	#ebebeb 50%,
+					                    	#ebebeb);
+	border: 1px solid #bdbdbd;
+	border-bottom: 0;
+	border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	cursor: pointer;
+}
+.editor .data .tabs li:first-child {
+	margin-left: 0px;
+	border-left: 0;
+	border-top-left-radius: 0;
+	-moz-border-radius-topleft: 0px;
+}
+
+.editor .data .tabs li:last-child {
+	border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	padding-right: 5px;
+}
+
+.editor .data .tabs li.active {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#d4e9ff),
+	                    color-stop(0.5, #9bcaee),
+	                    color-stop(0.5, #55ade7),
+	                    to(#aff0fa));
+	background-image: -moz-linear-gradient(top, #d4e9ff 0%,
+						                    #9bcaee 50%,
+						                    #55ade7 50%,
+						                    #aff0fa);
+}
+
+.tabcontents {
+	background-color: #dae1e9;
+	width: 800;
+	height: 100px;
+	min-height: 100px;
+	border-top: 1px solid #9e9e9e;
+}
+
+.tabcontents > div {
+	display: none;
+}
+
+.input {
+		padding: 5px;
+}
+
+.input textarea {
+	float: left;
+	width: 680px;
+	margin-right: 10px;
+	height: 80px;
+}
+
+.input .controls {
+	float: left;
+	width: 90px;
+}
+
+.tabcontents ul {
+	margin: 0;
+	padding: 0 0 0 0px;
+}
+
+.tabcontents ul li {
+	list-style-type: none;
+	list-style-position: inside;
+	border-bottom: 1px solid #9e9e9e;
+	padding: 5px;
+}
+
+.tabcontents ul li:nth-child(2n+1) {
+	background-color: #f6f6f6;
+}
+
+.tabcontents ul li:last-child {
+	border-bottom: 0;
+}
+.tabcontents ul li:first-child {
+	border-bottom: 1px solid #9e9e9e !important;
+}
+.tabcontents .placeholder h4 {
+	text-align: center;
+	margin: 10px 0 0 0;
+	font-size: 40px;
+	color: #566f89;
+	text-shadow: 1px 1px 0px #e4f1ff;
+}
+.tabcontents .placeholder div {
+	text-align: center;
+	color: #666666;
+	text-shadow: 1px 1px 0px rgba(150,150,150,0.3);
+}
+
+
+.history {
+	overflow-y: scroll;
+	height: 100px;
+}
+.history ul {
+	display: none;
+}
+.history li .type {
+	float: left;
+	width: 60px;
+	color: #333333;
+	text-shadow: 1px 1px 0px rgba(150,150,150,0.5);
+}
+.history li .entry {
+	float: left;
+	width: 710px;
+}
+.history li .entry .tools {
+	text-align: right;
+}
+.history li .entry .tools a {
+	color: black;
+	text-decoration: none;
+	font-size: 10px;
+	cursor: pointer;
+}
+
+
+.errors h3 {
+	margin: 0;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #566f89;
+	text-shadow: 1px 1px 0px #e4f1ff;
+}
+
+.errors .summary {
+	margin: 0;
+	padding: 5px;
+	float: left;
+	border-right: 1px solid #9e9e9e;
+	height: 90px;
+	width: 130px;
+}
+
+.errors .summary .type {
+	margin: 0 0 10px 0;
+	color: #ff0000;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px rgba(150,150,150,0.7);
+}
+
+.errors .messages {
+	float: left;
+	width: 659px;
+	height: 100px;
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
+}
+.errors .messages ul li .unexpected, .errors .messages ul li .expected {
+	font-family: monospace;
+}
+.errors .messages ul li .context {
+	font-family: monospace;
+}
+.errors .messages ul li .context .unexpected {
+	color: red;
+}
+.errors .errorcontainer {
+	display: none;
+}
+
+
+.lightbox {
+	position: absolute; 
+	top: 0px; 
+	left: 0px; 
+	background-color: rgba(0,0,0,0.5); 
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+.lightbox .canvasContainer {
+	position: relative;
+	background-color: white;
+	margin: 100px auto;
+	-webkit-box-shadow: 3px 3px 40px rgba(0,0,0,0.7);
+	-moz-box-shadow: 3px 3px 40px rgba(0,0,0,0.7);
+}
+
+.lightbox .canvasContainer .canvasLabel {
+	position: absolute;
+	bottom: 0px;
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	display: none;
+}
+.lightbox .canvasContainer:hover .canvasLabel {
+	display: block;
+}
+.lightbox .canvasContainer .canvasLabel div {
+	padding: 5px;
+	color: white;
+}
+
+

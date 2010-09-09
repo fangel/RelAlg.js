@@ -19,7 +19,7 @@ drawGraph = (function() {
 			case item instanceof Tree.Projection:
 				return 'π';
 			case item instanceof Tree.Rename:
-				return'ρ';
+				return 'ρ';
 			case item instanceof Tree.Selection:
 				return 'σ';
 			case item instanceof Tree.Union:
@@ -228,21 +228,19 @@ drawGraph = (function() {
 		}
 	}
 	
-	return function(id, expr) {
-		var tree = parser(expr);
-		window.document.getElementById('prettyExpr').innerHTML = htmlify( tree );
+	return function(id, input) {
+		if( typeof(input) == 'string' )
+			input = parser( input );
 
 		var canvas  = window.document.getElementById(id);
 		var context = canvas.getContext('2d');
 		
-		var canvas_size = size( context, tree );
-		
-		window.console.log( canvas_size );
+		var canvas_size = size( context, input );
 		
 		canvas.width = canvas_size[0] + 20;
 		canvas.height = canvas_size[1] + 20;
 		
 		context.translate(10, 10);
-		draw( context, tree );
+		draw( context, input );
 	}
 })();
