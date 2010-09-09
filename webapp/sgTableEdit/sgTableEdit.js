@@ -19,14 +19,13 @@ sgTableEdit.prototype.setupEvents = function() {
 	$('thead th:last-child', this.table).live('mousedown', function(e) {
 		te.extenderHandler(e);
 	});
-	$('thead th', this.table).live('mousedown', function(e) { e.preventDefault(); });
+	$('thead th', this.table).live('mousedown', function(e) { e.preventDefault();});
 	$('thead th', this.table).live('dblclick',function(e) {
 		te.headerEdit($(this), e);
 	})
 	$('tbody td', this.table).live('click', function(e) {
 		te.cellClick($(this), e);
 		e.stopPropagation();
-		e.stopImmediatePropagation();
 	});
 	$(window).click( function(e) {
 		te.otherClick(e);
@@ -121,17 +120,10 @@ sgTableEdit.prototype.headerEdit = function(cell, e) {
 	this.headerEditing = $(cell);
 }
 sgTableEdit.prototype.otherClick = function(e) {
-	var target = this.table[0];
-	var elem = e.srcElement;
-	var found = elem == target;
-	while( !found && (elem = $(elem).parent()[0]) ) {
-		if( ! elem.nodeType ) break;
-		if( elem == target ) found = true;
-	}
-	if( ! found ) {
-		// Click was outside of table, so remove any selection
-		this.select(null);
-	}
+	// We can safely just deselect the table, because if a cell
+	// was it, it would have stop the propagation of the
+	// event so the listener on the window wouldnt have fired.. 
+	this.select(null);
 }
 sgTableEdit.prototype.keydown = function(e) {
 	if( this.selected && ! this.editing ) {
