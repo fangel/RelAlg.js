@@ -7,7 +7,7 @@
 	
 	<script type="text/javascript" src="relalg.webloader.js"></script>
 	<script type="text/javascript">
-		load = relalgLoader('/~fangel/relalg');
+		load = relalgLoader('relalg');
 		load('relalg.js');
 		load('relalg.demo-relations.js');
 	</script>
@@ -17,9 +17,9 @@
 	<link rel="stylesheet" href="sgTableEdit/sgTableEdit.css" />
 	
 	<link rel="stylesheet" href="style.css" />
-	
+
+	<script type="text/javascript" src="relalg.webapp.js"></script>	
 	<script type="text/javascript">
-		load('webapp/relalg.webapp.js');
 		$(function() {
 			new RAWebApp( Relation );
 		});
