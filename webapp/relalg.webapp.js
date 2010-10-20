@@ -3,7 +3,7 @@ function RAWebApp( relation_manager ) {
 	
 	this.table = new RAWATable( $('.table table'), this );
 	$('.table table').bind('cellChange headerChange', (function(app) { return function() {
-		Relation.add( app.list.selected, app.table.read() );
+		app.relationManager.add( app.list.selected, app.table.read() );
 	}})(this));
 	
 	this.list  = new RAWAList( $('.sidebar .list ul'), $('#add'), $('#remove'), this );
@@ -15,6 +15,10 @@ function RAWebApp( relation_manager ) {
 	this.tabs.history = new RAWATabHistory( $('.tabcontents .history'), $('.tabs ul'), 'history', this );
 	this.tabs.errors = new RAWATabErrors( $('.tabcontents .errors'), $('.tabs ul'), 'errors', this );	
 	this.tab('input');
+	
+	$('#import').click( (function(app) { return function() {
+		app.importRelation();
+	}})(this));
 }
 RAWebApp.prototype.relationManager = null;
 RAWebApp.prototype.table = null;
@@ -48,7 +52,7 @@ RAWebApp.prototype.add = function( name ) {
 		}})(this.table.tableEdit), 1);
 	} else {
 		// A relation with this name exists - ignore request..
-		this.list.fill( this.relationManager.storage, this.list.selected );
+		this.list.fill( this.relationManager.storage, $(this.list.selected).text() );
 	}
 }
 RAWebApp.prototype.tab = function( name ) {
@@ -95,6 +99,21 @@ RAWebApp.prototype.graph = function( expr, omitFromHistory ) {
 			default:
 				throw e;
 		}
+	}
+}
+RAWebApp.prototype.importRelation = function( data ) {
+	if( data != undefined ) {
+		var name = 'Import';
+		if( this.relationManager.storage[name] ) {
+			var i = 2;
+			while( this.relationManager.storage[name + ' ' + i] )
+				i++;
+			name = name + ' ' + i;
+		}
+		this.relationManager.add( name, data );
+		this.list.fill( this.relationManager.storage, name );
+	} else {
+		this.lightbox.importRelation();
 	}
 }
 
@@ -163,42 +182,41 @@ RAWAList.prototype.fill = function( list, select ) {
 	
 	var first = true;
 	for( var i in list ) {
-		this.listElem.append( $('<li />').text(i).click( (function(rel, l) { return function() { l.select(rel) }})(i, this) ) );
-		if( first && ! select ) this.select( i );
-		if( select == i ) this.select( i );
+		var elem = $('<li />').text(i).click( (function(rel, l) { return function() { l.select(this) }})(i, this) );
+		this.listElem.append( elem );
+		if( first && ! select ) this.select( elem );
+		if( select == i ) this.select( elem );
 		first = false;
 	}
 }
-RAWAList.prototype.select = function( name ) {
-	$('li:contains(' + this.selected + ')', this.listElem).removeClass('active').unbind('click').click( (function(rel, l) { return function() { l.select(rel) }})(this.selected, this));
-	$('li:contains(' + name +')', this.listElem).addClass('active').unbind('click').click( (function(l) { return function() { l.startEdit(this) }})(this) );
-	this.selected = name;
-	this.app.load( name );
+RAWAList.prototype.select = function( elem ) {
+	$(this.selected).removeClass('active').unbind('click').click( (function(l) { return function() { l.select(this) }})(this));
+	$(elem).addClass('active').unbind('click').click( (function(l) { return function() { l.startEdit(this) }})(this) );
+	this.selected = elem;
+	this.app.load( $(elem).text() );
 }
 RAWAList.prototype.startEdit = function( li_elem ) {
 	$(li_elem).unbind('click');
-	
-	$(li_elem).empty().append( $('<input type="text" />').val(this.selected) );
-	$('input', $(li_elem)).focus().blur( (function(l, el) { return function() { l.stopEdit(el); }})(this, li_elem));
+	var val = $(li_elem).text();
+	$(li_elem).empty().append( $('<input type="text" />').val( val ) );
+	$('input', $(li_elem)).focus().blur( (function(l, el) { return function() { l.stopEdit(el, val); }})(this, li_elem, val));
 }
-RAWAList.prototype.stopEdit = function( li_elem ) {
+RAWAList.prototype.stopEdit = function( li_elem, old_name ) {
 	var newName = $('input', $(li_elem)).val();
 	$(li_elem).empty().text( newName ).click( (function(l) { return function() { l.startEdit(this) }})(this) );
-	this.app.rename( this.selected, newName )
-	this.selected = newName;
+	this.app.rename( old_name, newName )
 }
 RAWAList.prototype.remove = function() {
-	var li = $('li:contains(' + this.selected + ')', this.listElem);
-	var next = li.next('li');
-	var prev = li.prev('li');
+	var next = $(this.selected).next('li');
+	var prev = $(this.selected).prev('li');
 	var select = (next.length) ? next.text() : (prev.length) ? prev.text() : null;
 	
-	this.app.remove( this.selected, select );
+	this.app.remove( $(this.selected).text(), select );
 }
 RAWAList.prototype.add = function( name ) {
 	if( name == undefined ) {
 		// Add the li and 
-		$('li:contains(' + this.selected + ')', this.listElem).removeClass('active')
+		$(this.selected).removeClass('active')
 		this.selected = null;
 		
 		var li = $('<li>').appendTo($(this.listElem)).addClass('active');
@@ -368,7 +386,7 @@ RAWALightBox = function( elem, app ) {
 	}})(this));
 	
 	// Unless the click is in the contents of the lightbox
-	$('.canvasContainer', this.elem).click( function(e) { 
+	$(this.elem).children().click( function(e) { 
 		e.stopImmediatePropagation(); 
 		e.stopPropagation(); 
 	});
@@ -388,8 +406,64 @@ RAWALightBox.prototype.graph = function( tree ) {
 	
 	$('.canvasContainer', this.elem).css('width', $('.canvasContainer canvas')[0].width );
 	$('.canvasContainer .canvasLabel div', this.elem).html( htmlify( tree ) )
+	
 	$(this.elem).css('display', 'block');
+	$('.canvasContainer').css('display', 'block');
+}
+RAWALightBox.prototype.importRelation = function() {
+	$(this.elem).css('display', 'block');
+	$('.relationImport').css('display', 'block');
+		
+	$('.relationImport textarea').val('').focus().one('paste', (function(lb) { return function(e) {
+		setTimeout( function() {
+			// We wait a bit for the select to update - some times that's better.. 
+			// Then we query the event-target for it's value
+			var pasted = e.target.value;
+			
+			// The data pasted is uuuusually newline-delimited for rows, and tab-delimited for columns
+			// if it aint, this wont work.
+			var data = pasted.split(/\n/g).map(function(row) { return row.split(/\t/g); });
+			
+			if( data.length ) {
+				// Remove rows that only contains empty cells
+				data = data.filter(function(row) { return ! row.every(function(cell) { return cell.length == 0; })});
+				
+				// Remove columns that only contains empty cells
+				for( var col=data[0].length-1;col>=0;col-- ) {
+					if( data.map( function(row) { return row[col]}).every( function(cell){ return cell.length == 0; }) )
+						// All cells in the column is empty, so remove them..
+						for( var row in data )
+							data[row].splice(col,1);
+				}
+				
+				if( data.length == 0 || data[0].length == 0 ) 
+					return lb.hide();
+					
+				// Create a header for the Relation
+				var header = [];
+				if( data[0].every( function(cell) { return cell.length == 0 || cell.match(/\D/); } ) ) {
+					// All cells in contains something thats not a number, so we use the first row as a 
+					// header - not as a row..
+					header = data.shift();
+				} else {
+					// We cant use the first row as a header, so just create one with all "NEW" labels
+					for( var i in data[0] ) header.push('NEW');
+				}
+				
+				var relation = new Relation(header, data);
+				
+				lb.app.importRelation( relation );
+				lb.hide();
+				
+			} else {
+				return lb.hide();
+			}
+		}, 10);
+	}})(this)).blur(function() { setTimeout((function(textarea) { return function() { $(textarea).focus(); }})(this), 1);});
 }
 RAWALightBox.prototype.hide = function() {
+	$(this.elem).children('div').css('display', 'none');
 	$(this.elem).css('display', 'none');
+	$('.relationImport textarea').unbind('paste');
+	
 }

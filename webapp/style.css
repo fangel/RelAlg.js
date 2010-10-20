@@ -323,6 +323,7 @@ body {
 	margin: 100px auto;
 	-webkit-box-shadow: 3px 3px 40px rgba(0,0,0,0.7);
 	-moz-box-shadow: 3px 3px 40px rgba(0,0,0,0.7);
+	display: none;
 }
 
 .lightbox .canvasContainer .canvasLabel {
@@ -340,4 +341,29 @@ body {
 	color: white;
 }
 
+.lightbox .relationImport {
+	position: relative;
+	background-color: white;
+	width: 200px;
+	padding: 5px;
+	margin: 100px auto;
+	-webkit-box-shadow: 3px 3px 40px rgba(0,0,0,0.7);
+	-moz-box-shadow: 3px 3px 40px rgba(0,0,0,0.7);
+	display: none;
+	overflow: hidden;
+}
+
+.lightbox .relationImport textarea {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	display: inline;
+	height: 10px;
+	width: 10px;
+	opacity: 1;
+}
+
+.lightbox .relationImport h1 {
+	margin: 0px;
+}
 
