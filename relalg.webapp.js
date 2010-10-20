@@ -3,7 +3,7 @@ function RAWebApp( relation_manager ) {
 	
 	this.table = new RAWATable( $('.table table'), this );
 	$('.table table').bind('cellChange headerChange', (function(app) { return function() {
-		app.relationManager.add( app.list.selected, app.table.read() );
+		app.relationManager.add( $(app.list.selected).text(), app.table.read() );
 	}})(this));
 	
 	this.list  = new RAWAList( $('.sidebar .list ul'), $('#add'), $('#remove'), this );
