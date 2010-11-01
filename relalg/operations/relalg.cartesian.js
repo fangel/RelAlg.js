@@ -12,7 +12,7 @@ function cartesian(left, right) {
 		throw "Cartesian fail. Both relations have the attribute(s): '" + duplicates.join("', '") + "' " +
 		      "in common. Because of this naming conflict the cartesian product can't be " +
 		      "calculated. You must rename the attributes in, or project the attributes out " +
-		      "from at least on of the relations."
+		      "from at least one of the relations."
 
 	var headerPrime = left.header.concat(right.header);
 
