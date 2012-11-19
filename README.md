@@ -5,15 +5,9 @@ Feel free to contact me if you have any issues or ideas for further work.
 
 ## Usage
 
-Right now there is only a SpiderMonkey CLI interface for RelAlg.js. The CLI is located in the `relalg.sm-cli.js` file. It's been developed for [SpiderMonkey][sm],
-because of the lexer/parser generator used ([JS/CC][jscc]). I believe the only thing that's SpiderMonkey specific is
-the use of `load` to include multiple files, so porting to different javascript evaluators shouldn't be that
-big of a deal..
+Right now I'm in the process of heavily altering everything. So yeah, you can't really use it at it's current version right now.
 
-Relations for the CLI are currently defined statically, in `relalg.demo-relations.js`. After you've defined your relations,
-you can query them like so
-
-	$> js relalg.sm-cli.js "Project[a,b]( Rename[alpha->a]( Test ) )"
+The plan is to have a webapp as well as a Node.js REPL interface.
 
 All the available functions takes input like this `Operation[arguments](Relation)`. Binary operations are 
 preformed using `Relation1 Operation Relation2`.
@@ -123,12 +117,12 @@ An example would be
 
 ## Extending the grammar
 
-The lexer/parse is built using [JS/CC][jscc]. So to extend the grammer, you need to have it installed.
-When JS/CC is installed, rebuilding the parser from the grammar-file (`relalg.par`), is as simple as 
-running JS/CC on `relalg.par` and replacing `relalg.parser.js` with the output from JS/CC.
+The lexer/parse is built using [Jison][jison]. So to extend the grammer, you need to have it installed.
+When JS/CC is installed, you can rebuild the parser from the grammar-file (`src/relalg.jison`), using
+`jison src/relalg.jison -o lib/parser.js -m amd`.  
+Currently you then need to alter the `define`-call in the top, to be `define(['tree'], function(Tree)) {`.
 
-
+In the future I will create a Grunt-task to rebuild the grammar.
 
 [relalg]: http://www.wikipedia.org/wiki/Relational_Algebra
-[sm]: http://www.mozilla.org/js/spidermonkey/
-[jscc]: http://jscc.jmksf.com/
+[jison]: http://zaach.github.com/jison/
