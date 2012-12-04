@@ -49,7 +49,7 @@ Expressions
 
 Stmt
   : ID
-    { $$ = new Tree.Relation(yytext); }
+    { $$ = new Tree.RelationReference(yytext); }
   | Stmt UNION Stmt
     { $$ = new Tree.Union( $1, $3 ); }
 	| Stmt INTERSECT Stmt
