@@ -12,6 +12,12 @@ The plan is to have a webapp as well as a Node.js REPL interface.
 All the available functions takes input like this `Operation[arguments](Relation)`. Binary operations are 
 preformed using `Relation1 Operation Relation2`.
 
+### Relations
+
+You can either reference a relation by it's name (if you have previously assigned a relation), or you can create anonymous relations with the syntax
+
+	[['attribute_a', 'attribute_b'] -> [1,2], [2,3], [3,4]]
+
 ### Projection
 
 Projections are done via the `Project` operation. And example where the columns `a` and `b` are projected would be

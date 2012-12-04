@@ -50,6 +50,8 @@ Expressions
 Stmt
   : ID
     { $$ = new Tree.RelationReference(yytext); }
+	| Relation
+		{ $$ = $1; }
   | Stmt UNION Stmt
     { $$ = new Tree.Union( $1, $3 ); }
 	| Stmt INTERSECT Stmt
@@ -114,3 +116,31 @@ Value
   | INT
     { $$ = new Tree.Value(parseInt(yytext, 10)); }
   ;
+
+Relation
+	: '[' '[' RelCellList ']' '->' RelRowList ']'
+		{ $$ = new Tree.Relation(new Relation($3, $6)); }
+	;
+
+RelRowList
+	: '[' RelCellList ']'
+		{ $$ = [$2]; }
+	| RelRowList ',' '[' RelCellList ']'
+		{ $$ = $1; $$.push($4); }
+	;
+
+RelCellList
+	: RelCell
+		{ $$ = [$1]; }
+	| RelCellList ',' RelCell
+		{ $$ = $1; $$.push($3); }
+	;
+
+RelCell
+	: FLOAT
+		{ $$ = parseFloat(yytext); }
+	| INT
+		{ $$ = parseInt(yytext, 10); }
+	| STRING
+		{ $$ = yytext.substring(1, yytext.length - 1); }
+	;
