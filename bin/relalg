@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var requirejs = require('requirejs')
+  , repl = require('repl')
+
+requirejs.config({
+  baseUrl: __dirname + "/../lib",
+});
+
+requirejs(['cli/repl', 'parser'], function(relalg_repl, Parser) {
+  repl.start(relalg_repl)
+})
