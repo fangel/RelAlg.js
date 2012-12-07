@@ -19,6 +19,7 @@
 '/'                           return 'DIV';
 ','                           return ',';
 '=='|'!='|'<='|'>='|'<'|'>'   return 'COMPARISON';
+':='													return 'ASSIGN';
 '('                           return '(';
 ')'                           return ')';
 '['                           return '[';
@@ -35,6 +36,7 @@
 %left '+' '-'
 %left CROSS DIV
 %left AND OR
+%left ASSIGN
 
 %right JOIN UNION DIV MINUS INTERSECT
 
@@ -43,8 +45,10 @@
 %% /* language grammar */
 
 Expressions
-  : Stmt EOF
-    { return $1; }
+	: ID ASSIGN Stmt EOF
+		{ return new Tree.Assignment($1, $3); }
+  | Stmt EOF
+    { return new Tree.Assignment('it', $1); }
   ;
 
 Stmt

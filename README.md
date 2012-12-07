@@ -5,9 +5,7 @@ Feel free to contact me if you have any issues or ideas for further work.
 
 ## Usage
 
-Right now I'm in the process of heavily altering everything. So yeah, you can't really use it at it's current version right now.
-
-The plan is to have a webapp as well as a Node.js REPL interface.
+Right now I'm in the process of heavily altering everything. So there is no web-app yet. But there is a rudimentary REPL-style command line interface.
 
 All the available functions takes input like this `Operation[arguments](Relation)`. Binary operations are 
 preformed using `Relation1 Operation Relation2`.
