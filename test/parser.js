@@ -29,10 +29,11 @@ function binaryStmtMixin(terminal, ASTLeaf, glue) {
   it(msg, function() {
     var expr = Parser.parse("LHS " + terminal + " RHS")
       , stmt = getStmt(expr)
+      , expected
     if (glue === undefined)
-      var expected = new ASTLeaf(new Tree.RelationReference('LHS'), new Tree.RelationReference('RHS'))
+      expected = new ASTLeaf(new Tree.RelationReference('LHS'), new Tree.RelationReference('RHS'))
     else  
-      var expected = new ASTLeaf(new Tree.RelationReference('LHS'), glue, new Tree.RelationReference('RHS'))
+      expected = new ASTLeaf(new Tree.RelationReference('LHS'), glue, new Tree.RelationReference('RHS'))
     assert.deepEqual(stmt, expected)
   })
 }
@@ -40,39 +41,43 @@ function rightAssocMixin(terminal, ASTLeaf, glue) {
   it('Should be right-associative', function() {
     var expr = Parser.parse("FST " + terminal + " SND " + terminal + " THD")
       , stmt = getStmt(expr)
+      , expected
     if (glue === undefined)
-      var expected = new ASTLeaf(new Tree.RelationReference('FST'), new ASTLeaf(new Tree.RelationReference('SND'), new Tree.RelationReference('THD')))
+      expected = new ASTLeaf(new Tree.RelationReference('FST'), new ASTLeaf(new Tree.RelationReference('SND'), new Tree.RelationReference('THD')))
     else
-      var expected = new ASTLeaf(new Tree.RelationReference('FST'), glue, new ASTLeaf(new Tree.RelationReference('SND'), glue, new Tree.RelationReference('THD')))
+      expected = new ASTLeaf(new Tree.RelationReference('FST'), glue, new ASTLeaf(new Tree.RelationReference('SND'), glue, new Tree.RelationReference('THD')))
     assert.deepEqual(stmt, expected)
   })
   it('.. and should respect parenthethis', function() {
     var expr = Parser.parse("(FST " + terminal + " SND) " + terminal + " THD")
       , stmt = getStmt(expr)
+      , expected
     if (glue === undefined)
-      var expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), new Tree.RelationReference('SND')), new Tree.RelationReference('THD'))
+      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), new Tree.RelationReference('SND')), new Tree.RelationReference('THD'))
     else
-      var expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), glue, new Tree.RelationReference('SND')), glue, new Tree.RelationReference('THD'))
+      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), glue, new Tree.RelationReference('SND')), glue, new Tree.RelationReference('THD'))
     assert.deepEqual(stmt, expected)        
   })
 }
 function leftAssocMixin(terminal, ASTLeaf, glue) {
   it('Should be left-associative', function() {
     var expr = Parser.parse("FST " + terminal + " SND " + terminal + " THD")
-      , stmt = getStmt(expr)
+      , stmt = getStmt(expr),
+      expected
     if (glue === undefined)
-      var expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), new Tree.RelationReference('SND')), new Tree.RelationReference('THD'))
+      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), new Tree.RelationReference('SND')), new Tree.RelationReference('THD'))
     else
-      var expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), glue, new Tree.RelationReference('SND')), glue, new Tree.RelationReference('THD'))
+      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), glue, new Tree.RelationReference('SND')), glue, new Tree.RelationReference('THD'))
     assert.deepEqual(stmt, expected)
   })
   it('.. and should respect parenthethis', function() {
     var expr = Parser.parse("FST " + terminal + " (SND " + terminal + " THD)")
       , stmt = getStmt(expr)
+      , expected
     if (glue === undefined)
-      var expected = new ASTLeaf(new Tree.RelationReference('FST'), new ASTLeaf(new Tree.RelationReference('SND'), new Tree.RelationReference('THD')))
+      expected = new ASTLeaf(new Tree.RelationReference('FST'), new ASTLeaf(new Tree.RelationReference('SND'), new Tree.RelationReference('THD')))
     else
-      var expected = new ASTLeaf(new Tree.RelationReference('FST'), glue, new ASTLeaf(new Tree.RelationReference('SND'), glue, new Tree.RelationReference('THD')))
+      expected = new ASTLeaf(new Tree.RelationReference('FST'), glue, new ASTLeaf(new Tree.RelationReference('SND'), glue, new Tree.RelationReference('THD')))
     assert.deepEqual(stmt, expected)        
   })
 }
@@ -182,7 +187,7 @@ describe('Parsing', function(){
   describe('Criterias', function() {
     describe('that involves binary comparison', function() {
       var ops = ['==', '!=', '<=', '>=', '<', '>']
-      for (op in ops) {
+      for (var op in ops) {
         // Loop through all the different comparison operators we have
         it('Works with ' + ops[op], function() {
           var expected = new Tree.Criteria(new Tree.Value(1), ops[op], new Tree.Value(2))
@@ -193,8 +198,8 @@ describe('Parsing', function(){
           assert.deepEqual(criteria, expected)
 
           // And Join-operations
-          var expr = Parser.parse('LHS Join[1 ' + ops[op] + ' 2] RHS')
-            , criteria = getCriteria(expr)
+          expr = Parser.parse('LHS Join[1 ' + ops[op] + ' 2] RHS')
+          criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
       }
@@ -206,8 +211,8 @@ describe('Parsing', function(){
         'float': '1.0', // Floats are on the form [digits].[digits]
         'attribute': 'attr' // A non-escaped string is used to refer to attributes on the relations
       }
-      for (fst in types) {
-        for (snd in types) {
+      for (var fst in types) {
+        for (var snd in types) {
           // And check that comparison between all 4 types work.
           it('Has ' + fst + ' vs ' + snd + ' support', function() {
             var lhs = fst == 'attribute' ? new Tree.Attribute(types[fst]) : new Tree.Value(types[fst])
@@ -220,8 +225,8 @@ describe('Parsing', function(){
             assert.deepEqual(criteria, expected)
 
             // And Join-operations
-            var expr = Parser.parse('LHS Join[' + types[fst] + ' == ' + types[snd] + '] RHS')
-              , criteria = getCriteria(expr)
+            expr = Parser.parse('LHS Join[' + types[fst] + ' == ' + types[snd] + '] RHS')
+            criteria = getCriteria(expr)
             assert.deepEqual(criteria, expected)
           })
         }
@@ -230,12 +235,15 @@ describe('Parsing', function(){
     describe('that is contained in parenthethis', function() {
       it('Should behave as if there is no parenthethis', function() {
         var expected = new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2))
+
+        // Check both places that could contain a criteria, in this case Select-operations
         var expr = Parser.parse('Select[(1==2)](Foo)')
           , criteria = getCriteria(expr)
         assert.deepEqual(criteria, expected)
 
-        var expr = Parser.parse('LHS Join[(1==2)] RHS')
-          , criteria = getCriteria(expr)
+        // And Join-operations
+        expr = Parser.parse('LHS Join[(1==2)] RHS')
+        criteria = getCriteria(expr)
         assert.deepEqual(criteria, expected)
       })
     })
@@ -243,7 +251,7 @@ describe('Parsing', function(){
       'conjunction': {terminal: '&&', op: 'AND'},
       'disjunction': {terminal: '||', op: 'OR'}
     }
-    for (comp in comps) {
+    for (var comp in comps) {
       describe('that is a ' + comp, function() {
         it('Contains both the LHS and the RHS', function() {
           var expected = new Tree.CriteriaComposition(
@@ -251,11 +259,15 @@ describe('Parsing', function(){
             comps[comp].op,
             new Tree.Criteria(new Tree.Value(3), '==', new Tree.Value(4))
           )
+
+          // Check both places that could contain a criteria, in this case Select-operations
           var expr = Parser.parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4)](Foo)')
             , criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
-          var expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4)] RHS')
-            , criteria = getCriteria(expr)
+
+          // And Join-operations
+          expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4)] RHS')
+          criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
         it('Should be left-associative', function() {
@@ -268,11 +280,15 @@ describe('Parsing', function(){
             comps[comp].op,
             new Tree.Criteria(new Tree.Value(5), '==', new Tree.Value(6))
           )
+
+          // Check both places that could contain a criteria, in this case Select-operations
           var expr = Parser.parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)](Foo)')
             , criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
-          var expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)] RHS')
-            , criteria = getCriteria(expr)
+
+          // And Join-operations
+          expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)] RHS')
+          criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
         it('.. and should respect parenthethis', function() {
@@ -285,11 +301,15 @@ describe('Parsing', function(){
               new Tree.Criteria(new Tree.Value(5), '==', new Tree.Value(6))
             )
           )
+
+          // Check both places that could contain a criteria, in this case Select-operations
           var expr = Parser.parse('Select[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))](Foo)')
             , criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
-          var expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))] RHS')
-            , criteria = getCriteria(expr)
+
+          // And Join-operations
+          expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))] RHS')
+          criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
       })

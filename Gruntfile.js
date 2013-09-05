@@ -29,7 +29,13 @@ module.exports = function(grunt) {
         asi: true, // I'm not a great fan of unneeded semicolons 
         laxcomma: true // And I like having commas first
       },
-      lib: ['lib/**/*.js']
+      lib: ['lib/**/*.js'],
+      test: {
+        options: {
+          loopfunc: true // For the tests, it's convient to define them in a loop
+        },
+        src: ['test/**/*.js']
+      }
     },
     mochaTest: {
       test: {
