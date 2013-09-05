@@ -1,0 +1,12 @@
+{
+  "name": "RelAlg.js",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-jison": "~1.1.1",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-mocha-test": "~0.6.3"
+  },
+  "dependencies": {
+    "requirejs": "~2.1.8"
+  }
+}

@@ -2,36 +2,68 @@
 <html>
   <head>
     <title>RelAlg.js</title>
-    <script data-main="lib/main" src="vendor/require.js"></script>
+    <script data-main="lib/main" src="bower_components/requirejs/require.js"></script>
+    <style>
+      #graph svg {
+        font-family: "Hoefler Text", Georgia;
+      }
+    </style>
+    <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="css/relalg.css" media="all" />
   </head>
   <body>
-    <h1>RelAlg.js</h1>
+    <div class="navbar navbar-default">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">RelAlg.js</a>
+      </div>
+    </div>
     
-    <!--
-    <svg height="400px" height="400px">
-      <g transform="translate(10, 10)">
-        <text x="50" y="0">
-         &pi;<tspan baseline-shift = "sub">foo, bar</tspan>
-        </text>
-        <line x1="75" y1="15" x2="30" y2="40" stroke="black" />
-        <g transform="translate(0, 50)">
-          <text x="0" y="0">
-            &pi;<tspan baseline-shift = "sub">foo, bar</tspan>
-          </text>
-        </g>
-      
-        <line x1="85" y1="15" x2="130" y2="40" stroke="black" />
-        <g transform="translate(100, 50)">
-          <text x="0" y="0">
-            &pi;<tspan baseline-shift = "sub">foo, bar</tspan>
-          </text>
-        </g>
-      </g>
-    </svg>
-    -->
+    <div class="container" role="main">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="well" id="list">
+            <ul class="nav nav-list">
+              <li class="nav-header">Relations</li>
+              <li class="divider"></li>
+              <li style="text-align: center">
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-default"><i class="icon-plus"></i>Add</button>
+                  <button class="btn btn-default"><i class="icon-trash"></i>Remove</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-10" id="main">MAIN</div>
+      </div>
+    </div>
     
-    <h2 id="lbl"></h2>
-    <div id="graph"></div>
+    <div class="navbar navbar-default navbar-fixed-bottom" id="input">
+        <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <textarea rows="4"></textarea>
+          </div>
+          <div class="col-md-2">
+            <ul class="list-unstyled">
+              <li><button class="btn btn-primary evaluate">Evaluate</button></li>
+              <li><button class="btn graph">Graph</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="graph" class="graph-box modal hide">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3>Expression Graph</h3>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer"></div>
+    </div>
+    
+    <div id="graph-staging"></div>
     
   </body>
 </html>
