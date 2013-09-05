@@ -54,13 +54,17 @@
       </div>
     </div>
     
-    <div id="graph" class="graph-box modal hide">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h3>Expression Graph</h3>
+    <div id="graph" class="graph-box modal" role="dialog" aria-labelledby="exprGraph" aria-hidden="true" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="exprGraph">Expression Graph</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer"></div>
         </div>
-        <div class="modal-body"></div>
-        <div class="modal-footer"></div>
+      </div>
     </div>
     
     <div id="graph-staging"></div>
