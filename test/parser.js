@@ -315,4 +315,12 @@ describe('Parsing', function(){
       })
     }
   })
+  describe('Invalid expressions', function() {
+    it('Throws an error', function() {
+      assert.throws(function() {
+        Parser.parse('FOO BAR')
+      },
+      Error)
+    })
+  })
 })
