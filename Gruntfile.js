@@ -40,7 +40,7 @@ module.exports = function(grunt) {
     mochaTest: {
       test: {
         options: {
-          reporter: 'spec'
+          reporter: 'dot'
         },
         src: ['test/**/*.js']
       }
@@ -81,4 +81,5 @@ module.exports = function(grunt) {
   // Set up aliases
   grunt.registerTask('build', ['jison', 'jison_amd_define']);
   grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('check', ['jshint', 'test']);
 }
