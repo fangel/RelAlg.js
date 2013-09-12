@@ -19,6 +19,7 @@ function binaryOperationMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(1, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal("Missing attributes: foo", check[0][0].error)
   })
   it("Fails if the RHS has a type-checking error", function() {
@@ -26,6 +27,7 @@ function binaryOperationMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(1, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal("Missing attributes: baz", check[0][0].error)
   })
   it("Fails if both the LHS and the RHS has type-checking errors", function() {
@@ -33,6 +35,8 @@ function binaryOperationMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(2, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
+    assert.equal(TypeCheck.Error, check[0][1].constructor)
     assert.equal("Missing attributes: foo", check[0][0].error)
     assert.equal("Missing attributes: baz", check[0][1].error)
   })
@@ -49,6 +53,7 @@ function schemaMustMatchMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(1, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 1: foo≠bar', check[0][0].error)
   })
   it("Fails when there is a disagreement on multiple of the attributes in the schema", function() {
@@ -56,6 +61,7 @@ function schemaMustMatchMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(1, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 1: foo≠bar, 2: bar≠foo', check[0][0].error)
   })
   it("Fails when there are more attributes in the schema of the LHS than the RHS", function() {
@@ -63,6 +69,7 @@ function schemaMustMatchMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(1, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 2: bar≠ε', check[0][0].error)
   })
   it("Fails when there are more attributes in the schema of the RHS than the LHS", function() {
@@ -70,6 +77,7 @@ function schemaMustMatchMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(1, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 2: ε≠bar', check[0][0].error)
   })
   it("Fails when there is a disagreement some of the attributes in the schema", function() {
@@ -77,6 +85,7 @@ function schemaMustMatchMixin(terminal) {
       , check = TypeCheck(expr)
     assert.equal(1, check[0].length)
     assert.deepEqual([], check[1])
+    assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 1: alpha≠a, 2: b≠bravo, 4: ε≠d', check[0][0].error)
   })
   it("Works when the disagreement is rectified with Select and Project prior to Union", function() {
@@ -89,12 +98,14 @@ function schemaMustMatchMixin(terminal) {
 
 describe("Type Checking", function() {
   describe("Relations", function() {
-    var expr = Parser.parse("Foo := [['foo', 'bar', 'baz'] -> [1,2,3], [3,4,5]]")
-      , check = TypeCheck(expr)
     it("Has no error", function() {
+      var expr = Parser.parse("Foo := [['foo', 'bar', 'baz'] -> [1,2,3], [3,4,5]]")
+        , check = TypeCheck(expr)
       assert.deepEqual([], check[0])
     })
     it("Has the correct schema", function() {
+      var expr = Parser.parse("Foo := [['foo', 'bar', 'baz'] -> [1,2,3], [3,4,5]]")
+        , check = TypeCheck(expr)
       assert.deepEqual(['foo', 'bar', 'baz'], check[1])
     })
     it("Fails when the relation have duplicate attributes", function() {
@@ -102,6 +113,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Duplicate attributes: foo", check[0][0].error)
     })
     it("Fails when the data does not have as many columns as the schema", function() {
@@ -109,6 +121,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Some rows does not conform to the schema: [3, 4]", check[0][0].error)
     })
   })
@@ -176,13 +189,15 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attribute: a", check[0][0].error)
     })
     it("Has an error when renaming a attribute to the name of a existing attribute", function() {
       var expr = Parser.parse("Rename[alpha/b](Foo)")
         , check = TypeCheck(expr)
-      // assert.equal(1, check[0].length)
+      assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Can not rename attribute alpha to b, b already exists", check[0][0].error)
     })
   })
@@ -216,6 +231,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a", check[0][0].error)
     })
     it("Has an error when multiple attributes are missing", function() {
@@ -223,6 +239,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a, d", check[0][0].error)
     })
     it("Has an error when both sides of the criteria are missing attributes", function() {
@@ -230,6 +247,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a, d", check[0][0].error)
     })
     it("Has an error when some of the attributes are missing", function() {
@@ -237,6 +255,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a", check[0][0].error)
     })
   })
@@ -269,6 +288,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: c", check[0][0].error)
     })
     it("Fails when the cartesian product involves relations has multiple overlapping attribute", function() {
@@ -276,6 +296,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: alpha, b, c", check[0][0].error)
     })
   })
@@ -296,6 +317,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: c", check[0][0].error)
     })
     it("Fails when the join involves relations has multiple overlapping attribute", function() {
@@ -303,6 +325,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: alpha, b, c", check[0][0].error)
     })
     it("Fails when the criteria involves attributes not in one of the two involved relations", function() {
@@ -310,6 +333,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: foz, baz", check[0][0].error)
     })
   })
@@ -347,6 +371,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("No unique attributes on the left hand side", check[0][0].error)
     })
     it("Fails when the RHS has attributes that the RHS does not", function () {
@@ -354,6 +379,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Right hand side has unique attributes: foo", check[0][0].error)
     })
   })
