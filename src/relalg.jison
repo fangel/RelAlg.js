@@ -19,13 +19,13 @@
 '/'                           return 'DIV';
 ','                           return ',';
 '=='|'!='|'<='|'>='|'<'|'>'   return 'COMPARISON';
-':='													return 'ASSIGN';
+':='                          return 'ASSIGN';
 '('                           return '(';
 ')'                           return ')';
 '['                           return '[';
 ']'                           return ']';
 [A-Za-z_][A-Za-z0-9_]*        return 'ID';
-\'([^\']|\'\')*\'             return 'STRING';
+\'([^\']|\'\')*\'             return 'STRING'; /*'*/
 [0-9]+\.[0-9]+                return 'FLOAT';
 [0-9]+                        return 'INT';
 <<EOF>>                       return 'EOF';
