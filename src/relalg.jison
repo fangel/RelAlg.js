@@ -72,8 +72,8 @@ Stmt
 	  { $$ = $2 }
 	| PROJECT '[' ProjectionList ']' '(' Stmt ')'
 	  { $$ = new Tree.Projection( $3, $6 ); }
-	| RENAME '[' RenameList ']' '(' Stmt ')'
-    { $$ = new Tree.Rename( $3, $6 ); }
+	| RENAME '[' ID DIV ID ']' '(' Stmt ')'
+    { $$ = new Tree.Rename( $8, $3, $5 ); }
 	| SELECT '[' Criteria ']' '(' Stmt ')'
 	  { $$ = new Tree.Selection( $3, $6 ); }
   ;
@@ -83,17 +83,6 @@ ProjectionList
     { $$ = new Tree.ProjectionList( $1 ); }
   | ProjectionList ',' ID
     { $$ = $1.add($3); }
-  ;
-
-RenameList
-  : ID '->' ID
-    { $$ = new Tree.RenameList( [$1, $3] ); }
-  | INT '->' ID
-    { $$ = new Tree.RenameList( [$1, $3] ); }
-  | RenameList ',' ID '->' ID
-    { $$ = $1.add( [$3, $5] ); }
-  | RenameList ',' INT '->' ID
-    { $$ = $1.add( [$3, $5] ); }
   ;
 
 Criteria
@@ -106,7 +95,6 @@ Criteria
   | '(' Criteria ')'
     { $$ = $2; }
   ;
-
 
 Value
   : ID

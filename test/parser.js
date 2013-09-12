@@ -166,11 +166,13 @@ describe('Parsing', function(){
     })
     describe('that is a rename statement', function() {
       it('Contains the rename list and the relation', function() {
-        var expr = Parser.parse('Rename[fst->FST, snd->SND](REL)')
+        var expr = Parser.parse('Rename[from/to](REL)')
           , stmt = getStmt(expr)
-          , renameList = new Tree.RenameList([['fst', 'FST'], ['snd', 'SND']])
-          , expected = new Tree.Rename(renameList, new Tree.RelationReference('REL'))
-        assert.deepEqual(stmt, expected)
+        assert.equal(Tree.Rename, stmt.constructor, 'Statement is not a rename expression')
+        assert.equal('from', stmt.from, 'From name wrong')
+        assert.equal('to', stmt.to, 'To name wrong')
+        assert.equal(Tree.RelationReference, stmt.relation.constructor, 'The expression to rename is not a relation reference')
+        assert.equal('REL', stmt.relation.name, 'Name of the relation referenced in the rename reference is wrong')
       })
     })
     describe('that is a selection statement', function() {

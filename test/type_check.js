@@ -80,10 +80,10 @@ function schemaMustMatchMixin(terminal) {
     assert.equal('Disagreement on attribute 1: alpha≠a, 2: b≠bravo, 4: ε≠d', check[0][0].error)
   })
   it("Works when the disagreement is rectified with Select and Project prior to Union", function() {
-    var expr = Parser.parse('Rename[alpha->a,b->bravo](Foo) ' + terminal + ' Project[a, bravo, c](Bar)')
+    var expr = Parser.parse('Rename[alpha/a](Foo) ' + terminal + ' Project[a, b, c](Rename[bravo/b](Bar))')
       , check = TypeCheck(expr)
     assert.deepEqual([], check[0])
-    assert.deepEqual(['a', 'bravo', 'c'], check[1])
+    assert.deepEqual(['a', 'b', 'c'], check[1])
   })
 }
 
@@ -149,7 +149,7 @@ describe("Type Checking", function() {
     })
   })
   describe("Renames", function() {
-    var expr = Parser.parse("Rename[alpha->a](Foo)")
+    var expr = Parser.parse("Rename[alpha/a](Foo)")
       , check = TypeCheck(expr)
     it("Has no errors when the rename involves known attributes", function() {
       assert.deepEqual([], check[0])
@@ -158,59 +158,18 @@ describe("Type Checking", function() {
       assert.deepEqual(['a', 'b', 'c'], check[1])
     })
     it("Has an error when a attribute is missing", function() {
-      var expr = Parser.parse("Rename[a->alpha](Foo)")
+      var expr = Parser.parse("Rename[a/alpha](Foo)")
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
-      assert.equal("Missing attributes: a", check[0][0].error)
-    })
-    it("Has an error when multiple attributes are missing", function() {
-      var expr = Parser.parse("Rename[a->alpha, d->delta](Foo)")
-        , check = TypeCheck(expr)
-      assert.equal(1, check[0].length)
-      assert.deepEqual([], check[1])
-      assert.equal("Missing attributes: a, d", check[0][0].error)
-    })
-    it("Has an error when some of the attributes are missing", function() {
-      var expr = Parser.parse("Rename[a->alpha, b->bravo](Foo)")
-        , check = TypeCheck(expr)
-      assert.equal(1, check[0].length)
-      assert.deepEqual([], check[1])
-      assert.equal("Missing attributes: a", check[0][0].error)
+      assert.equal("Missing attribute: a", check[0][0].error)
     })
     it("Has an error when renaming a attribute to the name of a existing attribute", function() {
-      var expr = Parser.parse("Rename[alpha->b](Foo)")
+      var expr = Parser.parse("Rename[alpha/b](Foo)")
         , check = TypeCheck(expr)
       // assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
-      assert.equal("Duplicate attributes: b (b, alpha→b)", check[0][0].error)
-    })
-    it("Has an error when renaming multiple attribute to the name of a single existing attribute", function() {
-      var expr = Parser.parse("Rename[alpha->b, c -> b](Foo)")
-        , check = TypeCheck(expr)
-      assert.equal(1, check[0].length)
-      assert.deepEqual([], check[1])
-      assert.equal("Duplicate attributes: b (b, alpha→b, c→b)", check[0][0].error)
-    })
-    it("Has an error when renaming multiple attribute to the name of different existing attributes", function() {
-      var expr = Parser.parse("Rename[a->bravo, c -> d](Bar)")
-        , check = TypeCheck(expr)
-      assert.equal(1, check[0].length)
-      assert.deepEqual([], check[1])
-      assert.equal("Duplicate attributes: bravo (bravo, a→bravo), d (d, c→d)", check[0][0].error)
-    })
-    it("Has an error when renaming multiple attribute to the name of previously unknown attribute", function() {
-      var expr = Parser.parse("Rename[alpha->d, c -> d](Foo)")
-        , check = TypeCheck(expr)
-      assert.equal(1, check[0].length)
-      assert.deepEqual([], check[1])
-      assert.equal("Duplicate attributes: d (alpha→d, c→d)", check[0][0].error)
-    })
-    it("Does not have an error when swapping attribute names", function() {
-      var expr = Parser.parse("Rename[alpha->b, b->alpha](Foo)")
-        , check = TypeCheck(expr)
-      assert.deepEqual([], check[0])
-      assert.deepEqual(['b', 'alpha', 'c'], check[1])
+      assert.equal("Can not rename attribute alpha to b, b already exists", check[0][0].error)
     })
   })
   describe("Selections", function() {
