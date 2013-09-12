@@ -5,7 +5,7 @@ requirejs.config({
   baseUrl: __dirname + "/../lib",
 });
 
-var Parser = requirejs("parser")
+var Parse = requirejs("parse")
   , Tree = requirejs("tree")
   , Relation = requirejs("relation")
 
@@ -27,7 +27,7 @@ function getCriteria(expr) {
 function binaryStmtMixin(terminal, ASTLeaf, glue) {
   var msg = glue === undefined ? 'Contains both the LHS and the RHS' : 'Contains the LHS, the RHS and the operation meta-data'
   it(msg, function() {
-    var expr = Parser.parse("LHS " + terminal + " RHS")
+    var expr = Parse("LHS " + terminal + " RHS")
       , stmt = getStmt(expr)
       , expected
     if (glue === undefined)
@@ -41,7 +41,7 @@ function rightAssocMixin(terminal, ASTLeaf, glue) {
   // This mixin is currently not used, as relational algebra doesn't have any
   // binary right-associative rules, but it's left in here for completeness
   it('Should be right-associative', function() {
-    var expr = Parser.parse("FST " + terminal + " SND " + terminal + " THD")
+    var expr = Parse("FST " + terminal + " SND " + terminal + " THD")
       , stmt = getStmt(expr)
       , expected
     if (glue === undefined)
@@ -51,7 +51,7 @@ function rightAssocMixin(terminal, ASTLeaf, glue) {
     assert.deepEqual(stmt, expected)
   })
   it('.. and should respect parenthethis', function() {
-    var expr = Parser.parse("(FST " + terminal + " SND) " + terminal + " THD")
+    var expr = Parse("(FST " + terminal + " SND) " + terminal + " THD")
       , stmt = getStmt(expr)
       , expected
     if (glue === undefined)
@@ -63,7 +63,7 @@ function rightAssocMixin(terminal, ASTLeaf, glue) {
 }
 function leftAssocMixin(terminal, ASTLeaf, glue) {
   it('Should be left-associative', function() {
-    var expr = Parser.parse("FST " + terminal + " SND " + terminal + " THD")
+    var expr = Parse("FST " + terminal + " SND " + terminal + " THD")
       , stmt = getStmt(expr),
       expected
     if (glue === undefined)
@@ -73,7 +73,7 @@ function leftAssocMixin(terminal, ASTLeaf, glue) {
     assert.deepEqual(stmt, expected)
   })
   it('.. and should respect parenthethis', function() {
-    var expr = Parser.parse("FST " + terminal + " (SND " + terminal + " THD)")
+    var expr = Parse("FST " + terminal + " (SND " + terminal + " THD)")
       , stmt = getStmt(expr)
       , expected
     if (glue === undefined)
@@ -88,14 +88,14 @@ describe('Parsing', function(){
   describe('Expressions', function(){
     describe('With a explicit assignment', function(){
       it("Is a Assignment to the LFS", function() {
-        var expr = Parser.parse("LHS := RHS")
+        var expr = Parse("LHS := RHS")
           , expected = new Tree.Assignment('LHS', new Tree.RelationReference('RHS'))
         assert.deepEqual(expr, expected)
       })
     })
     describe("Without a explicit assignment", function() {
       it("Is a Assignment to the 'it' relation", function() {
-        var expr = Parser.parse("RHS")
+        var expr = Parse("RHS")
           , expected = new Tree.Assignment('it', new Tree.RelationReference('RHS'))
         assert.deepEqual(expr, expected)
       })
@@ -103,7 +103,7 @@ describe('Parsing', function(){
   })
   describe('Statements', function() {
     describe('that is the name of a relation', function() {
-      var expr = Parser.parse('relationName')
+      var expr = Parse('relationName')
       it('Contains the relation-name', function() {
         var stmt = getStmt(expr)
           , expected = new Tree.RelationReference('relationName')
@@ -111,7 +111,7 @@ describe('Parsing', function(){
       })
     })
     describe('that is a inline relation', function() {
-      var expr = Parser.parse("[['foo', 'bar'] -> [1, 2], [3, 4]]")
+      var expr = Parse("[['foo', 'bar'] -> [1, 2], [3, 4]]")
       it('Contains the relation', function() {
         var stmt = getStmt(expr)
           , expected = new Tree.Relation(new Relation(["foo", "bar"], [[1, 2], [3, 4]]))
@@ -149,7 +149,7 @@ describe('Parsing', function(){
     })
     describe('that is contained in parenthethis', function() {
       it('Should behave exactly as if the parenthethis weren\'t there', function() {
-        var expr = Parser.parse('(REL)')
+        var expr = Parse('(REL)')
           , stmt = getStmt(expr)
           , expected = new Tree.RelationReference('REL')
         assert.deepEqual(stmt, expected)
@@ -157,7 +157,7 @@ describe('Parsing', function(){
     })
     describe('that is a projection statement', function() {
       it('Contains the projection list and the relation', function() {
-        var expr = Parser.parse('Project[fst, snd](REL)')
+        var expr = Parse('Project[fst, snd](REL)')
           , stmt = getStmt(expr)
           , projList = new Tree.ProjectionList(['fst', 'snd'])
           , expected = new Tree.Projection(projList, new Tree.RelationReference('REL'))
@@ -166,7 +166,7 @@ describe('Parsing', function(){
     })
     describe('that is a rename statement', function() {
       it('Contains the rename list and the relation', function() {
-        var expr = Parser.parse('Rename[from/to](REL)')
+        var expr = Parse('Rename[from/to](REL)')
           , stmt = getStmt(expr)
         assert.equal(Tree.Rename, stmt.constructor, 'Statement is not a rename expression')
         assert.equal('from', stmt.from, 'From name wrong')
@@ -177,7 +177,7 @@ describe('Parsing', function(){
     })
     describe('that is a selection statement', function() {
       it('Contains the selection criteria and the relation', function() {
-        var expr = Parser.parse('Select[1==2](REL)')
+        var expr = Parse('Select[1==2](REL)')
           , stmt = getStmt(expr)
           , criteria = new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2))
           , expected = new Tree.Selection(criteria, new Tree.RelationReference('REL'))
@@ -194,12 +194,12 @@ describe('Parsing', function(){
           var expected = new Tree.Criteria(new Tree.Value(1), ops[op], new Tree.Value(2))
 
           // Check both places that could contain a criteria, in this case Select-operations
-          var expr = Parser.parse('Select[1 ' + ops[op] + ' 2](Foo)')
+          var expr = Parse('Select[1 ' + ops[op] + ' 2](Foo)')
             , criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
 
           // And Join-operations
-          expr = Parser.parse('LHS Join[1 ' + ops[op] + ' 2] RHS')
+          expr = Parse('LHS Join[1 ' + ops[op] + ' 2] RHS')
           criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
@@ -221,12 +221,12 @@ describe('Parsing', function(){
               , expected = new Tree.Criteria(lhs, '==', rhs)
 
             // Check both places that could contain a criteria, in this case Select-operations
-            var expr = Parser.parse('Select[' + types[fst] + ' == ' + types[snd] + '](Foo)')
+            var expr = Parse('Select[' + types[fst] + ' == ' + types[snd] + '](Foo)')
               , criteria = getCriteria(expr)
             assert.deepEqual(criteria, expected)
 
             // And Join-operations
-            expr = Parser.parse('LHS Join[' + types[fst] + ' == ' + types[snd] + '] RHS')
+            expr = Parse('LHS Join[' + types[fst] + ' == ' + types[snd] + '] RHS')
             criteria = getCriteria(expr)
             assert.deepEqual(criteria, expected)
           })
@@ -238,12 +238,12 @@ describe('Parsing', function(){
         var expected = new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2))
 
         // Check both places that could contain a criteria, in this case Select-operations
-        var expr = Parser.parse('Select[(1==2)](Foo)')
+        var expr = Parse('Select[(1==2)](Foo)')
           , criteria = getCriteria(expr)
         assert.deepEqual(criteria, expected)
 
         // And Join-operations
-        expr = Parser.parse('LHS Join[(1==2)] RHS')
+        expr = Parse('LHS Join[(1==2)] RHS')
         criteria = getCriteria(expr)
         assert.deepEqual(criteria, expected)
       })
@@ -262,12 +262,12 @@ describe('Parsing', function(){
           )
 
           // Check both places that could contain a criteria, in this case Select-operations
-          var expr = Parser.parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4)](Foo)')
+          var expr = Parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4)](Foo)')
             , criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
 
           // And Join-operations
-          expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4)] RHS')
+          expr = Parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4)] RHS')
           criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
@@ -283,12 +283,12 @@ describe('Parsing', function(){
           )
 
           // Check both places that could contain a criteria, in this case Select-operations
-          var expr = Parser.parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)](Foo)')
+          var expr = Parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)](Foo)')
             , criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
 
           // And Join-operations
-          expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)] RHS')
+          expr = Parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)] RHS')
           criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
@@ -304,12 +304,12 @@ describe('Parsing', function(){
           )
 
           // Check both places that could contain a criteria, in this case Select-operations
-          var expr = Parser.parse('Select[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))](Foo)')
+          var expr = Parse('Select[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))](Foo)')
             , criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
 
           // And Join-operations
-          expr = Parser.parse('LHS Join[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))] RHS')
+          expr = Parse('LHS Join[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))] RHS')
           criteria = getCriteria(expr)
           assert.deepEqual(criteria, expected)
         })
@@ -319,7 +319,7 @@ describe('Parsing', function(){
   describe('Invalid expressions', function() {
     it('Throws an error', function() {
       assert.throws(function() {
-        Parser.parse('FOO BAR')
+        Parse('FOO BAR')
       },
       Error)
     })
