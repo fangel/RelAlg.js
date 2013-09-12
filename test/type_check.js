@@ -131,6 +131,7 @@ describe("Type Checking", function() {
         , check = TypeCheck(expr)
       assert.equal(1, check[0].length)
       assert.equal(0, check[1].length)
+      assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Unknown relation: Baz", check[0][0].error)
     })
     var expr = Parse('Foo')
