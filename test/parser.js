@@ -38,6 +38,8 @@ function binaryStmtMixin(terminal, ASTLeaf, glue) {
   })
 }
 function rightAssocMixin(terminal, ASTLeaf, glue) {
+  // This mixin is currently not used, as relational algebra doesn't have any
+  // binary right-associative rules, but it's left in here for completeness
   it('Should be right-associative', function() {
     var expr = Parser.parse("FST " + terminal + " SND " + terminal + " THD")
       , stmt = getStmt(expr)
@@ -118,15 +120,15 @@ describe('Parsing', function(){
     })
     describe('that is a union statement', function() {
       binaryStmtMixin.call(this, 'Union', Tree.Union)
-      rightAssocMixin.call(this, 'Union', Tree.Union)
+      leftAssocMixin.call(this, 'Union', Tree.Union)
     })
     describe('that is a intersect statement', function() {
       binaryStmtMixin.call(this, 'Intersect', Tree.Intersection)
-      rightAssocMixin.call(this, 'Intersect', Tree.Intersection)
+      leftAssocMixin.call(this, 'Intersect', Tree.Intersection)
     })
     describe('that is a set-difference statement', function() {
       binaryStmtMixin.call(this, '-', Tree.Difference)
-      rightAssocMixin.call(this, '-', Tree.Difference)
+      leftAssocMixin.call(this, '-', Tree.Difference)
     })
     describe('that is a cartesian-join statement', function() {
       binaryStmtMixin.call(this, 'X', Tree.Cartesian)
@@ -135,18 +137,15 @@ describe('Parsing', function(){
     describe('that is a join statement', function() {
       var criteria = new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2))
       binaryStmtMixin.call(this, 'Join[1==2]', Tree.Join, criteria)
-      rightAssocMixin.call(this, 'Join[1==2]', Tree.Join, criteria)
+      leftAssocMixin.call(this, 'Join[1==2]', Tree.Join, criteria)
     })
     describe('that is a natural-join statement', function() {
       binaryStmtMixin.call(this, 'Join', Tree.NaturalJoin)
-      rightAssocMixin.call(this, 'Join', Tree.NaturalJoin)
+      leftAssocMixin.call(this, 'Join', Tree.NaturalJoin)
     })
     describe('that is a division statement', function() {
       binaryStmtMixin.call(this, '/', Tree.Division)
-      rightAssocMixin.call(this, '/', Tree.Division)
-      // TODO: Is this correct? Should it be left- or right-associative? The parser 
-      //       as-is is ambivalent, as it's currently under both left and right, but
-      //       right-assoc wins.
+      leftAssocMixin.call(this, '/', Tree.Division)
     })
     describe('that is contained in parenthethis', function() {
       it('Should behave exactly as if the parenthethis weren\'t there', function() {

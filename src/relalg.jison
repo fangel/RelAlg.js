@@ -33,12 +33,10 @@
 
 /* operator associations and precedence */
 
-%left '+' '-'
-%left CROSS DIV
-%left AND OR
-%left ASSIGN
-
-%right JOIN UNION DIV MINUS INTERSECT
+%left CROSS JOIN MINUS DIV
+%left UNION INTERSECT
+%left AND
+%left OR
 
 %start Expressions
 
