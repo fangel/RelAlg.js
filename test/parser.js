@@ -378,7 +378,25 @@ describe('Parsing', function(){
         Parse('FOO BAR')
         assert.fail('worked', 'failed')
       } catch (e) {
-        assert.equal("Unexpected 'BAR':<<id>>, expected on of ':=', '<<EOF>>', 'Union', 'Intersect', '-', 'X', 'Join', '/'",""+e)
+        assert.equal("Parse Error: Unexpected 'BAR':<<id>>, expected on of ':=', '<<EOF>>', 'Union', 'Intersect', '-', 'X', 'Join', '/'",""+e)
+      }
+    })
+  })
+  describe('Invalid characters', function() {
+    it('Throws an error', function() {
+      assert.throws(function() {
+        Parse('foo.bar')
+      },
+      function(err) {
+        return err.constructor == Parse.Error
+      })
+    })
+    it('Has a useful error message', function() {
+      try {
+        Parse('foo.bar')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        assert.equal("Tokenization Error: Unrecognized text: .bar",""+e)
       }
     })
   })
