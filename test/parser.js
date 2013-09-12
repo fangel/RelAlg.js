@@ -369,7 +369,17 @@ describe('Parsing', function(){
       assert.throws(function() {
         Parse('FOO BAR')
       },
-      Error)
+      function(err) {
+        return err.constructor == Parse.Error
+      })
+    })
+    it('Has a useful error message', function() {
+      try {
+        Parse('FOO BAR')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        assert.equal("Unexpected 'BAR':<<id>>, expected on of ':=', '<<EOF>>', 'Union', 'Intersect', '-', 'X', 'Join', '/'",""+e)
+      }
     })
   })
 })
