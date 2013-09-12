@@ -10,8 +10,8 @@ var Parse = requirejs("parse")
   , Relation = requirejs("relation")
 
 function getStmt(expr) {
-  if (expr instanceof Tree.Assignment) 
-    if (expr.name == 'it') 
+  if (expr instanceof Tree.Assignment)
+    if (expr.name == 'it')
       return expr.relation
     else
       assert.fail(expr.name, 'it', 'The expression is not on the form it := EXPR')
@@ -24,64 +24,99 @@ function getCriteria(expr) {
   else if (stmt.criteria !== undefined) assert.fail(stmt.criteria.constructor, 'Tree.Criteria(Composition)?', 'The criteria is not a real criteria')
   else assert.fail(stmt.criteria, 'object', 'The expression doesn\'t have a criteria')
 }
-function binaryStmtMixin(terminal, ASTLeaf, glue) {
-  var msg = glue === undefined ? 'Contains both the LHS and the RHS' : 'Contains the LHS, the RHS and the operation meta-data'
+function binaryStmtMixin(terminal, ASTLeaf, additionalCheck) {
+  var msg = additionalCheck === undefined ? 'Contains both the LHS and the RHS' : 'Contains the LHS, the RHS and the operation meta-data'
   it(msg, function() {
     var expr = Parse("LHS " + terminal + " RHS")
       , stmt = getStmt(expr)
-      , expected
-    if (glue === undefined)
-      expected = new ASTLeaf(new Tree.RelationReference('LHS'), new Tree.RelationReference('RHS'))
-    else  
-      expected = new ASTLeaf(new Tree.RelationReference('LHS'), glue, new Tree.RelationReference('RHS'))
-    assert.deepEqual(stmt, expected)
+    assert.equal(ASTLeaf, stmt.constructor)
+    assert.equal(Tree.RelationReference, stmt.left.constructor)
+    assert.equal('LHS', stmt.left.name)
+    assert.equal(Tree.RelationReference, stmt.right.constructor)
+    assert.equal('RHS', stmt.right.name)
+    if (additionalCheck)
+      additionalCheck.call(this, stmt)
   })
 }
-function rightAssocMixin(terminal, ASTLeaf, glue) {
+function rightAssocMixin(terminal, ASTLeaf, additionalCheck) {
   // This mixin is currently not used, as relational algebra doesn't have any
   // binary right-associative rules, but it's left in here for completeness
   it('Should be right-associative', function() {
     var expr = Parse("FST " + terminal + " SND " + terminal + " THD")
       , stmt = getStmt(expr)
-      , expected
-    if (glue === undefined)
-      expected = new ASTLeaf(new Tree.RelationReference('FST'), new ASTLeaf(new Tree.RelationReference('SND'), new Tree.RelationReference('THD')))
-    else
-      expected = new ASTLeaf(new Tree.RelationReference('FST'), glue, new ASTLeaf(new Tree.RelationReference('SND'), glue, new Tree.RelationReference('THD')))
-    assert.deepEqual(stmt, expected)
+    assert.equal(ASTLeaf, stmt.constructor)
+    assert.equal(Tree.RelationReference, stmt.left.constructor)
+    assert.equal('FST', stmt.left.name)
+    assert.equal(ASTLeaf, stmt.right.constructor)
+    assert.equal(Tree.RelationReference, stmt.right.left.constructor)
+    assert.equal('SND', stmt.right.left.name)
+    assert.equal(Tree.RelationReference, stmt.right.right.constructor)
+    assert.equal('THD', stmt.right.right.name)
+    if (additionalCheck)
+      additionalCheck.call(this, stmt)
   })
   it('.. and should respect parenthethis', function() {
     var expr = Parse("(FST " + terminal + " SND) " + terminal + " THD")
       , stmt = getStmt(expr)
-      , expected
-    if (glue === undefined)
-      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), new Tree.RelationReference('SND')), new Tree.RelationReference('THD'))
-    else
-      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), glue, new Tree.RelationReference('SND')), glue, new Tree.RelationReference('THD'))
-    assert.deepEqual(stmt, expected)        
+    assert.equal(ASTLeaf, stmt.constructor)
+    assert.equal(ASTLeaf, stmt.left.constructor)
+    assert.equal(Tree.RelationReference, stmt.left.left.constructor)
+    assert.equal('FST', stmt.left.left.name)
+    assert.equal(Tree.RelationReference, stmt.left.right.constructor)
+    assert.equal('SND', stmt.left.right.name)
+    assert.equal(Tree.RelationReference, stmt.right.constructor)
+    assert.equal('THD', stmt.right.name)
+    if (additionalCheck)
+      additionalCheck.call(this, stmt)
   })
 }
-function leftAssocMixin(terminal, ASTLeaf, glue) {
+function leftAssocMixin(terminal, ASTLeaf, additionalCheck) {
   it('Should be left-associative', function() {
     var expr = Parse("FST " + terminal + " SND " + terminal + " THD")
-      , stmt = getStmt(expr),
-      expected
-    if (glue === undefined)
-      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), new Tree.RelationReference('SND')), new Tree.RelationReference('THD'))
-    else
-      expected = new ASTLeaf(new ASTLeaf(new Tree.RelationReference('FST'), glue, new Tree.RelationReference('SND')), glue, new Tree.RelationReference('THD'))
-    assert.deepEqual(stmt, expected)
+      , stmt = getStmt(expr)
+    assert.equal(ASTLeaf, stmt.constructor)
+    assert.equal(ASTLeaf, stmt.left.constructor)
+    assert.equal(Tree.RelationReference, stmt.left.left.constructor)
+    assert.equal('FST', stmt.left.left.name)
+    assert.equal(Tree.RelationReference, stmt.left.right.constructor)
+    assert.equal('SND', stmt.left.right.name)
+    assert.equal(Tree.RelationReference, stmt.right.constructor)
+    assert.equal('THD', stmt.right.name)
+    if (additionalCheck)
+      additionalCheck.call(this, stmt)
   })
   it('.. and should respect parenthethis', function() {
     var expr = Parse("FST " + terminal + " (SND " + terminal + " THD)")
       , stmt = getStmt(expr)
-      , expected
-    if (glue === undefined)
-      expected = new ASTLeaf(new Tree.RelationReference('FST'), new ASTLeaf(new Tree.RelationReference('SND'), new Tree.RelationReference('THD')))
-    else
-      expected = new ASTLeaf(new Tree.RelationReference('FST'), glue, new ASTLeaf(new Tree.RelationReference('SND'), glue, new Tree.RelationReference('THD')))
-    assert.deepEqual(stmt, expected)        
+    assert.equal(ASTLeaf, stmt.constructor)
+    assert.equal(Tree.RelationReference, stmt.left.constructor)
+    assert.equal('FST', stmt.left.name)
+    assert.equal(ASTLeaf, stmt.right.constructor)
+    assert.equal(Tree.RelationReference, stmt.right.left.constructor)
+    assert.equal('SND', stmt.right.left.name)
+    assert.equal(Tree.RelationReference, stmt.right.right.constructor)
+    assert.equal('THD', stmt.right.right.name)
+    if (additionalCheck)
+      additionalCheck.call(this, stmt)
   })
+}
+function checkCriteriaMixin(criteria, left, op, right) {
+  assert.equal(Tree.Criteria, criteria.constructor)
+  assert.equal(op, criteria.op)
+  if (left.constructor == Tree.Attribute) {
+    assert.equal(Tree.Attribute, criteria.left.constructor)
+    assert.equal(left.name, criteria.left.name)
+  } else {
+    assert.equal(Tree.Value, criteria.left.constructor)
+    assert.equal(left, criteria.left.value)
+  }
+  if (right.constructor == Tree.Attribute) {
+    assert.equal(Tree.Attribute, criteria.right.constructor)
+    assert.equal(right.name, criteria.right.name)
+  } else {
+    assert.equal(Tree.Value, criteria.right.constructor)
+    assert.equal(right, criteria.right.value)
+  }
 }
 
 describe('Parsing', function(){
@@ -89,15 +124,21 @@ describe('Parsing', function(){
     describe('With a explicit assignment', function(){
       it("Is a Assignment to the LFS", function() {
         var expr = Parse("LHS := RHS")
-          , expected = new Tree.Assignment('LHS', new Tree.RelationReference('RHS'))
-        assert.deepEqual(expr, expected)
+        assert.equal(Tree.Assignment, expr.constructor)
+        assert.equal('LHS', expr.name)
+        assert.equal(Tree.RelationReference, expr.relation.constructor)
+        assert.equal('RHS', expr.relation.name)
+        assert.equal(Object, expr.position.constructor)
       })
     })
     describe("Without a explicit assignment", function() {
       it("Is a Assignment to the 'it' relation", function() {
         var expr = Parse("RHS")
-          , expected = new Tree.Assignment('it', new Tree.RelationReference('RHS'))
-        assert.deepEqual(expr, expected)
+        assert.equal(Tree.Assignment, expr.constructor)
+        assert.equal('it', expr.name)
+        assert.equal(Tree.RelationReference, expr.relation.constructor)
+        assert.equal('RHS', expr.relation.name)
+        assert.equal(Object, expr.position.constructor)
       })
     })
   })
@@ -106,16 +147,18 @@ describe('Parsing', function(){
       var expr = Parse('relationName')
       it('Contains the relation-name', function() {
         var stmt = getStmt(expr)
-          , expected = new Tree.RelationReference('relationName')
-        assert.deepEqual(stmt, expected)
+        assert.equal(Tree.RelationReference, stmt.constructor)
+        assert.equal('relationName', stmt.name)
+        assert.equal(Object, stmt.position.constructor)
       })
     })
     describe('that is a inline relation', function() {
       var expr = Parse("[['foo', 'bar'] -> [1, 2], [3, 4]]")
       it('Contains the relation', function() {
         var stmt = getStmt(expr)
-          , expected = new Tree.Relation(new Relation(["foo", "bar"], [[1, 2], [3, 4]]))
-        assert.deepEqual(stmt, expected)
+          , relation = new Relation(["foo", "bar"], [[1, 2], [3, 4]])
+        assert.deepEqual(Tree.Relation, stmt.constructor)
+        assert.deepEqual(relation, stmt.relation)
       })
     })
     describe('that is a union statement', function() {
@@ -135,9 +178,11 @@ describe('Parsing', function(){
       leftAssocMixin.call(this, 'X', Tree.Cartesian)
     })
     describe('that is a join statement', function() {
-      var criteria = new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2))
-      binaryStmtMixin.call(this, 'Join[1==2]', Tree.Join, criteria)
-      leftAssocMixin.call(this, 'Join[1==2]', Tree.Join, criteria)
+      var additionalCheck = function(stmt) {
+        checkCriteriaMixin.call(this, stmt.criteria, 1, '==', 2)
+      }
+      binaryStmtMixin.call(this, 'Join[1==2]', Tree.Join, additionalCheck)
+      leftAssocMixin.call(this, 'Join[1==2]', Tree.Join, additionalCheck)
     })
     describe('that is a natural-join statement', function() {
       binaryStmtMixin.call(this, 'Join', Tree.NaturalJoin)
@@ -151,17 +196,19 @@ describe('Parsing', function(){
       it('Should behave exactly as if the parenthethis weren\'t there', function() {
         var expr = Parse('(REL)')
           , stmt = getStmt(expr)
-          , expected = new Tree.RelationReference('REL')
-        assert.deepEqual(stmt, expected)
+        assert.equal(Tree.RelationReference, stmt.constructor)
+        assert.equal('REL', stmt.name)
       })
     })
     describe('that is a projection statement', function() {
       it('Contains the projection list and the relation', function() {
         var expr = Parse('Project[fst, snd](REL)')
           , stmt = getStmt(expr)
-          , projList = new Tree.ProjectionList(['fst', 'snd'])
-          , expected = new Tree.Projection(projList, new Tree.RelationReference('REL'))
-        assert.deepEqual(stmt, expected)
+        assert.equal(Tree.Projection, stmt.constructor)
+        assert.equal(Tree.ProjectionList, stmt.projectionList.constructor)
+        assert.deepEqual(['fst', 'snd'], stmt.projectionList.list)
+        assert.equal(Tree.RelationReference, stmt.relation.constructor)
+        assert.equal('REL', stmt.relation.name)
       })
     })
     describe('that is a rename statement', function() {
@@ -180,8 +227,10 @@ describe('Parsing', function(){
         var expr = Parse('Select[1==2](REL)')
           , stmt = getStmt(expr)
           , criteria = new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2))
-          , expected = new Tree.Selection(criteria, new Tree.RelationReference('REL'))
-        assert.deepEqual(stmt, expected)
+        assert.equal(Tree.Selection, stmt.constructor)
+        checkCriteriaMixin.call(this, stmt.criteria, 1, '==', 2)
+        assert.equal(Tree.RelationReference, stmt.relation.constructor)
+        assert.equal('REL', stmt.relation.name)
       })
     })
   })
@@ -191,17 +240,15 @@ describe('Parsing', function(){
       for (var op in ops) {
         // Loop through all the different comparison operators we have
         it('Works with ' + ops[op], function() {
-          var expected = new Tree.Criteria(new Tree.Value(1), ops[op], new Tree.Value(2))
-
           // Check both places that could contain a criteria, in this case Select-operations
           var expr = Parse('Select[1 ' + ops[op] + ' 2](Foo)')
             , criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          checkCriteriaMixin.call(this, criteria, 1, ops[op], 2)
 
           // And Join-operations
           expr = Parse('LHS Join[1 ' + ops[op] + ' 2] RHS')
           criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          checkCriteriaMixin.call(this, criteria, 1, ops[op], 2)
         })
       }
     })
@@ -216,36 +263,33 @@ describe('Parsing', function(){
         for (var snd in types) {
           // And check that comparison between all 4 types work.
           it('Has ' + fst + ' vs ' + snd + ' support', function() {
-            var lhs = fst == 'attribute' ? new Tree.Attribute(types[fst]) : new Tree.Value(types[fst])
-              , rhs = snd == 'attribute' ? new Tree.Attribute(types[snd]) : new Tree.Value(types[snd])
-              , expected = new Tree.Criteria(lhs, '==', rhs)
+            var lhs = fst == 'attribute' ? new Tree.Attribute(types[fst]) : types[fst]
+              , rhs = snd == 'attribute' ? new Tree.Attribute(types[snd]) : types[snd]
 
             // Check both places that could contain a criteria, in this case Select-operations
             var expr = Parse('Select[' + types[fst] + ' == ' + types[snd] + '](Foo)')
               , criteria = getCriteria(expr)
-            assert.deepEqual(criteria, expected)
+            checkCriteriaMixin.call(this, criteria, lhs, '==', rhs)
 
             // And Join-operations
             expr = Parse('LHS Join[' + types[fst] + ' == ' + types[snd] + '] RHS')
             criteria = getCriteria(expr)
-            assert.deepEqual(criteria, expected)
+            checkCriteriaMixin.call(this, criteria, lhs, '==', rhs)
           })
         }
       }
     })
     describe('that is contained in parenthethis', function() {
       it('Should behave as if there is no parenthethis', function() {
-        var expected = new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2))
-
         // Check both places that could contain a criteria, in this case Select-operations
         var expr = Parse('Select[(1==2)](Foo)')
           , criteria = getCriteria(expr)
-        assert.deepEqual(criteria, expected)
+        checkCriteriaMixin.call(this, criteria, 1, '==', 2)
 
         // And Join-operations
         expr = Parse('LHS Join[(1==2)] RHS')
         criteria = getCriteria(expr)
-        assert.deepEqual(criteria, expected)
+        checkCriteriaMixin.call(this, criteria, 1, '==', 2)
       })
     })
     var comps = {
@@ -255,63 +299,67 @@ describe('Parsing', function(){
     for (var comp in comps) {
       describe('that is a ' + comp, function() {
         it('Contains both the LHS and the RHS', function() {
-          var expected = new Tree.CriteriaComposition(
-            new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2)),
-            comps[comp].op,
-            new Tree.Criteria(new Tree.Value(3), '==', new Tree.Value(4))
-          )
-
           // Check both places that could contain a criteria, in this case Select-operations
           var expr = Parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4)](Foo)')
             , criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          assert.equal(Tree.CriteriaComposition, criteria.constructor)
+          assert.equal(comps[comp].op, criteria.comp)
+          checkCriteriaMixin.call(this, criteria.left, 1, '==', 2)
+          checkCriteriaMixin.call(this, criteria.right, 3, '==', 4)
 
           // And Join-operations
           expr = Parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4)] RHS')
           criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          assert.equal(Tree.CriteriaComposition, criteria.constructor)
+          assert.equal(comps[comp].op, criteria.comp)
+          checkCriteriaMixin.call(this, criteria.left, 1, '==', 2)
+          checkCriteriaMixin.call(this, criteria.right, 3, '==', 4)
         })
         it('Should be left-associative', function() {
-          var expected = new Tree.CriteriaComposition(
-            new Tree.CriteriaComposition(
-              new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2)),
-              comps[comp].op,
-              new Tree.Criteria(new Tree.Value(3), '==', new Tree.Value(4))
-            ),
-            comps[comp].op,
-            new Tree.Criteria(new Tree.Value(5), '==', new Tree.Value(6))
-          )
-
           // Check both places that could contain a criteria, in this case Select-operations
           var expr = Parse('Select[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)](Foo)')
             , criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          assert.equal(Tree.CriteriaComposition, criteria.constructor)
+          assert.equal(comps[comp].op, criteria.comp)
+          assert.equal(Tree.CriteriaComposition, criteria.left.constructor)
+          assert.equal(comps[comp].op, criteria.left.comp)
+          checkCriteriaMixin.call(this, criteria.left.left, 1, '==', 2)
+          checkCriteriaMixin.call(this, criteria.left.right, 3, '==', 4)
+          checkCriteriaMixin.call(this, criteria.right, 5, '==', 6)
 
           // And Join-operations
           expr = Parse('LHS Join[(1==2 ' + comps[comp].terminal + ' 3==4 ' + comps[comp].terminal + ' 5==6)] RHS')
           criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          assert.equal(Tree.CriteriaComposition, criteria.constructor)
+          assert.equal(comps[comp].op, criteria.comp)
+          assert.equal(Tree.CriteriaComposition, criteria.left.constructor)
+          assert.equal(comps[comp].op, criteria.left.comp)
+          checkCriteriaMixin.call(this, criteria.left.left, 1, '==', 2)
+          checkCriteriaMixin.call(this, criteria.left.right, 3, '==', 4)
+          checkCriteriaMixin.call(this, criteria.right, 5, '==', 6)
         })
         it('.. and should respect parenthethis', function() {
-          var expected = new Tree.CriteriaComposition(
-            new Tree.Criteria(new Tree.Value(1), '==', new Tree.Value(2)),
-            comps[comp].op,
-            new Tree.CriteriaComposition(
-              new Tree.Criteria(new Tree.Value(3), '==', new Tree.Value(4)),
-              comps[comp].op,
-              new Tree.Criteria(new Tree.Value(5), '==', new Tree.Value(6))
-            )
-          )
-
           // Check both places that could contain a criteria, in this case Select-operations
           var expr = Parse('Select[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))](Foo)')
             , criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          assert.equal(Tree.CriteriaComposition, criteria.constructor)
+          assert.equal(comps[comp].op, criteria.comp)
+          checkCriteriaMixin.call(this, criteria.left, 1, '==', 2)
+          assert.equal(Tree.CriteriaComposition, criteria.right.constructor)
+          assert.equal(comps[comp].op, criteria.right.comp)
+          checkCriteriaMixin.call(this, criteria.right.left, 3, '==', 4)
+          checkCriteriaMixin.call(this, criteria.right.right, 5, '==', 6)
 
           // And Join-operations
           expr = Parse('LHS Join[(1==2 ' + comps[comp].terminal + ' (3==4 ' + comps[comp].terminal + ' 5==6))] RHS')
           criteria = getCriteria(expr)
-          assert.deepEqual(criteria, expected)
+          assert.equal(Tree.CriteriaComposition, criteria.constructor)
+          assert.equal(comps[comp].op, criteria.comp)
+          checkCriteriaMixin.call(this, criteria.left, 1, '==', 2)
+          assert.equal(Tree.CriteriaComposition, criteria.right.constructor)
+          assert.equal(comps[comp].op, criteria.right.comp)
+          checkCriteriaMixin.call(this, criteria.right.left, 3, '==', 4)
+          checkCriteriaMixin.call(this, criteria.right.right, 5, '==', 6)
         })
       })
     }

@@ -44,72 +44,72 @@
 
 Expressions
 	: ID ASSIGN Stmt EOF
-		{ return new Tree.Assignment($1, $3); }
+		{ return yy.AST.call(this, 'Assignment', $1, $3); }
   | Stmt EOF
-    { return new Tree.Assignment('it', $1); }
+    { return yy.AST.call(this, 'Assignment', 'it', $1); }
   ;
 
 Stmt
   : ID
-    { $$ = new Tree.RelationReference(yytext); }
+    { $$ = yy.AST.call(this, 'RelationReference', yytext); }
 	| Relation
 		{ $$ = $1; }
   | Stmt UNION Stmt
-    { $$ = new Tree.Union( $1, $3 ); }
+    { $$ = yy.AST.call(this, 'Union', $1, $3 ); }
 	| Stmt INTERSECT Stmt
-	  { $$ = new Tree.Intersection( $1, $3 ); }
+	  { $$ = yy.AST.call(this, 'Intersection', $1, $3 ); }
 	| Stmt MINUS Stmt
-	  { $$ = new Tree.Difference( $1, $3 ); }
+	  { $$ = yy.AST.call(this, 'Difference', $1, $3 ); }
 	| Stmt CROSS Stmt
-	  { $$ = new Tree.Cartesian( $1, $3 ); }
+	  { $$ = yy.AST.call(this, 'Cartesian', $1, $3 ); }
 	| Stmt JOIN '[' Criteria ']' Stmt
-	  { $$ = new Tree.Join( $1, $4, $6 ); }
+	  { $$ = yy.AST.call(this, 'Join', $1, $4, $6 ); }
 	| Stmt JOIN Stmt
-    { $$ = new Tree.NaturalJoin( $1, $3 ); }
+    { $$ = yy.AST.call(this, 'NaturalJoin', $1, $3 ); }
 	| Stmt DIV Stmt
-    { $$ = new Tree.Division( $1, $3 ); }
+    { $$ = yy.AST.call(this, 'Division', $1, $3 ); }
 	| '(' Stmt ')'
 	  { $$ = $2 }
 	| PROJECT '[' ProjectionList ']' '(' Stmt ')'
-	  { $$ = new Tree.Projection( $3, $6 ); }
+	  { $$ = yy.AST.call(this, 'Projection', $3, $6 ); }
 	| RENAME '[' ID DIV ID ']' '(' Stmt ')'
-    { $$ = new Tree.Rename( $8, $3, $5 ); }
+    { $$ = yy.AST.call(this, 'Rename', $8, $3, $5 ); }
 	| SELECT '[' Criteria ']' '(' Stmt ')'
-	  { $$ = new Tree.Selection( $3, $6 ); }
+	  { $$ = yy.AST.call(this, 'Selection', $3, $6 ); }
   ;
 
 ProjectionList
   : ID
-    { $$ = new Tree.ProjectionList( $1 ); }
+    { $$ = yy.AST.call(this, 'ProjectionList', $1 ); }
   | ProjectionList ',' ID
     { $$ = $1.add($3); }
   ;
 
 Criteria
   : Value COMPARISON Value
-    { $$ = new Tree.Criteria($1, $2, $3); }
+    { $$ = yy.AST.call(this, 'Criteria', $1, $2, $3); }
   | Criteria AND Criteria
-    { $$ = new Tree.CriteriaComposition($1, 'AND', $3); }
+    { $$ = yy.AST.call(this, 'CriteriaComposition', $1, 'AND', $3); }
   | Criteria OR Criteria
-    { $$ = new Tree.CriteriaComposition($1, 'OR', $3); }
+    { $$ = yy.AST.call(this, 'CriteriaComposition', $1, 'OR', $3); }
   | '(' Criteria ')'
     { $$ = $2; }
   ;
 
 Value
   : ID
-    { $$ = new Tree.Attribute(yytext); }
+    { $$ = yy.AST.call(this, 'Attribute', yytext); }
   | STRING
-    { $$ = new Tree.Value(yytext.substring(1, yytext.length - 1)); }
+    { $$ = yy.AST.call(this, 'Value', yytext.substring(1, yytext.length - 1)); }
   | FLOAT
-    { $$ = new Tree.Value(parseFloat(yytext)); }
+    { $$ = yy.AST.call(this, 'Value', parseFloat(yytext)); }
   | INT
-    { $$ = new Tree.Value(parseInt(yytext, 10)); }
+    { $$ = yy.AST.call(this, 'Value', parseInt(yytext, 10)); }
   ;
 
 Relation
 	: '[' '[' RelCellList ']' '->' RelRowList ']'
-		{ $$ = new Tree.Relation(new Relation($3, $6)); }
+		{ $$ = yy.AST.call(this, 'Relation', new yy.Relation($3, $6)); }
 	;
 
 RelRowList
