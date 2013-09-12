@@ -97,8 +97,20 @@ describe("Type Checking", function() {
     it("Has the correct schema", function() {
       assert.deepEqual(['foo', 'bar', 'baz'], check[1])
     })
-    it("Fails when the relation have duplicate attributes")
-    it("Fails when the data does not have as many columns as the schema")
+    it("Fails when the relation have duplicate attributes", function() {
+      var expr = Parser.parse("Foo := [['foo', 'bar', 'foo'] -> [1,2,3], [3,4,5]]")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Duplicate attributes: foo", check[0][0].error)
+    })
+    it("Fails when the data does not have as many columns as the schema", function() {
+      var expr = Parser.parse("Foo := [['foo', 'bar', 'baz'] -> [1,2,3], [3,4]]")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Some rows does not conform to the schema: [3, 4]", check[0][0].error)
+    })
   })
   describe("Relation References", function() {
     it("Fails when the relation reference isn\'t known", function() {
@@ -149,12 +161,14 @@ describe("Type Checking", function() {
     })
   })
   describe("Renames", function() {
-    var expr = Parser.parse("Rename[alpha/a](Foo)")
-      , check = TypeCheck(expr)
     it("Has no errors when the rename involves known attributes", function() {
+      var expr = Parser.parse("Rename[alpha/a](Foo)")
+        , check = TypeCheck(expr)
       assert.deepEqual([], check[0])
     })
     it("Has the correct schema when the rename involves known attributes", function() {
+      var expr = Parser.parse("Rename[alpha/a](Foo)")
+        , check = TypeCheck(expr)
       assert.deepEqual(['a', 'b', 'c'], check[1])
     })
     it("Has an error when a attribute is missing", function() {
@@ -238,16 +252,109 @@ describe("Type Checking", function() {
     binaryOperationMixin.call(this, 'Intersect')
     schemaMustMatchMixin.call(this, 'Intersect')
   })
-  describe.skip("Cartesian Joins", function() {
+  describe("Cartesian Product", function() {
     binaryOperationMixin.call(this, 'X')
+    it("Has no errors when the cartesian product involves relations of different schemas", function() {
+      var expr = Parser.parse("[['foo']->[1]] X [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual([], check[0])
+    })
+    it("Has the correct schema when the cartesian product involves relations of different schemas", function() {
+      var expr = Parser.parse("[['foo']->[1]] X [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual(['foo', 'bar'], check[1])
+    })
+    it("Fails when the cartesian product involves relations has one overlapping attribute", function() {
+      var expr = Parser.parse("Foo X Bar")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Overlapping attributes: c", check[0][0].error)
+    })
+    it("Fails when the cartesian product involves relations has multiple overlapping attribute", function() {
+      var expr = Parser.parse("Foo X Foo")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Overlapping attributes: alpha, b, c", check[0][0].error)
+    })
   })
-  describe.skip("Joins", function() {
+  describe("Joins", function() {
     binaryOperationMixin.call(this, 'Join[1==2]')
+    it("Has no errors when the join involves relations of different schemas", function() {
+      var expr = Parser.parse("[['foo']->[1]] Join[foo==bar] [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual([], check[0])
+    })
+    it("Has the correct schema when the join involves relations of different schemas", function() {
+      var expr = Parser.parse("[['foo']->[1]] Join[foo==bar] [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual(['foo', 'bar'], check[1])
+    })
+    it("Fails when the join involves relations has one overlapping attribute", function() {
+      var expr = Parser.parse("Foo Join[alpha==a] Bar")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Overlapping attributes: c", check[0][0].error)
+    })
+    it("Fails when the join involves relations has multiple overlapping attribute", function() {
+      var expr = Parser.parse("Foo Join[alpha==alpha] Foo")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Overlapping attributes: alpha, b, c", check[0][0].error)
+    })
+    it("Fails when the criteria involves attributes not in one of the two involved relations", function() {
+      var expr = Parser.parse("[['foo']->[1]] Join[foz==baz] [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Missing attributes: foz, baz", check[0][0].error)
+    })
   })
-  describe.skip("Natural Joins", function() {
+  describe("Natural Joins", function() {
     binaryOperationMixin.call(this, 'Join')
+    it("Never has an error as long as the two expressions are sound", function() {
+      var expr = Parser.parse("[['foo']->[1]] Join [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual([], check[0])
+    })
+    it("Has the correct schema when the two expressions are sound", function() {
+      var expr = Parser.parse("[['foo']->[1]] Join [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual(['foo', 'bar'], check[1])
+
+      expr = Parser.parse("Foo Join Bar")
+      check = TypeCheck(expr)
+      assert.deepEqual(['alpha', 'b', 'c', 'a', 'bravo', 'd'], check[1])
+    })
   })
-  describe.skip("Divisions", function() {
+  describe("Divisions", function() {
     binaryOperationMixin.call(this, '/')
+    it("Has no errors when the LHS is a superset of the RHS", function () {
+      var expr = Parser.parse("[['foo', 'bar']->[1, 2]] / [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual([], check[0])
+    })
+    it("Has the correct schema when the LHS is a superset of the RHS", function () {
+      var expr = Parser.parse("[['foo', 'bar']->[1, 2]] / [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.deepEqual(['foo'], check[1])
+    })
+    it("Fails when the LHS equals RHS", function () {
+      var expr = Parser.parse("[['bar']->[1]] / [['bar']->[2]]")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("No unique attributes on the left hand side", check[0][0].error)
+    })
+    it("Fails when the RHS has attributes that the RHS does not", function () {
+      var expr = Parser.parse("[['bar']->[1]] / [['foo', 'bar']->[1, 2]]")
+        , check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal("Right hand side has unique attributes: foo", check[0][0].error)
+    })
   })
 })
