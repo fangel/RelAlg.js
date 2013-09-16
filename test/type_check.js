@@ -474,5 +474,35 @@ describe("Type Checking", function() {
       assert.equal(err, combinedError.toString())
       assert.equal(pos, combinedError.showPosition())
     })
+    it("Can highlight the position of three errors", function() {
+      var expr = Parse("Baz X Qux X Quid")
+        , pos =        "^-^   ^-^   ^--^\n" + 
+                       "#1    #2    #3  "
+        , err = "Type Errors!\n" + 
+                "#1: Unknown relation: Baz\n" +
+                "#2: Unknown relation: Qux\n" +
+                "#3: Unknown relation: Quid"
+        , check = TypeCheck(expr)
+        , combinedError = new TypeCheck.Errors(check[0])
+      assert.equal(3, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal(err, combinedError.toString())
+      assert.equal(pos, combinedError.showPosition())
+    })
+    it("Can highlight the position of three errors within statements", function() {
+      var expr = Parse("Rename[foo/bar](Baz) X Project[baz](Qux) X Select[qux==2](Quid)")
+        , pos =        "                ^-^                 ^-^                   ^--^\n" + 
+                       "                #1                  #2                    #3  "
+        , err = "Type Errors!\n" + 
+                "#1: Unknown relation: Baz\n" +
+                "#2: Unknown relation: Qux\n" +
+                "#3: Unknown relation: Quid"
+        , check = TypeCheck(expr)
+        , combinedError = new TypeCheck.Errors(check[0])
+      assert.equal(3, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal(err, combinedError.toString())
+      assert.equal(pos, combinedError.showPosition())
+    })
   })
 })
