@@ -8,6 +8,7 @@
     "grunt-mocha-test": "~0.6.3"
   },
   "dependencies": {
-    "requirejs": "~2.1.8"
+    "requirejs": "~2.1.8",
+    "deep-equal": "0.0.0"
   }
 }
