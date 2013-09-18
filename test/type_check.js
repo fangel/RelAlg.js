@@ -7,9 +7,6 @@ var Parse = requirejs("parse")
   , Relation = requirejs("relation")
   , TypeCheck = requirejs("type_check")
 
-Relation.add('Foo', new Relation(['alpha', 'b', 'c'], [[1, 2, 3], [4, 5, 6]]))
-Relation.add('Bar', new Relation(['a', 'bravo', 'c', 'd'], [[1, 2, 3, 4], [5, 6, 7, 8]]))
-
 function binaryOperationMixin(terminal) {
   it("Fails if the LHS has a type-checking error", function() {
     var expr = Parse("Project[foo]([['bar']->[1]]) " + terminal + " [['bar']->[1]]")
@@ -123,6 +120,13 @@ function schemaMustMatchMixin(terminal) {
 }
 
 describe("Type Checking", function() {
+  before(function() {
+    Relation.add('Foo', new Relation(['alpha', 'b', 'c'], [[1, 2, 3], [4, 5, 6]]))
+    Relation.add('Bar', new Relation(['a', 'bravo', 'c', 'd'], [[1, 2, 3, 4], [5, 6, 7, 8]]))    
+  })
+  after(function() {
+    Relation.storage = []
+  })
   describe("Relations", function() {
     it("Has no error", function() {
       var expr = Parse("Foo := [['foo', 'bar', 'baz'] -> [1,2,3], [3,4,5]]")
@@ -166,22 +170,26 @@ describe("Type Checking", function() {
       assert.equal("Unknown relation: Baz", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
     })
-    var expr = Parse('Foo')
-      , check = TypeCheck(expr)
     it("Has no errors when the relation reference is known", function() {
+      var expr = Parse('Foo')
+        , check = TypeCheck(expr)
       assert.deepEqual([], check[0])
     })
     it("Has the correct schema when the relation reference is known", function() {
+      var expr = Parse('Foo')
+        , check = TypeCheck(expr)
       assert.deepEqual(['alpha', 'b', 'c'], check[1])
     })
   })
   describe("Projections", function() {
-    var expr = Parse("Project[alpha, b](Foo)")
-      , check = TypeCheck(expr)
     it("Has no errors when the projection is over known attributes", function() {
+      var expr = Parse("Project[alpha, b](Foo)")
+        , check = TypeCheck(expr)
       assert.deepEqual([], check[0])
     })
     it("Has the correct schema when the projection is over known attributes", function() {
+      var expr = Parse("Project[alpha, b](Foo)")
+        , check = TypeCheck(expr)
       assert.deepEqual(['alpha', 'b'], check[1])
     })
     it("Has an error when a attribute is missing", function() {
