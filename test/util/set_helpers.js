@@ -94,4 +94,19 @@ describe("Set Helper Function", function() {
       assert.deepEqual([1, 2], SetHelper.Duplicates([1, 2, 1, 2]))
     })
   })
+  describe("Pluck", function() {
+    it("Should pluck out the values in the given positions", function() {
+      assert.deepEqual([], SetHelper.Pluck([1,2,3], []))
+      assert.deepEqual([1], SetHelper.Pluck([1,2,3], [0]))
+      assert.deepEqual([2], SetHelper.Pluck([1,2,3], [1]))
+      assert.deepEqual([3], SetHelper.Pluck([1,2,3], [2]))
+      assert.deepEqual([1,2], SetHelper.Pluck([1,2,3], [0,1]))
+      assert.deepEqual([2,3], SetHelper.Pluck([1,2,3], [1,2]))
+      assert.deepEqual([1,2,3], SetHelper.Pluck([1,2,3], [0,1,2]))
+    })
+    it("Should ignore positions that are not in the set", function() {
+      assert.deepEqual([], SetHelper.Pluck([1,2,3], [3]))
+      assert.deepEqual([1,], SetHelper.Pluck([1,2,3], [0,3]))
+    })
+  })
 })
