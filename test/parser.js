@@ -1,9 +1,6 @@
 var assert = require("assert")
   , requirejs = require("requirejs")
-
-requirejs.config({
-  baseUrl: __dirname + "/../lib",
-});
+  , _ = require('./test-setup')
 
 var Parse = requirejs("parse")
   , Tree = requirejs("tree")

@@ -1,9 +1,6 @@
 var assert = require("assert")
   , requirejs = require("requirejs")
-
-requirejs.config({
-  baseUrl: __dirname + "/../../lib",
-});
+  , _ = require('../test-setup')
 
 var SetHelper = requirejs("util/set_helpers")
 
@@ -20,6 +17,17 @@ describe("Set Helper Function", function() {
       assert.deepEqual([1, 2], SetHelper.Union([1, 2], [1]))
       assert.deepEqual([1, 2], SetHelper.Union([1, 2], [1, 2]))
       assert.deepEqual([1, 2], SetHelper.Union([1, 2], [2, 1]))
+    })
+    it("Should work on multi-dimentional data", function() {
+      assert.deepEqual([[]], SetHelper.Union([[]], [[]]))
+      assert.deepEqual([[1]], SetHelper.Union([[1]], []))
+      assert.deepEqual([[1]], SetHelper.Union([], [[1]]))
+      assert.deepEqual([[1], [2]], SetHelper.Union([[1]], [[2]]))
+      assert.deepEqual([[1]], SetHelper.Union([[1]], [[1]]))
+      assert.deepEqual([[1], [2]], SetHelper.Union([[1], [2]], [[1]]))
+      assert.deepEqual([[1], [2]], SetHelper.Union([[1], [2]], [[1], [2]]))
+      assert.deepEqual([[1], [2]], SetHelper.Union([[1], [2]], [[2], [1]]))
+      assert.deepEqual([[1, 2]], SetHelper.Union([[1, 2]], [[1, 2]]))
     })
   })
   describe("Difference", function() {
@@ -38,6 +46,14 @@ describe("Set Helper Function", function() {
       assert.deepEqual([], SetHelper.Difference([1], [1, 2]))
       assert.deepEqual([], SetHelper.Difference([2], [1, 2]))
     })
+    it("Should work with multi-dimentional data", function() {
+      assert.deepEqual([], SetHelper.Difference([[]], [[]]))
+      assert.deepEqual([], SetHelper.Difference([[1]], [[1]]))
+      assert.deepEqual([[1,2]], SetHelper.Difference([[1,2]], [[1,3]]))
+      assert.deepEqual([[1,2]], SetHelper.Difference([[1,2], [1,3]], [[1,3]]))
+      assert.deepEqual([], SetHelper.Difference([[1,2]], [[1,2], [1,3]]))
+      assert.deepEqual([], SetHelper.Difference([], [[1,2], [1,3]]))
+    })
   })
   describe("Intersection", function() {
     it("Should return everything when both sets contains the same", function() {
@@ -54,6 +70,16 @@ describe("Set Helper Function", function() {
       assert.deepEqual([1], SetHelper.Intersection([1], [2, 1]))
       assert.deepEqual([3], SetHelper.Intersection([1, 3], [2, 3]))
       assert.deepEqual([4], SetHelper.Intersection([1, 2, 4], [3, 4]))
+    })
+    it("Should work on multi-dimentional data", function() {
+      assert.deepEqual([[]], SetHelper.Intersection([[]], [[]]))
+      assert.deepEqual([[1]], SetHelper.Intersection([[1]], [[1]]))
+      assert.deepEqual([[1], [2]], SetHelper.Intersection([[1], [2]], [[1], [2]]))
+      assert.deepEqual([[1, 2]], SetHelper.Intersection([[1, 2]], [[1, 2]]))
+      assert.deepEqual([], SetHelper.Intersection([[1, 2]], [[1, 3]]))
+      assert.deepEqual([[1,2]], SetHelper.Intersection([[1, 2]], [[1,2], [1, 3]]))
+      assert.deepEqual([[1,2]], SetHelper.Intersection([[1, 2], [1, 3]], [[1,2]]))
+      assert.deepEqual([[1,2], [1,3]], SetHelper.Intersection([[1, 2], [1, 3]], [[1, 2], [1, 3]]))
     })
   })
   describe("Duplicates", function() {
