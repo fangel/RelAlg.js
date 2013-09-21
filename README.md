@@ -1,6 +1,7 @@
 # RelAlg.js - A JavaScript Relational Algebra evaluator
 
-This [Relational Algebra][relalg] evaluator is written by me, Morten Fangel (fangel@sevengoslings.net, twitter.com/fangel). Assistant Professer, Ph.D. Henrik Bulskov from Roskilde University has been a tremendous help with his great inputs and thoughts on the project.  
+This [Relational Algebra][relalg] evaluator is written by me, Morten Fangel (fangel@sevengoslings.net, twitter.com/fangel). For their assistance with this project, I'd like to thank Assistant Professor, Ph.D. Henrik Bulskov from Roskilde University and Associate Professor, IT University of Copenhagen.
+
 Feel free to contact me if you have any issues or ideas for further work.
 
 ## Usage
@@ -9,6 +10,16 @@ Right now I'm in the process of heavily altering everything. So there is no web-
 
 All the available functions takes input like this `Operation[arguments](Relation)`. Binary operations are 
 preformed using `Relation1 Operation Relation2`.
+
+### Features of the CLI REPL
+
+The REPL is built on top of Node.js, so you can use the special Node.js commands. The two most useful are `.save` and `.load`.   
+`.save [filename]` will simply take all the operations you have performed in the current session and save them to a file with the name _filename_.  
+`.load [filename]` will read in the file specified by _filename_ and run the commands, one line at a time.
+
+This enables you to have a file that defines a set of operations that you can start all your sessions out by loading them. In the future I will probably add a command-line parameter to a file with initial relations, but till then, the `.save` and `.load` will have to do.
+
+## Operations
 
 ### Relations
 
@@ -24,16 +35,9 @@ Projections are done via the `Project` operation. And example where the columns 
 	
 ### Renaming
 
-Renaming are done with the `Rename` operation. If you want to rename the attribute `alpha` into `a` and the attribute `bravo` into `b`, the command would be
+Renaming are done with the `Rename` operation. If you want to rename the attribute `alpha` into `a` the command would be
 
-	Rename[alpha->a, bravo->b]( Relation )
-	
-You can also rename fields by position. If you have the relation _C(a,b,c)_ and you want to rename the second attribute to _bravo_, you can use
-
-	Rename[2->bravo](C)
-	
-The resulting schema will then be _C'(a,bravo,c)_.  
-_Note_: Positions are not zero indexed - the first attribute is the one on position 1.
+	Rename[alpha/a]( Relation )
 	
 ### Selection
 
@@ -93,14 +97,7 @@ If you wish to create a theta-join, you provide the join-condition like this:
 
 	Relation1 Join[attribute1 == attribute2] Relation2
 	
-**Warning**: If both relations have attributes with the same name, and you do _not_ have a criteria equalling 
-both attributes (in other words, a _explicit_ natural-join) to each other, the calculation will fail. If 
-your intent wasn't to join on those conditions, you must rename an attribute from, or project the attribute out
-of the at least one of the relations.
-
-_Example_: Say you have the schemas R(id, name) and S(id, place), you _must_ have the join-condition _id == id_,
-when joining. You can also have a condition on say _name == 'foo'_, so the join-conditions need not the 
-only conditions.
+**Warning**: If both relations have attributes with the same name, the calculation will fail. If your intention was to join on the attributes, use a Natural Join. If your intent wasn't to join on those conditions, you must rename the attributes for at least one of the relations.
 
 There is no specific notation for creating _Equi-joins_, just create a all-AND, all-equality condition and
 your Theta-join will classify as a Equi-join.
@@ -122,11 +119,9 @@ An example would be
 ## Extending the grammar
 
 The lexer/parse is built using [Jison][jison]. So to extend the grammer, you need to have it installed.
-When JS/CC is installed, you can rebuild the parser from the grammar-file (`src/relalg.jison`), using
-`jison src/relalg.jison -o lib/parser.js -m amd`.  
-Currently you then need to alter the `define`-call in the top, to be `define(['tree'], function(Tree)) {`.
-
-In the future I will create a Grunt-task to rebuild the grammar.
+When Jison and [Grunt][grunt] is installed, you can rebuild the parser from the grammar-file (`src/relalg.jison`), using
+`grunt build`.
 
 [relalg]: http://www.wikipedia.org/wiki/Relational_Algebra
 [jison]: http://zaach.github.com/jison/
+[grunt]: http://gruntjs.com

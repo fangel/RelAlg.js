@@ -1,5 +1,23 @@
 {
   "name": "RelAlg.js",
+	"version": "0.2.0-beta",
+	"preferGlobal": true,
+  "author": {
+		"name" : "Morten Fangel",
+		"email" : "fangel@sevengoslings.net",
+		"url" : "http://sevengoslings.net"
+	},
+	"repository" : {
+		"type" : "git",
+		"url" : "https://github.com/fangel/RelAlg.js.git"
+	},
+  "directories": {
+		"lib": "./lib",
+		"bin": "./bin"
+	},
+	"bin": {
+	  "relalg": "./bin/relalg"
+	},
   "devDependencies": {
     "jison": "~0.3.12",
     "grunt": "~0.4.1",
@@ -10,5 +28,8 @@
   "dependencies": {
     "requirejs": "~2.1.8",
     "deep-equal": "0.0.0"
-  }
+  },
+  "engines": {
+		"node": ">=0.4.0"
+	}
 }
