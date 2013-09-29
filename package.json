@@ -19,9 +19,13 @@
   "bin": {
     "relalg": "./bin/relalg"
   },
+  "scripts": {
+    "test": "grunt check"
+  },
   "devDependencies": {
     "jison": "~0.3.12",
     "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.9",
     "grunt-jison": "~1.2.0",
     "grunt-contrib-jshint": "~0.6.3",
     "grunt-mocha-test": "~0.6.3"
