@@ -1,6 +1,6 @@
 # RelAlg.js - A JavaScript Relational Algebra evaluator [![Build Status](https://travis-ci.org/fangel/RelAlg.js.png?branch=master)](https://travis-ci.org/fangel/RelAlg.js)
 
-This [Relational Algebra][relalg] evaluator is written by me, Morten Fangel (fangel@sevengoslings.net, twitter.com/fangel). For their assistance with this project, I'd like to thank Assistant Professor, Ph.D. Henrik Bulskov from Roskilde University and Associate Professor, IT University of Copenhagen.
+This [Relational Algebra][relalg] evaluator is written by me, Morten Fangel (fangel@sevengoslings.net, twitter.com/fangel). For their assistance with this project, I'd like to thank Assistant Professor, Ph.D. Henrik Bulskov from Roskilde University and Associate Professor Philippe Bonnet, IT University of Copenhagen.
 
 Feel free to contact me if you have any issues or ideas for further work.
 
