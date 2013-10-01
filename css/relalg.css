@@ -5,10 +5,6 @@
 #list {
   padding: 8px 0
 }
-#input textarea {
-  width: 100%;
-  box-sizing: border-box;
-}
 #graph .modal-body {
   text-align: center;
 }
@@ -27,8 +23,18 @@
   right: 0;
   bottom: 0;
   left: 0;
-  height: 70px;
+  height: 75px;
 }
+
+#main {
+  margin-bottom: 95px;
+}
+  #main h1 {
+    margin-top: 0;
+  }
+  #main .table {
+    width: auto;
+  }
 
 .ace_marker-layer .relalg_error {
     position: absolute;
@@ -38,6 +44,10 @@
     box-sizing: border-box;
 
     border-bottom: 2px dotted red;
+}
+
+.actions li + li {
+  margin-top: 5px;
 }
 
 /*
