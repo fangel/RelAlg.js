@@ -369,6 +369,12 @@ describe('Parsing', function(){
       function(err) {
         return err.constructor == Parse.Error
       })
+      assert.throws(function() {
+        Parse('')
+      },
+      function(err) {
+        return err.constructor == Parse.Error
+      })
     })
     it('Has a useful error message', function() {
       try {
@@ -376,6 +382,95 @@ describe('Parsing', function(){
         assert.fail('worked', 'failed')
       } catch (e) {
         assert.equal("Parse Error: Unexpected 'BAR':<<id>>, expected on of ':=', '<<EOF>>', 'Union', 'Intersect', '-', 'X', 'Join', '/'",""+e)
+      }
+    })
+    it('Is able to return where it failed', function() {
+      try {
+        Parse('')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 0}, pos)
+      }
+
+      try {
+        Parse('FOO BAR')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 1, startColumn: 4, endRow: 1, endColumn: 7}, pos)
+      }
+
+      try {
+        Parse('FOO   BAR')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 1, startColumn: 6, endRow: 1, endColumn: 9}, pos)
+      }
+
+      try {
+        Parse('Rename[a/b](c')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 1, startColumn: 13, endRow: 1, endColumn: 13}, pos)
+      }
+
+      try {
+        Parse('Rename[a/b](c)' + "\n" + 'Join Join')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 2, startColumn: 5, endRow: 2, endColumn: 9}, pos)
+      }
+
+      try {
+        Parse('Rename[a/b](' + "\n" + 'c')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 2, startColumn: 1, endRow: 2, endColumn: 1}, pos)
+      }
+    })
+    it('Is able to graphicaly describe where it failed', function() {
+      try {
+        Parse('')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.showPosition()
+          , expected = '^'
+        assert.equal(expected, pos)
+      }
+
+      try {
+        Parse('FOO BAR')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.showPosition()
+                     // FOO BAR
+          , expected = '    ^-^'
+        assert.equal(expected, pos)
+      }
+
+      try {
+        Parse('FOO   BAR')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.showPosition()
+                     // FOO   BAR
+          , expected = '      ^-^'
+        assert.equal(expected, pos)
+      }
+
+      try {
+        Parse('Rename[a/b](c')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.showPosition()
+                     // Rename[a/b](c
+          , expected = '             ^'
+        assert.equal(expected, pos)
       }
     })
   })
@@ -394,6 +489,42 @@ describe('Parsing', function(){
         assert.fail('worked', 'failed')
       } catch (e) {
         assert.equal("Tokenization Error: Unrecognized text: .bar",""+e)
+      }
+    })
+    it('Is able to return where it failed', function() {
+      try {
+        Parse('foo.bar')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 1, startColumn: 3, endRow: 1, endColumn: 7}, pos)
+      }
+
+      try {
+        Parse('Select[alpha==4](' + "\n" + 'foo.bar)')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 2, startColumn: 3, endRow: 2, endColumn: 8}, pos)
+      }
+
+      try {
+        Parse('Select' + "\n" + '[alpha==4](' + "\n" + 'foo.bar)')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.getPosition()
+        assert.deepEqual({startRow: 3, startColumn: 3, endRow: 3, endColumn: 8}, pos)
+      }
+    })
+    it('Is able to graphicaly describe where it failed', function() {
+      try {
+        Parse('foo.bar')
+        assert.fail('worked', 'failed')
+      } catch (e) {
+        var pos = e.showPosition()
+                    //  foo.bar
+          , expected = '   ^--^'
+        assert.equal(expected, pos)
       }
     })
   })
