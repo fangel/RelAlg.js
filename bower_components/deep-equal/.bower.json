@@ -1,0 +1,23 @@
+{
+  "name": "deep-equal",
+  "version": "0.0.0",
+  "main": "index.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/sakabako/node-deep-equal",
+  "_release": "0.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.0",
+    "commit": "9f471afbe86a7a25cd9cb7875438e2e5d8a50d1c"
+  },
+  "_source": "git://github.com/sakabako/node-deep-equal.git",
+  "_target": "~0.0.0",
+  "_originalSource": "deep-equal",
+  "_direct": true
+}

@@ -1,0 +1,20 @@
+{
+  "name": "flight",
+  "description": "Clientside component infrastructure",
+  "main": "lib/index.js",
+  "version": "1.1.0",
+  "ignore": [
+    "tools/standalone",
+    "test",
+    ".gitignore",
+    ".travis.yml",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "Makefile",
+    "package.json"
+  ],
+  "dependencies": {
+    "es5-shim": "2.0.0",
+    "jquery": ">=1.8.0"
+  }
+}
