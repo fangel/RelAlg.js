@@ -1,0 +1,16 @@
+{
+  "name": "RelAlg.js",
+  "description": "A Relational Algebra evaluator",
+  "main": "lib/main.js",
+  "ignore": [
+    ".gitignore"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.0.0",
+    "requirejs": "~2.1.8",
+    "d3": "~3.3.3",
+    "flight": "~1.1.0",
+    "deep-equal": "~0.0.0",
+    "ace": "~1.1.1"
+  }
+}

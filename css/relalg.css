@@ -1,0 +1,105 @@
+.navbar-fixed-bottom .container {
+  padding-top: 10px;
+}
+
+#list {
+  padding: 8px 0
+}
+#graph .modal-body {
+  text-align: center;
+}
+#graph-staging {
+  /* This box needs to be displayed, but out of sight - so position it off-canvas */
+  position: absolute;
+  top: -220px;
+  left: -220px;
+  width: 200px;
+  height: 200px;
+}
+
+#editor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 75px;
+}
+
+#main {
+  margin-bottom: 95px;
+}
+  #main h1 {
+    margin-top: 0;
+  }
+  #main .table {
+    width: auto;
+  }
+
+.ace_marker-layer .relalg_error {
+    position: absolute;
+    z-index: 4;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    border-bottom: 2px dotted red;
+}
+
+.actions li + li {
+  margin-top: 5px;
+}
+
+/*
+ * Re-create .nav-list from bootstrap 2, because I really like that style
+ */
+ .nav-header {
+   display: block;
+   padding: 3px 15px;
+   font-size: 11px;
+   font-weight: bold;
+   line-height: 20px;
+   color: #999999;
+   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+   text-transform: uppercase;
+ }
+ 
+ .nav-list {
+   padding-right: 15px;
+   padding-left: 15px;
+   margin-bottom: 0;
+ }
+
+ .nav-list > li > a,
+ .nav-list .nav-header {
+   margin-right: -15px;
+   margin-left: -15px;
+   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+ }
+
+ .nav-list > li > a {
+   padding: 3px 15px;
+ }
+
+ .nav-list > .active > a,
+ .nav-list > .active > a:hover,
+ .nav-list > .active > a:focus {
+   color: #ffffff;
+   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+   background-color: #0088cc;
+ }
+
+ .nav-list [class^="icon-"],
+ .nav-list [class*=" icon-"] {
+   margin-right: 2px;
+ }
+
+ .nav-list .divider {
+   *width: 100%;
+   height: 1px;
+   margin: 9px 1px;
+   *margin: -5px 0 5px;
+   overflow: hidden;
+   background-color: #e5e5e5;
+   border-bottom: 1px solid #e5e5e5;
+ }
