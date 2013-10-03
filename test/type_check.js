@@ -17,6 +17,7 @@ function binaryOperationMixin(terminal) {
     assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal("Missing attributes: foo", check[0][0].toString())
     assert.equal(pos, check[0][0].showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 28}, check[0][0].getPosition())
   })
   it("Fails if the RHS has a type-checking error", function() {
     var expr = Parse("[['bar']->[1]] " + terminal + " Project[baz]([['bar']->[1]])")
@@ -28,6 +29,7 @@ function binaryOperationMixin(terminal) {
     assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal("Missing attributes: baz", check[0][0].toString())
     assert.equal(pos, check[0][0].showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 15+terminal.length+1, endRow: 1, endColumn: 15+terminal.length+29}, check[0][0].getPosition())
   })
   it("Fails if both the LHS and the RHS has type-checking errors", function() {
     var expr = Parse("Project[foo]([['bar']->[1]]) " + terminal + " Project[baz]([['bar']->[1]])")
@@ -47,6 +49,8 @@ function binaryOperationMixin(terminal) {
     assert.equal(posR, check[0][1].showPosition())
     var combinedError = new TypeCheck.Errors(check[0])
     assert.equal(posC, combinedError.showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 28}, check[0][0].getPosition())
+    assert.deepEqual({startRow: 1, startColumn: 29+terminal.length+1, endRow: 1, endColumn: 29+terminal.length+29}, check[0][1].getPosition())
   })
 }
 function schemaMustMatchMixin(terminal) {
@@ -66,6 +70,7 @@ function schemaMustMatchMixin(terminal) {
     assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 1: foo≠bar', check[0][0].toString())
     assert.equal(pos, check[0][0].showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 15+terminal.length+15}, check[0][0].getPosition())
   })
   it("Fails when there is a disagreement on multiple of the attributes in the schema", function() {
     var expr = Parse("[['foo', 'bar']->[1, 2]] " + terminal + " [['bar', 'foo']->[1, 2]]")
@@ -77,6 +82,7 @@ function schemaMustMatchMixin(terminal) {
     assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 1: foo≠bar, 2: bar≠foo', check[0][0].toString())
     assert.equal(pos, check[0][0].showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 25+terminal.length+25}, check[0][0].getPosition())
   })
   it("Fails when there are more attributes in the schema of the LHS than the RHS", function() {
     var expr = Parse("[['foo', 'bar']->[1, 2]] " + terminal + " [['foo']->[1]]")
@@ -88,6 +94,7 @@ function schemaMustMatchMixin(terminal) {
     assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 2: bar≠ε', check[0][0].toString())
     assert.equal(pos, check[0][0].showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 25+terminal.length+15}, check[0][0].getPosition())
   })
   it("Fails when there are more attributes in the schema of the RHS than the LHS", function() {
     var expr = Parse("[['foo']->[1]] " + terminal + " [['foo', 'bar']->[1, 2]]")
@@ -99,6 +106,7 @@ function schemaMustMatchMixin(terminal) {
     assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 2: ε≠bar', check[0][0].toString())
     assert.equal(pos, check[0][0].showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 15+terminal.length+25}, check[0][0].getPosition())
   })
   it("Fails when there is a disagreement on some of the attributes in the schema", function() {
     var expr = Parse('Foo ' + terminal + ' Bar')
@@ -110,6 +118,7 @@ function schemaMustMatchMixin(terminal) {
     assert.equal(TypeCheck.Error, check[0][0].constructor)
     assert.equal('Disagreement on attribute 1: alpha≠a, 2: b≠bravo, 4: ε≠d', check[0][0].toString())
     assert.equal(pos, check[0][0].showPosition())
+    assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 4+terminal.length+4}, check[0][0].getPosition())
   })
   it("Works when the disagreement is rectified with Select and Project prior to Union", function() {
     var expr = Parse('Rename[alpha/a](Foo) ' + terminal + ' Project[a, b, c](Rename[bravo/b](Bar))')
@@ -147,6 +156,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Duplicate attributes: foo", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 7, endRow: 1, endColumn: 50}, check[0][0].getPosition())
     })
     it("Fails when the data does not have as many columns as the schema", function() {
       var expr = Parse("Foo := [['foo', 'bar', 'baz'] -> [1,2,3], [3,4]]")
@@ -157,6 +167,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Some rows does not conform to the schema: [3, 4]", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 7, endRow: 1, endColumn: 48}, check[0][0].getPosition())
     })
   })
   describe("Relation References", function() {
@@ -169,6 +180,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Unknown relation: Baz", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 3}, check[0][0].getPosition())
     })
     it("Has no errors when the relation reference is known", function() {
       var expr = Parse('Foo')
@@ -200,6 +212,7 @@ describe("Type Checking", function() {
       assert.deepEqual([], check[1])
       assert.equal("Missing attributes: a", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 15}, check[0][0].getPosition())
     })
     it("Has an error when multiple attributes are missing", function() {
       var expr = Parse("Project[a, d](Foo)")
@@ -209,6 +222,7 @@ describe("Type Checking", function() {
       assert.deepEqual([], check[1])
       assert.equal("Missing attributes: a, d", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 18}, check[0][0].getPosition())
     })
     it("Has an error when some of the attributes are missing", function() {
       var expr = Parse("Project[a, c, d, b](Foo)")
@@ -218,6 +232,7 @@ describe("Type Checking", function() {
       assert.deepEqual([], check[1])
       assert.equal("Missing attributes: a, d", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 24}, check[0][0].getPosition())
     })
   })
   describe("Renames", function() {
@@ -240,6 +255,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attribute: a", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 20}, check[0][0].getPosition())
     })
     it("Has an error when renaming a attribute to the name of a existing attribute", function() {
       var expr = Parse("Rename[alpha/b](Foo)")
@@ -250,6 +266,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Can not rename attribute alpha to b, b already exists", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 20}, check[0][0].getPosition())
     })
   })
   describe("Selections", function() {
@@ -286,6 +303,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 17}, check[0][0].getPosition())
     })
     it("Has an error when multiple attributes are missing", function() {
       var expr = Parse("Select[a==1 && d==2](Foo)")
@@ -296,6 +314,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a, d", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 25}, check[0][0].getPosition())
     })
     it("Has an error when both sides of the criteria are missing attributes", function() {
       var expr = Parse("Select[a==d](Foo)")
@@ -306,6 +325,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a, d", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 17}, check[0][0].getPosition())
     })
     it("Has an error when some of the attributes are missing", function() {
       var expr = Parse("Select[a==1 && b==2](Foo)")
@@ -316,6 +336,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: a", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 25}, check[0][0].getPosition())
     })
   })
   describe("Unions", function() {
@@ -351,6 +372,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: c", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 9}, check[0][0].getPosition())
     })
     it("Fails when the cartesian product involves relations has multiple overlapping attribute", function() {
       var expr = Parse("Foo X Foo")
@@ -361,6 +383,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: alpha, b, c", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 9}, check[0][0].getPosition())
     })
   })
   describe("Joins", function() {
@@ -384,6 +407,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: c", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 22}, check[0][0].getPosition())
     })
     it("Fails when the join involves relations has multiple overlapping attribute", function() {
       var expr = Parse("Foo Join[alpha==alpha] Foo")
@@ -394,6 +418,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Overlapping attributes: alpha, b, c", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 26}, check[0][0].getPosition())
     })
     it("Fails when the criteria involves attributes not in one of the two involved relations", function() {
       var expr = Parse("[['foo']->[1]] Join[foz==baz] [['bar']->[2]]")
@@ -404,6 +429,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Missing attributes: foz, baz", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 44}, check[0][0].getPosition())
     })
   })
   describe("Natural Joins", function() {
@@ -444,6 +470,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("No unique attributes on the left hand side", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 31}, check[0][0].getPosition())
     })
     it("Fails when the RHS has attributes that the RHS does not", function () {
       var expr = Parse("[['bar']->[1]] / [['foo', 'bar']->[1, 2]]")
@@ -454,6 +481,7 @@ describe("Type Checking", function() {
       assert.equal(TypeCheck.Error, check[0][0].constructor)
       assert.equal("Right hand side has unique attributes: foo", check[0][0].toString())
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 41}, check[0][0].getPosition())
     })
   })
   describe("Error Messages", function() {
@@ -464,6 +492,15 @@ describe("Type Checking", function() {
       assert.equal(1, check[0].length)
       assert.deepEqual([], check[1])
       assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 16, endRow: 1, endColumn: 19}, check[0][0].getPosition())
+
+      expr = Parse("Foo  X   Baz")
+      pos =        "         ^-^"
+      check = TypeCheck(expr)
+      assert.equal(1, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.equal(pos, check[0][0].showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 9, endRow: 1, endColumn: 12}, check[0][0].getPosition())
     })
     it("Can highlight the position of two errors within statements", function() {
       var expr = Parse("Rename[foo/bar](Baz) X Project[foo,baz](Qux)")
@@ -478,6 +515,8 @@ describe("Type Checking", function() {
       assert.deepEqual([], check[1])
       assert.equal(err, combinedError.toString())
       assert.equal(pos, combinedError.showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 16, endRow: 1, endColumn: 19}, check[0][0].getPosition())
+      assert.deepEqual({startRow: 1, startColumn: 40, endRow: 1, endColumn: 43}, check[0][1].getPosition())
     })
     it("Can highlight the position of three errors", function() {
       var expr = Parse("Baz X Qux X Quid")
@@ -493,6 +532,9 @@ describe("Type Checking", function() {
       assert.deepEqual([], check[1])
       assert.equal(err, combinedError.toString())
       assert.equal(pos, combinedError.showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 3}, check[0][0].getPosition())
+      assert.deepEqual({startRow: 1, startColumn: 6, endRow: 1, endColumn: 9}, check[0][1].getPosition())
+      assert.deepEqual({startRow: 1, startColumn: 12, endRow: 1, endColumn: 16}, check[0][2].getPosition())
     })
     it("Can highlight the position of three errors within statements", function() {
       var expr = Parse("Rename[foo/bar](Baz) X Project[baz](Qux) X Select[qux==2](Quid)")
@@ -508,6 +550,24 @@ describe("Type Checking", function() {
       assert.deepEqual([], check[1])
       assert.equal(err, combinedError.toString())
       assert.equal(pos, combinedError.showPosition())
+      assert.deepEqual({startRow: 1, startColumn: 16, endRow: 1, endColumn: 19}, check[0][0].getPosition())
+      assert.deepEqual({startRow: 1, startColumn: 36, endRow: 1, endColumn: 39}, check[0][1].getPosition())
+      assert.deepEqual({startRow: 1, startColumn: 58, endRow: 1, endColumn: 62}, check[0][2].getPosition())
+    })
+    it("Can return the position of type-errors on multiple lines", function () {
+      var expr = Parse("Baz\nX\nQux")
+        , check = TypeCheck(expr)
+      assert.equal(2, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.deepEqual({startRow: 1, startColumn: 0, endRow: 1, endColumn: 3}, check[0][0].getPosition())
+      assert.deepEqual({startRow: 3, startColumn: 0, endRow: 3, endColumn: 3}, check[0][1].getPosition())
+
+      expr = Parse("Rename[foo/bar](Baz)\nX\nProject[baz](Qux)")
+      check = TypeCheck(expr)
+      assert.equal(2, check[0].length)
+      assert.deepEqual([], check[1])
+      assert.deepEqual({startRow: 1, startColumn: 16, endRow: 1, endColumn: 19}, check[0][0].getPosition())
+      assert.deepEqual({startRow: 3, startColumn: 13, endRow: 3, endColumn: 16}, check[0][1].getPosition())
     })
   })
 })
