@@ -2,7 +2,7 @@ var assert = require("assert")
   , requirejs = require("requirejs")
   , _ = require('../test-setup')
 
-var SetHelper = requirejs("util/set_helpers")
+var SetHelper = requirejs("relalg/util/set_helpers")
 
 describe("Set Helper Function", function() {
   describe("Union", function() {

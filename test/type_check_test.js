@@ -2,10 +2,10 @@ var assert = require("assert")
   , requirejs = require("requirejs")
   , _ = require('./test-setup')
 
-var Parse = requirejs("parse")
-  , Tree = requirejs("tree")
-  , Relation = requirejs("relation")
-  , TypeCheck = requirejs("type_check")
+var Parse = requirejs("relalg/parse")
+  , Tree = requirejs("relalg/tree")
+  , Relation = requirejs("relalg/relation")
+  , TypeCheck = requirejs("relalg/type_check")
 
 function binaryOperationMixin(terminal) {
   it("Fails if the LHS has a type-checking error", function() {

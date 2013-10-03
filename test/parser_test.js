@@ -2,9 +2,9 @@ var assert = require("assert")
   , requirejs = require("requirejs")
   , _ = require('./test-setup')
 
-var Parse = requirejs("parse")
-  , Tree = requirejs("tree")
-  , Relation = requirejs("relation")
+var Parse = requirejs("relalg/parse")
+  , Tree = requirejs("relalg/tree")
+  , Relation = requirejs("relalg/relation")
 
 function getStmt(expr) {
   if (expr instanceof Tree.Assignment)

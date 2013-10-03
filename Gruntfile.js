@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     },
     jshint: {
       options: {
-        ignores: 'lib/parser.js', // The parser is auto-generated
+        ignores: 'lib/relalg/parser.js', // The parser is auto-generated
         asi: true, // I'm not a great fan of unneeded semicolons 
         laxcomma: true // And I like having commas first
       },

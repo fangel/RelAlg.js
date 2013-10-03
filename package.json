@@ -13,7 +13,7 @@
   },
   "license" : "BSD",
   "directories": {
-    "lib": "./lib",
+    "lib": "./lib/relalg",
     "bin": "./bin"
   },
   "bin": {

@@ -2,10 +2,10 @@ var assert = require("assert")
   , requirejs = require("requirejs")
   , _ = require('./test-setup')
 
-var Parse = requirejs("parse")
-  , Tree = requirejs("tree")
-  , Relation = requirejs("relation")
-  , Evaluate = requirejs("evaluate")
+var Parse = requirejs("relalg/parse")
+  , Tree = requirejs("relalg/tree")
+  , Relation = requirejs("relalg/relation")
+  , Evaluate = requirejs("relalg/evaluate")
 
 // Please ensure that expressions used actually type-check. 
 // To ease development of these test-cases, type-checking has
