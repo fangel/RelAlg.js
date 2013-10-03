@@ -31,7 +31,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'dot'
         },
-        src: ['test/**/*.js']
+        src: ['test/**/*_test.js']
       }
     }
   })
