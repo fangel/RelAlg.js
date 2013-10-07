@@ -1,11 +1,23 @@
-var assert = require("assert")
-  , requirejs = require("requirejs")
-  , _ = require('./test-setup')
-
-var Parse = requirejs("relalg/parse")
-  , Tree = requirejs("relalg/tree")
-  , Relation = requirejs("relalg/relation")
-  , TypeCheck = requirejs("relalg/type_check")
+(function(factory) {
+  if (typeof define !== 'undefined' && define.amd) {
+    // We are running the tests in Karma, which uses RequireJS for everything,
+    // so we wrap everything in a define, with our test-case as the module.
+    // Chai is loaded from Bower.
+    define(['chai', 'relalg/parse', 'relalg/tree', 'relalg/relation', 'relalg/type_check'], factory)
+  } else {
+    // We are using the Mocha runner in Node.js, so we load Chai and RequireJS
+    // from NPM, then use RequireJS to load relalg.
+    var chai = require("chai")
+      , requirejs = require("requirejs")
+      , _ = require('./mocha-setup')
+    var Parse = requirejs("relalg/parse")
+      , Tree = requirejs("relalg/tree")
+      , Relation = requirejs("relalg/relation")
+      , TypeCheck = requirejs("relalg/type_check")
+    factory(chai, Parse, Tree, Relation, TypeCheck)
+  }
+})(function(chai, Parse, Tree, Relation, TypeCheck) {
+var assert = chai.assert
 
 function binaryOperationMixin(terminal, ENV) {
   it("Fails if the LHS has a type-checking error", function() {
@@ -568,4 +580,6 @@ describe("Type Checking", function() {
       assert.deepEqual({startRow: 3, startColumn: 13, endRow: 3, endColumn: 16}, check[0][1].getPosition())
     })
   })
+})
+
 })

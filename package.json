@@ -3,15 +3,15 @@
   "version": "0.2.0-beta",
   "preferGlobal": true,
   "author": {
-    "name" : "Morten Fangel",
-    "email" : "fangel@sevengoslings.net",
-    "url" : "http://sevengoslings.net"
+    "name": "Morten Fangel",
+    "email": "fangel@sevengoslings.net",
+    "url": "http://sevengoslings.net"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/fangel/RelAlg.js.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fangel/RelAlg.js.git"
   },
-  "license" : "BSD",
+  "license": "BSD",
   "directories": {
     "lib": "./lib/relalg",
     "bin": "./bin"
@@ -28,7 +28,14 @@
     "grunt-cli": "~0.1.9",
     "grunt-jison": "~1.2.0",
     "grunt-contrib-jshint": "~0.6.3",
-    "grunt-mocha-test": "~0.6.3"
+    "grunt-mocha-test": "~0.6.3",
+    "grunt-karma": "~0.6.2",
+    "karma-mocha": "~0.1.0",
+    "karma": "~0.10.2",
+    "karma-requirejs": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.0",
+    "karma-phantomjs-launcher": "~0.1.0",
+    "chai": "~1.8.0"
   },
   "dependencies": {
     "requirejs": "~2.1.8",

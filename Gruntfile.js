@@ -33,6 +33,27 @@ module.exports = function(grunt) {
         },
         src: ['test/**/*_test.js']
       }
+    },
+    karma: {
+      options: {
+        basePath: '',
+        frameworks: ['mocha', 'requirejs'],
+        files: [
+          {pattern: 'bower_components/chai/**/*.js', included: false},
+          {pattern: 'bower_components/deep-equal/**/*.js', included: false},
+          {pattern: 'lib/relalg/**/*.js', included: false},
+          {pattern: 'test/**/*_test.js', included: false},
+          'test/karma-setup.js'
+        ],
+        reporters: ['dots'],
+        singleRun: true
+      },
+      chrome: {
+        browsers: ['Chrome'],
+      },
+      test: {
+        browsers: ['PhantomJS'],
+      }
     }
   })
   
@@ -40,9 +61,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jison');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-karma');
   
   // Set up aliases
-  grunt.registerTask('build', ['jison']); // , 'jison_amd_define']);
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('build', ['jison']);
+  grunt.registerTask('test', ['mochaTest:test', 'karma:test']);
   grunt.registerTask('check', ['jshint', 'test']);
 }

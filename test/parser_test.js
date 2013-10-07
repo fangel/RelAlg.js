@@ -1,10 +1,22 @@
-var assert = require("assert")
-  , requirejs = require("requirejs")
-  , _ = require('./test-setup')
-
-var Parse = requirejs("relalg/parse")
-  , Tree = requirejs("relalg/tree")
-  , Relation = requirejs("relalg/relation")
+(function(factory) {
+  if (typeof define !== 'undefined' && define.amd) {
+    // We are running the tests in Karma, which uses RequireJS for everything,
+    // so we wrap everything in a define, with our test-case as the module.
+    // Chai is loaded from Bower.
+    define(['chai', 'relalg/parse', 'relalg/tree', 'relalg/relation'], factory)
+  } else {
+    // We are using the Mocha runner in Node.js, so we load Chai and RequireJS
+    // from NPM, then use RequireJS to load relalg.
+    var chai = require("chai")
+      , requirejs = require("requirejs")
+      , _ = require('./mocha-setup')
+    var Parse = requirejs("relalg/parse")
+      , Tree = requirejs("relalg/tree")
+      , Relation = requirejs("relalg/relation")
+    factory(chai, Parse, Tree, Relation)
+  }
+})(function(chai, Parse, Tree, Relation) {
+var assert = chai.assert
 
 function getStmt(expr) {
   if (expr instanceof Tree.Assignment)
@@ -363,18 +375,19 @@ describe('Parsing', function(){
   })
   describe('Invalid expressions', function() {
     it('Throws an error', function() {
-      assert.throws(function() {
+      try {
         Parse('FOO BAR')
-      },
-      function(err) {
-        return err.constructor == Parse.Error
-      })
-      assert.throws(function() {
+        assert.fail('worked', 'failed')
+      } catch (err) {
+        assert.instanceOf(err, Parse.Error)
+      }
+      
+      try {
         Parse('')
-      },
-      function(err) {
-        return err.constructor == Parse.Error
-      })
+        assert.fail('worked', 'failed')
+      } catch (err) {
+        assert.instanceOf(err, Parse.Error)
+      }
     })
     it('Has a useful error message', function() {
       try {
@@ -476,12 +489,12 @@ describe('Parsing', function(){
   })
   describe('Invalid characters', function() {
     it('Throws an error', function() {
-      assert.throws(function() {
+      try {
         Parse('foo.bar')
-      },
-      function(err) {
-        return err.constructor == Parse.Error
-      })
+        assert.fail('worked', 'failed')
+      } catch (err) {
+        assert.instanceOf(err, Parse.Error)
+      }
     })
     it('Has a useful error message', function() {
       try {
@@ -528,4 +541,6 @@ describe('Parsing', function(){
       }
     })
   })
+})
+
 })

@@ -1,8 +1,20 @@
-var assert = require("assert")
-  , requirejs = require("requirejs")
-  , _ = require('../test-setup')
-
-var SetHelper = requirejs("relalg/util/set_helpers")
+(function(factory) {
+  if (typeof define !== 'undefined' && define.amd) {
+    // We are running the tests in Karma, which uses RequireJS for everything,
+    // so we wrap everything in a define, with our test-case as the module.
+    // Chai is loaded from Bower.
+    define(['chai', 'relalg/util/set_helpers'], factory)
+  } else {
+    // We are using the Mocha runner in Node.js, so we load Chai and RequireJS
+    // from NPM, then use RequireJS to load relalg.
+    var chai = require("chai")
+      , requirejs = require("requirejs")
+      , _ = require('../mocha-setup')
+    var SetHelper = requirejs("relalg/util/set_helpers")
+    factory(chai, SetHelper)
+  }
+})(function(chai, SetHelper) {
+var assert = chai.assert
 
 describe("Set Helper Function", function() {
   describe("Union", function() {
@@ -109,4 +121,6 @@ describe("Set Helper Function", function() {
       assert.deepEqual([1,], SetHelper.Pluck([1,2,3], [0,3]))
     })
   })
+})
+
 })
