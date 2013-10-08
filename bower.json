@@ -14,6 +14,7 @@
     "ace": "~1.1.1"
   },
   "devDependencies": {
-    "chai": "~1.8.0"
+    "chai": "~1.8.0",
+    "mocha-flight": "~0.3.0"
   }
 }

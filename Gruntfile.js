@@ -31,15 +31,19 @@ module.exports = function(grunt) {
         options: {
           reporter: 'dot'
         },
-        src: ['test/**/*_test.js']
+        src: ['test/*_test.js', 'test/util/*_test.js']
       }
     },
     karma: {
       options: {
         basePath: '',
-        frameworks: ['mocha', 'requirejs'],
+        frameworks: ['mocha', 'requirejs', 'sinon'],
         files: [
+          {pattern: 'bower_components/es5-shim/es5-shim.js', included: false},
           {pattern: 'bower_components/chai/**/*.js', included: false},
+          {pattern: 'bower_components/flight/lib/**/*.js', included: false},
+          {pattern: 'bower_components/mocha-flight/lib/**/*.js', included: false},
+          {pattern: 'bower_components/jquery/**/*.js', included: false},
           {pattern: 'bower_components/deep-equal/**/*.js', included: false},
           {pattern: 'lib/relalg/**/*.js', included: false},
           {pattern: 'test/**/*_test.js', included: false},

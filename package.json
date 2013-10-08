@@ -35,7 +35,8 @@
     "karma-requirejs": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",
     "karma-phantomjs-launcher": "~0.1.0",
-    "chai": "~1.8.0"
+    "chai": "~1.8.0",
+    "karma-sinon": "0.0.1"
   },
   "dependencies": {
     "requirejs": "~2.1.8",
