@@ -45,9 +45,15 @@ module.exports = function(grunt) {
           {pattern: 'bower_components/mocha-flight/lib/**/*.js', included: false},
           {pattern: 'bower_components/jquery/**/*.js', included: false},
           {pattern: 'bower_components/deep-equal/**/*.js', included: false},
+          {pattern: 'bower_components/ace/lib/**/*.js', included: false},
+          {pattern: 'bower_components/ace/lib/**/*.css', included: false},
           {pattern: 'lib/relalg/**/*.js', included: false},
           {pattern: 'test/**/*_test.js', included: false},
           'test/karma-setup.js'
+        ],
+        exclude: [
+          'bower_components/ace/lib/test/**/*.js',
+          'bower_components/ace/lib/**/*_test.js',
         ],
         reporters: ['dots'],
         singleRun: true
