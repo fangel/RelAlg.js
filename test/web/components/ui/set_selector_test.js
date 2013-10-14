@@ -1,7 +1,7 @@
 define(['chai', 'relalg/web/components/ui/set_selector'], function(chai, SetSelectorUI) {
   var assert = chai.assert
     , fixture = '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Datasets <b class="caret"></b></a>' + "\n" + 
-                '<ul class="dropdown-menu">' + "\n"
+                '<ul class="dropdown-menu">' + "\n" +
                 '</ul>'
   
   describeComponent('relalg/web/components/ui/set_selector', function () {
