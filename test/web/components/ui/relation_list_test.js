@@ -76,7 +76,7 @@ define(['chai', 'relalg/web/components/ui/relation_list'], function(chai, Relati
         this.component.$node.find('.relation a').click()
         
         assert(spy.calledOnce)
-        assert(spy.calledWithExactly(document, 'relationSelected', {name: 'Foo'}))
+        assert(spy.calledWithExactly('uiRelationSelected', {name: 'Foo'}))
         
         this.component.trigger.restore();
       })
@@ -86,7 +86,7 @@ define(['chai', 'relalg/web/components/ui/relation_list'], function(chai, Relati
         this.component.select('addSelector').click()
         
         assert(spy.calledOnce)
-        assert(spy.calledWithExactly(document, 'uiAddRelation', {name: 'NewRelation'}))
+        assert(spy.calledWithExactly('uiAddRelation', {name: 'NewRelation'}))
         
         this.component.trigger.restore();
         window.prompt.restore()
@@ -100,7 +100,7 @@ define(['chai', 'relalg/web/components/ui/relation_list'], function(chai, Relati
         this.component.select('removeSelector').click()
 
         assert(spy.calledOnce)
-        assert(spy.calledWithExactly(document, 'uiRemoveRelation', {name: 'Foo'}))
+        assert(spy.calledWithExactly('uiRemoveRelation', {name: 'Foo'}))
 
         this.component.trigger.restore();
         window.confirm.restore()

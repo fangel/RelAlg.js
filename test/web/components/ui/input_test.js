@@ -11,16 +11,15 @@ define(['chai', 'relalg/web/components/ui/input', 'relalg/relation'], function(c
                 '    </ul>' + "\n" + 
                 '  </div>' + "\n" + 
                 '</div>'
+    , Foo = new Relation(['alpha', 'bravo'], [[1,2], [3,4]])
 
   describeComponent('relalg/web/components/ui/input', function() {
     beforeEach(function(done) {
-      setupComponent(fixture, {dataStore: {
-        'Foo': new Relation(['alpha', 'bravo'], [[1,2], [3,4]])
-      }})
+      setupComponent(fixture)
 
       var mode = this.component.editor.getSession().getMode().$id
       if (mode == 'web/components/ace/mode') {
-        this.component.enviromentChange()
+        this.component.trigger('enviromentChange', {ENV: {'Foo': Foo}})
         done()
       } else {
         this.component.editor.getSession().on('changeMode', function() {

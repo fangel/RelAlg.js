@@ -9,12 +9,11 @@ define(['chai', 'relalg/web/components/ui/relation_view', 'relalg/relation'], fu
                 '</table>' + "\n" +
                 '<button class="btn btn-default btn-sm addRow">Add Row</button>' + "\n" +
                 '<button class="btn btn-default btn-sm addColumn">Add Column</button>'
+    , Foo = new Relation(['alpha', 'bravo'], [[1,2], [3,4]])
 
   describeComponent('relalg/web/components/ui/relation_view', function() {
     beforeEach(function() {
-      setupComponent(fixture, {dataStore: {
-        'Foo': new Relation(['alpha', 'bravo'], [[1,2], [3,4]])
-      }})
+      setupComponent(fixture)
     })
     
     it("Initially starts out empty", function() {
@@ -24,7 +23,7 @@ define(['chai', 'relalg/web/components/ui/relation_view', 'relalg/relation'], fu
     })
     
     it("Will display a relation after it is selected", function() {
-      this.component.trigger('relationSelected', {name: 'Foo'})
+      this.component.trigger('relationSelected', {name: 'Foo', relation: Foo})
       assert.equal("Foo", this.component.select('title').html())
       assert.equal(2, this.component.select('headerCell').length)
       assert.equal("alpha", $(this.component.select('headerCell')[0]).html())
@@ -38,7 +37,7 @@ define(['chai', 'relalg/web/components/ui/relation_view', 'relalg/relation'], fu
     })
     
     it("Header cells are editable", function() {
-      this.component.trigger('relationSelected', {name: 'Foo'})
+      this.component.trigger('relationSelected', {name: 'Foo', relation: Foo})
       var spy = sinon.spy(this.component, 'trigger')
         , cell = $(this.component.select('headerCell')[0])
       assert.equal("alpha", cell.html())
@@ -60,7 +59,7 @@ define(['chai', 'relalg/web/components/ui/relation_view', 'relalg/relation'], fu
     })
 
     it("Body cells are editable", function() {
-      this.component.trigger('relationSelected', {name: 'Foo'})
+      this.component.trigger('relationSelected', {name: 'Foo', relation: Foo})
       var spy = sinon.spy(this.component, 'trigger')
         , cell = $(this.component.select('bodyCell')[2])
       assert.equal("3", cell.html())
@@ -82,7 +81,7 @@ define(['chai', 'relalg/web/components/ui/relation_view', 'relalg/relation'], fu
     })
     
     it("Adding a column triggers uiAddColumn", function() {
-      this.component.trigger('relationSelected', {name: 'Foo'})
+      this.component.trigger('relationSelected', {name: 'Foo', relation: Foo})
       var spy = sinon.spy(this.component, 'trigger')
         , stub = sinon.stub(window, 'prompt').returns('new_column')
       
@@ -96,7 +95,7 @@ define(['chai', 'relalg/web/components/ui/relation_view', 'relalg/relation'], fu
     })
   
     it("Adding a row triggers uiAddRow", function() {
-      this.component.trigger('relationSelected', {name: 'Foo'})
+      this.component.trigger('relationSelected', {name: 'Foo', relation: Foo})
       var spy = sinon.spy(this.component, 'trigger')
       
       this.component.select('addRow').click();
