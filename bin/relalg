@@ -8,5 +8,8 @@ requirejs.config({
 });
 
 requirejs(['relalg/cli/repl'], function(relalg_repl) {
-  repl.start(relalg_repl)
+  var cli = repl.start(relalg_repl.options)
+  for (var command in relalg_repl.commands) {
+    cli.defineCommand(command, relalg_repl.commands[command])
+  }
 })
