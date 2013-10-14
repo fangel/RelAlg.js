@@ -56,13 +56,14 @@ module.exports = function(grunt) {
           'bower_components/ace/lib/**/*_test.js',
         ],
         reporters: ['dots'],
-        singleRun: true
       },
       chrome: {
         browsers: ['Chrome'],
+        autoWatch: true
       },
       test: {
         browsers: ['PhantomJS'],
+        singleRun: true
       }
     }
   })
