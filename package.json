@@ -42,6 +42,10 @@
     "requirejs": "~2.1.8",
     "deep-equal": "0.0.0"
   },
+  "optionalDependencies": {
+    "d3": "~3.3.8",
+    "phantomjs": "~1.9.2-2"
+  },
   "engines": {
     "node": ">=0.4.0"
   }
