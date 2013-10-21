@@ -394,7 +394,7 @@ describe('Parsing', function(){
         Parse('FOO BAR')
         assert.fail('worked', 'failed')
       } catch (e) {
-        assert.equal("Parse Error: Unexpected 'BAR':<<id>>, expected on of ':=', '<<EOF>>', 'Union', 'Intersect', '-', 'X', 'Join', '/'",""+e)
+        assert.equal("Parse Error: Unexpected 'BAR':<<id>>, expected one of ':=', '<<EOF>>', 'Union', 'Intersect', '-', 'X', 'Join', '/'",""+e)
       }
     })
     it('Is able to return where it failed', function() {
