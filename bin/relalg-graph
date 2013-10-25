@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+var requirejs = require('requirejs')
+
+requirejs.config({
+  baseUrl: __dirname + "/../lib",
+});
+
+requirejs(['relalg/cli/graph'], function(graph) {
+  graph(process.argv[2], function(output) {
+    console.log(output)
+  })
+})

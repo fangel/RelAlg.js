@@ -7,6 +7,9 @@ requirejs.config({
   baseUrl: __dirname + "/../lib",
 });
 
-requirejs(['cli/repl', 'parser'], function(relalg_repl, Parser) {
-  repl.start(relalg_repl)
+requirejs(['relalg/cli/repl'], function(relalg_repl) {
+  var cli = repl.start(relalg_repl.options)
+  for (var command in relalg_repl.commands) {
+    cli.defineCommand(command, relalg_repl.commands[command])
+  }
 })

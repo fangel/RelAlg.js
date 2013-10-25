@@ -1,0 +1,34 @@
+{
+  "name": "mocha-flight",
+  "version": "0.3.0",
+  "description": "Extensions to the Mocha test framework for use with Flight",
+  "keywords": [
+    "flight",
+    "mocha",
+    "test"
+  ],
+  "main": "lib/mocha-flight.js",
+  "ignore": [
+    ".*",
+    "test",
+    "package.json",
+    "karma.conf.js",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md"
+  ],
+  "devDependencies": {
+    "chai": "~1.7.2",
+    "flight": "~1.1.0"
+  },
+  "homepage": "https://github.com/flightjs/mocha-flight",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.3.0",
+    "commit": "9dc5a48b59e4b99ab0ff07135d8e935960f9c79a"
+  },
+  "_source": "git://github.com/flightjs/mocha-flight.git",
+  "_target": "~0.3.0",
+  "_originalSource": "mocha-flight",
+  "_direct": true
+}

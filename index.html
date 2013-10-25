@@ -2,20 +2,23 @@
 <html>
   <head>
     <title>RelAlg.js</title>
-    <script data-main="lib/main" src="bower_components/requirejs/require.js"></script>
-    <style>
-      #graph svg {
-        font-family: "Hoefler Text", Georgia;
-      }
-    </style>
+    <script data-main="lib/relalg/main" src="bower_components/requirejs/require.js"></script>
     <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" media="all" />
     <link type="text/css" rel="stylesheet" href="css/relalg.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="css/svg.css" media="all" />
   </head>
   <body>
     <div class="navbar navbar-default">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">RelAlg.js</a>
       </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" id="set-selector">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Datasets <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+          </ul>
+        </li>
+      </ul>
     </div>
     
     <div class="container" role="main">

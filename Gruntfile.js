@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     },
     jshint: {
       options: {
-        ignores: 'lib/parser.js', // The parser is auto-generated
+        ignores: 'lib/relalg/parser.js', // The parser is auto-generated
         asi: true, // I'm not a great fan of unneeded semicolons 
         laxcomma: true // And I like having commas first
       },
@@ -31,7 +31,39 @@ module.exports = function(grunt) {
         options: {
           reporter: 'dot'
         },
-        src: ['test/**/*.js']
+        src: ['test/*_test.js', 'test/util/*_test.js']
+      }
+    },
+    karma: {
+      options: {
+        basePath: '',
+        frameworks: ['mocha', 'requirejs', 'sinon'],
+        files: [
+          {pattern: 'bower_components/es5-shim/es5-shim.js', included: false},
+          {pattern: 'bower_components/chai/**/*.js', included: false},
+          {pattern: 'bower_components/flight/lib/**/*.js', included: false},
+          {pattern: 'bower_components/mocha-flight/lib/**/*.js', included: false},
+          {pattern: 'bower_components/jquery/**/*.js', included: false},
+          {pattern: 'bower_components/deep-equal/**/*.js', included: false},
+          {pattern: 'bower_components/ace/lib/**/*.js', included: false},
+          {pattern: 'bower_components/ace/lib/**/*.css', included: false},
+          {pattern: 'lib/relalg/**/*.js', included: false},
+          {pattern: 'test/**/*_test.js', included: false},
+          'test/karma-setup.js'
+        ],
+        exclude: [
+          'bower_components/ace/lib/test/**/*.js',
+          'bower_components/ace/lib/**/*_test.js',
+        ],
+        reporters: ['dots'],
+      },
+      chrome: {
+        browsers: ['Chrome'],
+        autoWatch: true
+      },
+      test: {
+        browsers: ['PhantomJS'],
+        singleRun: true
       }
     }
   })
@@ -40,9 +72,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jison');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-karma');
   
   // Set up aliases
-  grunt.registerTask('build', ['jison']); // , 'jison_amd_define']);
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('build', ['jison']);
+  grunt.registerTask('test', ['mochaTest:test', 'karma:test']);
   grunt.registerTask('check', ['jshint', 'test']);
 }

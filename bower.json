@@ -1,7 +1,7 @@
 {
   "name": "RelAlg.js",
   "description": "A Relational Algebra evaluator",
-  "main": "lib/main.js",
+  "main": "lib/relalg/main.js",
   "ignore": [
     ".gitignore"
   ],
@@ -12,5 +12,9 @@
     "flight": "~1.1.0",
     "deep-equal": "~0.0.0",
     "ace": "~1.1.1"
+  },
+  "devDependencies": {
+    "chai": "~1.8.0",
+    "mocha-flight": "~0.3.0"
   }
 }

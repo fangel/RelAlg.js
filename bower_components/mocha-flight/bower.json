@@ -1,0 +1,23 @@
+{
+  "name": "mocha-flight",
+  "version": "0.3.0",
+  "description": "Extensions to the Mocha test framework for use with Flight",
+  "keywords": [
+    "flight",
+    "mocha",
+    "test"
+  ],
+  "main": "lib/mocha-flight.js",
+  "ignore": [
+    ".*",
+    "test",
+    "package.json",
+    "karma.conf.js",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md"
+  ],
+  "devDependencies": {
+    "chai": "~1.7.2",
+    "flight": "~1.1.0"
+  }
+}
