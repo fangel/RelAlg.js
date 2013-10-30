@@ -47,16 +47,16 @@ var MakefileHighlightRules = require("./makefile_highlight_rules").MakefileHighl
 var FoldMode = require("./folding/coffee").FoldMode;
 
 var Mode = function() {
-    var highlighter = new MakefileHighlightRules();
+    this.HighlightRules = MakefileHighlightRules;
     this.foldingRules = new FoldMode();
-    
-    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
 (function() {
        
-    this.lineCommentStart = "#";
+    this.lineCommentStart = "#";    
+    this.$indentWithTabs = true;
+    
 }).call(Mode.prototype);
 
 exports.Mode = Mode;

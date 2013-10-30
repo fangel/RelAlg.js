@@ -3,6 +3,7 @@
 The base API shared by Flight [components](component_api.md) and
 [mixins](mixin_api.md).
 
+<a name="this.defaultAttrs"></a>
 ## this.defaultAttrs(object)
 
 Most Components and Mixins need to define attributes. In Flight, default values
@@ -35,6 +36,7 @@ Button.attachTo("#foo", {
 
 ...or by [mixins](mixin_api.md).
 
+<a name="this.select"></a>
 ## this.select(attr)
 
 The `select` method takes an `attr` key as its argument. The value of the
@@ -54,13 +56,16 @@ this.selectMenuItem = function(e) {
 };
 ```
 
+<a name="this.initialize"></a>
 ## this.initialize()
 
-This method is attached to the prototype of every Component and called when a component instance is created.
+This method is attached to the prototype of every Component; it accepts the component's node and an `options`
+object as arguments. The core implementation, which is called every time an instance is created, will assign the
+node to the instance and override the default `attr`s with the `options` object.
 
-The method is typically augmented by supplying a function as an argument to the `after`
-method (see the [advice API](advice_api.md) for more information). This is a
-good place to set up event listeners that bind to callbacks.
+Components and Mixins will typically augment the core implementation by supplying a function as an argument to the
+`after` method (see the [advice API](advice_api.md) for more information). This is a good place to set up event
+listeners that bind to callbacks.
 
 ```js
 this.after('initialize', function() {
@@ -68,6 +73,7 @@ this.after('initialize', function() {
 });
 ```
 
+<a name="this.on"></a>
 ## this.on([selector,] eventType, handler)
 
 This allows a component instance to listen to an event and register a callback to be
@@ -96,6 +102,15 @@ this.after('initialize', function() {
 });
 ```
 
+Example of `handler` as an inline function. This demonstrates how the `ev` and `data` parameters can be used
+to receive data from the component's optional `trigger` parameter `eventPayload`.
+
+```js
+this.on(document, 'dataSent', function (ev, data) {
+  alert('Message sent: ' + data.msg);
+});
+```
+
 Example of `handler` being an object that maps event targets to callbacks.
 This is effectively event delegation; selector values are resolved, at event
 time, by keying into the `attr` property of the component.
@@ -114,6 +129,7 @@ this.after('initialize', function() {
 });
 ```
 
+<a name="this.off"></a>
 ## this.off([selector,] eventType [, handler])
 
 If we no longer want a component instance to listen to an event we can use the
@@ -146,6 +162,7 @@ function noHighlightOnHover() {
 Note: when a component is torn down, it automatically unsubscribes from all
 events.
 
+<a name="this.trigger"></a>
 ## this.trigger([selector,] eventType [, eventPayload])
 
 Trigger an event.
@@ -189,6 +206,7 @@ this.updateSuccessful = function() {
 }
 ```
 
+<a name="this.teardown"></a>
 ## this.teardown()
 
 Remove a component instance and its event bindings.

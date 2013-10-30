@@ -17,12 +17,7 @@
 }
 
 .ace-dreamweaver .ace_cursor {
-  border-left: 2px solid black;
-}
-
-.ace-dreamweaver .ace_overwrite-cursors .ace_cursor {
-  border-left: 0px;
-  border-bottom: 1px solid black;
+  color: black;
 }
         
 .ace-dreamweaver .ace_invisible {
@@ -105,11 +100,11 @@
 }
 
 
-.ace-dreamweaver .ace_markup.ace_heading {
+.ace-dreamweaver .ace_heading {
   color: rgb(12, 7, 255);
 }
 
-.ace-dreamweaver .ace_markup.ace_list {
+.ace-dreamweaver .ace_list {
   color:rgb(185, 6, 144);
 }
 

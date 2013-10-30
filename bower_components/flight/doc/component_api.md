@@ -18,6 +18,7 @@ property.
 **A Component instance cannot be referenced directly**; it communicates with
 other components via events.
 
+<a name="defineComponent"></a>
 ## defineComponent(...)
 
 Flight expects its client apps to support
@@ -69,6 +70,7 @@ Components make no assumptions about the existence of other objects. If you
 were to remove all other JavaScript on the site, this Component would still
 work as intended.
 
+<a name="defineComponent.teardownAll"></a>
 ## defineComponent.teardownAll()
 
 On `defineComponent` (i.e., the object exported by `lib/component`) this
@@ -92,6 +94,7 @@ define(function(require) {
 });
 ```
 
+<a name="Component.attachTo"></a>
 ## Component.attachTo(selector[, options])
 
 Create a new instance of a Component and attach it to a DOM node.
@@ -103,9 +106,9 @@ Component instance will be created for each node.
 
 #### `options`: Object
 
-Optional. An object that will be merged into the `attr` object, which is a
-property of the Component instance. Any additional arguments are merged into
-the first `options` argument.
+Optional. An object that will be merged into the component's default `attr` object
+via the `initialize` method. Any additional arguments are merged into the first `options`
+argument.
 
 In the example below, we are creating an instance of an "inbox" Component and
 attaching it to a node with id `inbox`. We're also passing in values for a
@@ -145,6 +148,7 @@ this.hideComponent = function() {
 };
 ```
 
+<a name="Component.teardownAll"></a>
 ## Component.teardownAll()
 
 On a Component constructor this method deletes every instance of that Component

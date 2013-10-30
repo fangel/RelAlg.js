@@ -47,15 +47,12 @@ var StylusHighlightRules = require("./stylus_highlight_rules").StylusHighlightRu
 var FoldMode = require("./folding/coffee").FoldMode;
 
 var Mode = function() {
-    var highlighter = new StylusHighlightRules();
+    this.HighlightRules = StylusHighlightRules;
     this.foldingRules = new FoldMode();
-    
-    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
-(function() {
-    // Extra logic goes here. 
+(function() { 
 }).call(Mode.prototype);
 
 exports.Mode = Mode;

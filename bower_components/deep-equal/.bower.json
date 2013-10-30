@@ -18,6 +18,5 @@
   },
   "_source": "git://github.com/sakabako/node-deep-equal.git",
   "_target": "~0.0.0",
-  "_originalSource": "deep-equal",
-  "_direct": true
+  "_originalSource": "deep-equal"
 }

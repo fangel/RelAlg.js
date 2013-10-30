@@ -35,6 +35,7 @@ var EditSession = require("../edit_session").EditSession;
 var TextLayer = require("../layer/text").Text;
 var baseStyles = require("../requirejs/text!./static.css");
 var config = require("../config");
+var dom = require("../lib/dom");
 /**
  * Transforms a given input code snippet into HTML using the given mode
  *
@@ -56,7 +57,8 @@ var config = require("../config");
  */
 
 exports.render = function(input, mode, theme, lineStart, disableGutter, callback) {
-    var waiting = 0
+    var waiting = 0;
+    var modeCache = EditSession.prototype.$modes;
 
     // if either the theme or the mode were specified as objects
     // then we need to lazily load them.
@@ -71,7 +73,8 @@ exports.render = function(input, mode, theme, lineStart, disableGutter, callback
     if (typeof mode == "string") {
         waiting++;
         config.loadModule(['mode', mode], function(m) {
-            mode = new m.Mode()
+            if (!modeCache[mode]) modeCache[mode] = new m.Mode();
+            mode = modeCache[mode];
             --waiting || done();
         });
     }
@@ -84,13 +87,13 @@ exports.render = function(input, mode, theme, lineStart, disableGutter, callback
     return waiting || done();
 };
 
-/* Transforms a given input code snippet into HTML using the given mode
-*
-* @param {string} input Code snippet
-* @param {mode} mode Mode loaded from /ace/mode (use 'ServerSideHiglighter.getMode')
-* @param {string} r Code snippet
-* @returns {object} An object containing: html, css
-*/
+/* 
+ * Transforms a given input code snippet into HTML using the given mode
+ * @param {string} input Code snippet
+ * @param {mode} mode Mode loaded from /ace/mode (use 'ServerSideHiglighter.getMode')
+ * @param {string} r Code snippet
+ * @returns {object} An object containing: html, css
+ */
 
 exports.renderSync = function(input, mode, theme, lineStart, disableGutter) {
     lineStart = parseInt(lineStart || 1, 10);
@@ -120,11 +123,11 @@ exports.renderSync = function(input, mode, theme, lineStart, disableGutter) {
     }
 
     // let's prepare the whole html
-    var html = "<div class=':cssClass'>\
-        <div class='ace_editor ace_scroller ace_text-layer'>\
-            :code\
-        </div>\
-    </div>".replace(/:cssClass/, theme.cssClass).replace(/:code/, stringBuilder.join(""));
+    var html = "<div class='" + theme.cssClass + "'>" +
+        "<div class='ace_static_highlight'>" +
+            stringBuilder.join("") +
+        "</div>" +
+    "</div>";
 
     textLayer.destroy();
 
@@ -134,4 +137,44 @@ exports.renderSync = function(input, mode, theme, lineStart, disableGutter) {
     };
 };
 
+
+
+exports.highlight = function(el, opts, callback) {
+    var m = el.className.match(/lang-(\w+)/);
+    var mode = opts.mode || m && ("ace/mode/" + m[1]);
+    if (!mode)
+        return false;
+    var theme = opts.theme || "ace/theme/textmate";
+    
+    var data = "";
+    var nodes = [];
+
+    if (el.firstElementChild) {
+        var textLen = 0;
+        for (var i = 0; i < el.childNodes.length; i++) {
+            var ch = el.childNodes[i];
+            if (ch.nodeType == 3) {
+                textLen += ch.data.length;
+                data += ch.data;
+            } else {
+                nodes.push(textLen, ch);
+            }
+        }
+    } else {
+        data = dom.getInnerText(el);
+    }
+    
+    exports.render(data, mode, theme, 1, true, function (highlighted) {
+        dom.importCssString(highlighted.css, "ace_highlight");
+        el.innerHTML = highlighted.html;
+        var container = el.firstChild.firstChild
+        for (var i = 0; i < nodes.length; i += 2) {
+            var pos = highlighted.session.doc.indexToPosition(nodes[i])
+            var node = nodes[i + 1];
+            var lineEl = container.children[pos.row];
+            lineEl && lineEl.appendChild(nodes[i+1]);
+        }
+        callback && callback();
+    });
+};
 });

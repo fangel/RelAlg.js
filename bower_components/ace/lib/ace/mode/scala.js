@@ -9,7 +9,7 @@ var ScalaHighlightRules = require("./scala_highlight_rules").ScalaHighlightRules
 var Mode = function() {
     JavaScriptMode.call(this);
     
-    this.$tokenizer = new Tokenizer(new ScalaHighlightRules().getRules());
+    this.HighlightRules = ScalaHighlightRules;
 };
 oop.inherits(Mode, JavaScriptMode);
 

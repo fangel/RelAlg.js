@@ -39,6 +39,7 @@ EventEmitter._emit =
 EventEmitter._dispatchEvent = function(eventName, e) {
     this._eventRegistry || (this._eventRegistry = {});
     this._defaultHandlers || (this._defaultHandlers = {});
+
     var listeners = this._eventRegistry[eventName] || [];
     var defaultHandler = this._defaultHandlers[eventName];
     if (!listeners.length && !defaultHandler)
@@ -54,6 +55,7 @@ EventEmitter._dispatchEvent = function(eventName, e) {
     if (!e.preventDefault)
         e.preventDefault = preventDefault;
 
+    listeners = listeners.slice();
     for (var i=0; i<listeners.length; i++) {
         listeners[i](e, this);
         if (e.propagationStopped)
@@ -69,7 +71,7 @@ EventEmitter._signal = function(eventName, e) {
     var listeners = (this._eventRegistry || {})[eventName];
     if (!listeners)
         return;
-
+    listeners = listeners.slice();
     for (var i=0; i<listeners.length; i++)
         listeners[i](e, this);
 };
@@ -120,6 +122,7 @@ EventEmitter.removeDefaultHandler = function(eventName, callback) {
 EventEmitter.on =
 EventEmitter.addEventListener = function(eventName, callback, capturing) {
     this._eventRegistry = this._eventRegistry || {};
+
     var listeners = this._eventRegistry[eventName];
     if (!listeners)
         listeners = this._eventRegistry[eventName] = [];

@@ -14,12 +14,7 @@
 }
 
 .ace-clouds-midnight .ace_cursor {
-  border-left: 2px solid #7DA5DC
-}
-
-.ace-clouds-midnight .ace_overwrite-cursors .ace_cursor {
-  border-left: 0px;
-  border-bottom: 1px solid #7DA5DC
+  color: #7DA5DC
 }
 
 .ace-clouds-midnight .ace_marker-layer .ace_selection {
@@ -111,10 +106,6 @@
 .ace-clouds-midnight .ace_entity.ace_name.ace_tag,
 .ace-clouds-midnight .ace_entity.ace_other.ace_attribute-name {
   color: #606060
-}
-
-.ace-clouds-midnight .ace_markup.ace_underline {
-  text-decoration: underline
 }
 
 .ace-clouds-midnight .ace_indent-guide {

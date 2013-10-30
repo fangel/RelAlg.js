@@ -38,7 +38,7 @@ var ShHighlightRules = require("./sh_highlight_rules").ShHighlightRules;
 var Range = require("../range").Range;
 
 var Mode = function() {
-    this.$tokenizer = new Tokenizer(new ShHighlightRules().getRules());
+    this.HighlightRules = ShHighlightRules;
 };
 oop.inherits(Mode, TextMode);
 
@@ -50,7 +50,7 @@ oop.inherits(Mode, TextMode);
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
 
-        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
+        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
 
         if (tokens.length && tokens[tokens.length-1].type == "comment") {
@@ -79,7 +79,7 @@ oop.inherits(Mode, TextMode);
         if (input !== "\r\n" && input !== "\r" && input !== "\n")
             return false;
 
-        var tokens = this.$tokenizer.getLineTokens(line.trim(), state).tokens;
+        var tokens = this.getTokenizer().getLineTokens(line.trim(), state).tokens;
 
         if (!tokens)
             return false;

@@ -406,10 +406,11 @@ var EditSession = function(text, mode) {
                 if (self.$deltas.length > 0) {
                     undoManager.execute({
                         action: "aceupdate",
-                        args: [self.$deltas, self]
+                        args: [self.$deltas, self],
+                        merge: self.mergeUndoDeltas
                     });
                 }
-
+                self.mergeUndoDeltas = false;
                 self.$deltas = [];
             }
             this.$informUndoManager = lang.delayedCall(this.$syncInformUndoManager);
@@ -461,7 +462,8 @@ var EditSession = function(text, mode) {
     * @returns {Boolean}
     **/
     this.getUseSoftTabs = function() {
-         return this.$useSoftTabs;
+        // todo might need more general way for changing settings from mode, but this is ok for now
+        return this.$useSoftTabs && !this.$mode.$indentWithTabs;
     };
     /**
     * Set the number of spaces that define a soft tab; for example, passing in `4` transforms the soft tabs to be equivalent to four spaces. This function also emits the `changeTabSize` event.
@@ -864,11 +866,12 @@ var EditSession = function(text, mode) {
     /**
     * Sets a new text mode for the `EditSession`. This method also emits the `'changeMode'` event. If a [[BackgroundTokenizer `BackgroundTokenizer`]] is set, the `'tokenizerUpdate'` event is also emitted.
     * @param {TextMode} mode Set a new text mode
+    * @param {cb} optional callback
     *
     **/
     this.$mode = null;
     this.$modeId = null;
-    this.setMode = function(mode) {
+    this.setMode = function(mode, cb) {
         if (mode && typeof mode === "object") {
             if (mode.getTokenizer)
                 return this.$onChangeMode(mode);
@@ -882,14 +885,16 @@ var EditSession = function(text, mode) {
         if (!this.$modes["ace/mode/text"])
             this.$modes["ace/mode/text"] = new TextMode();
 
-        if (this.$modes[path] && !options)
-            return this.$onChangeMode(this.$modes[path]);
-
+        if (this.$modes[path] && !options) {
+            this.$onChangeMode(this.$modes[path]);
+            cb && cb();
+            return;
+        }
         // load on demand
         this.$modeId = path;
         config.loadModule(["mode", path], function(m) {
             if (this.$modeId !== path)
-                return;
+                return cb && cb();
             if (this.$modes[path] && !options)
                 return this.$onChangeMode(this.$modes[path]);
             if (m && m.Mode) {
@@ -898,7 +903,8 @@ var EditSession = function(text, mode) {
                     this.$modes[path] = m;
                     m.$id = path;
                 }
-                this.$onChangeMode(m)
+                this.$onChangeMode(m);
+                cb && cb();
             }
         }.bind(this));
 
@@ -908,7 +914,11 @@ var EditSession = function(text, mode) {
     };
 
     this.$onChangeMode = function(mode, $isPlaceholder) {
-        if (this.$mode === mode) return;
+        if (!$isPlaceholder)
+            this.$modeId = mode.$id;
+        if (this.$mode === mode) 
+            return;
+
         this.$mode = mode;
 
         this.$stopWorker();
@@ -938,9 +948,9 @@ var EditSession = function(text, mode) {
         this.tokenRe = mode.tokenRe;
         this.nonTokenRe = mode.nonTokenRe;
 
-
+        this.$options.wrapMethod.set.call(this, this.$wrapMethod);
+        
         if (!$isPlaceholder) {
-            this.$modeId = mode.$id;
             this.$setFolding(mode.foldingRules);
             this._emit("changeMode");
             this.bgTokenizer.start(0);
@@ -984,7 +994,7 @@ var EditSession = function(text, mode) {
     *
     **/
     this.setScrollTop = function(scrollTop) {
-        scrollTop = Math.round(Math.max(0, scrollTop));
+        // TODO: should we force integer lineheight instead? scrollTop = Math.round(scrollTop); 
         if (this.$scrollTop === scrollTop || isNaN(scrollTop))
             return;
 
@@ -1005,7 +1015,7 @@ var EditSession = function(text, mode) {
     * [Sets the value of the distance between the left of the editor and the leftmost part of the visible content.]{: #EditSession.setScrollLeft}
     **/
     this.setScrollLeft = function(scrollLeft) {
-        scrollLeft = Math.round(Math.max(0, scrollLeft));
+        // scrollLeft = Math.round(scrollLeft);
         if (this.$scrollLeft === scrollLeft || isNaN(scrollLeft))
             return;
 
@@ -1214,7 +1224,7 @@ var EditSession = function(text, mode) {
         var range, point;
         var lastDeltaIsInsert = false;
         if (isInsert(delta)) {
-            range = delta.range.clone();
+            range = Range.fromPoints(delta.range.start, delta.range.end);
             lastDeltaIsInsert = true;
         } else {
             range = Range.fromPoints(delta.range.start, delta.range.start);
@@ -1246,6 +1256,11 @@ var EditSession = function(text, mode) {
         // Check if this range and the last undo range has something in common.
         // If true, merge the ranges.
         if (lastUndoRange != null) {
+            if (Range.comparePoints(lastUndoRange.start, range.start) == 0) {
+                lastUndoRange.start.column += range.end.column - range.start.column;
+                lastUndoRange.end.column += range.end.column - range.start.column;
+            }
+
             var cmp = lastUndoRange.compareRange(range);
             if (cmp == 1) {
                 range.setStart(lastUndoRange.start);
@@ -1312,7 +1327,7 @@ var EditSession = function(text, mode) {
             }
         }
 
-        this.insert(toRange.start, text);
+        toRange.end = this.insert(toRange.start, text);
         if (folds.length) {
             var oldStart = fromRange.start;
             var newStart = toRange.start;
@@ -1561,8 +1576,10 @@ var EditSession = function(text, mode) {
     **/
     this.setWrapLimitRange = function(min, max) {
         if (this.$wrapLimitRange.min !== min || this.$wrapLimitRange.max !== max) {
-            this.$wrapLimitRange.min = min;
-            this.$wrapLimitRange.max = max;
+            this.$wrapLimitRange = {
+                min: min,
+                max: max
+            };
             this.$modified = true;
             // This will force a recalculation of the wrap limit
             this._emit("changeWrapMode");
@@ -1779,7 +1796,7 @@ var EditSession = function(text, mode) {
         while (row <= lastRow) {
             foldLine = this.getFoldLine(row, foldLine);
             if (!foldLine) {
-                tokens = this.$getDisplayTokens(lang.stringTrimRight(lines[row]));
+                tokens = this.$getDisplayTokens(lines[row]);
                 wrapData[row] = this.$computeWrapSplits(tokens, wrapLimit, tabSize);
                 row ++;
             } else {
@@ -1803,9 +1820,6 @@ var EditSession = function(text, mode) {
                     foldLine.end.row,
                     lines[foldLine.end.row].length + 1
                 );
-                // Remove spaces/tabs from the back of the token array.
-                while (tokens.length != 0 && tokens[tokens.length - 1] >= SPACE)
-                    tokens.pop();
 
                 wrapData[foldLine.start.row]
                     = this.$computeWrapSplits(tokens, wrapLimit, tabSize);
@@ -1834,6 +1848,8 @@ var EditSession = function(text, mode) {
         var displayLength = tokens.length;
         var lastSplit = 0, lastDocSplit = 0;
 
+        var isCode = this.$wrapAsCode;
+
         function addSplit(screenPos) {
             var displayed = tokens.slice(lastSplit, screenPos);
 
@@ -1861,11 +1877,12 @@ var EditSession = function(text, mode) {
 
             // If there is a space or tab at this split position, then making
             // a split is simple.
-            if (tokens[split] >= SPACE) {
+            if (tokens[split - 1] >= SPACE && tokens[split] >= SPACE) {
+                /* disabled see https://github.com/ajaxorg/ace/issues/1186
                 // Include all following spaces + tabs in this split as well.
                 while (tokens[split] >= SPACE) {
                     split ++;
-                }
+                } */
                 addSplit(split);
                 continue;
             }
@@ -1874,9 +1891,7 @@ var EditSession = function(text, mode) {
             // Check if split is inside of a placeholder. Placeholder are
             // not splitable. Therefore, seek the beginning of the placeholder
             // and try to place the split beofre the placeholder's start.
-            if (tokens[split] == PLACEHOLDER_START
-                || tokens[split] == PLACEHOLDER_BODY)
-            {
+            if (tokens[split] == PLACEHOLDER_START || tokens[split] == PLACEHOLDER_BODY) {
                 // Seek the start of the placeholder and do the split
                 // before the placeholder. By definition there always
                 // a PLACEHOLDER_START between split and lastSplit.
@@ -1900,8 +1915,7 @@ var EditSession = function(text, mode) {
                 // placeholder. So, let's seek for the end of the placeholder.
                 split = lastSplit + wrapLimit;
                 for (split; split < tokens.length; split++) {
-                    if (tokens[split] != PLACEHOLDER_BODY)
-                    {
+                    if (tokens[split] != PLACEHOLDER_BODY) {
                         break;
                     }
                 }
@@ -1919,12 +1933,21 @@ var EditSession = function(text, mode) {
 
             // === ELSE ===
             // Search for the first non space/tab/placeholder/punctuation token backwards.
-            var minSplit = Math.max(split - 10, lastSplit - 1);
+            var minSplit = Math.max(split - (isCode ? 10 : wrapLimit-(wrapLimit>>2)), lastSplit - 1);
             while (split > minSplit && tokens[split] < PLACEHOLDER_START) {
                 split --;
             }
-            while (split > minSplit && tokens[split] == PUNCTUATION) {
-                split --;
+            if (isCode) {
+                while (split > minSplit && tokens[split] < PLACEHOLDER_START) {
+                    split --;
+                }
+                while (split > minSplit && tokens[split] == PUNCTUATION) {
+                    split --;
+                }
+            } else {
+                while (split > minSplit && tokens[split] < SPACE) {
+                    split --;
+                }
             }
             // If we found one, then add the split.
             if (split > minSplit) {
@@ -2429,6 +2452,16 @@ config.defineOptions(EditSession.prototype, "session", {
             return this.getUseWrapMode() ? this.getWrapLimitRange().min || "free" : "off";
         },
         handlesSet: true
+    },    
+    wrapMethod: {
+        // code|text|auto
+        set: function(val) {
+            if (val == "auto")
+                this.$wrapAsCode = this.$mode.type != "text";
+            else
+                this.$wrapAsCode = val != "text";
+        },
+        initialValue: "auto"
     },
     firstLineNumber: {
         set: function() {this._emit("changeBreakpoint");},

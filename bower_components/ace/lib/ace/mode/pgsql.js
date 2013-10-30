@@ -37,11 +37,11 @@ var PgsqlHighlightRules = require("./pgsql_highlight_rules").PgsqlHighlightRules
 var Range = require("../range").Range;
 
 var Mode = function() {
-    this.$tokenizer = new Tokenizer(new PgsqlHighlightRules().getRules());
+    this.HighlightRules = PgsqlHighlightRules;
 };
 oop.inherits(Mode, TextMode);
 
-(function() {       
+(function() {
     this.lineCommentStart = "--";
     this.blockComment = {start: "/*", end: "*/"};
 

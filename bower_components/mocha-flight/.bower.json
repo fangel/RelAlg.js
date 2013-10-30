@@ -29,6 +29,5 @@
   },
   "_source": "git://github.com/flightjs/mocha-flight.git",
   "_target": "~0.3.0",
-  "_originalSource": "mocha-flight",
-  "_direct": true
+  "_originalSource": "mocha-flight"
 }

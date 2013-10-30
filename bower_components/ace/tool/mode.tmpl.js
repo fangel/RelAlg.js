@@ -48,9 +48,8 @@ var %language%HighlightRules = require("./%languageHighlightFilename%_highlight_
 var FoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    var highlighter = new %language%HighlightRules();
+    this.HighlightRules = new %language%HighlightRules();
     this.foldingRules = new FoldMode();
-    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 

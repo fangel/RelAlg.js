@@ -14,12 +14,7 @@
 }
 
 .ace-merbivore .ace_cursor {
-  border-left: 2px solid #FFFFFF
-}
-
-.ace-merbivore .ace_overwrite-cursors .ace_cursor {
-  border-left: 0px;
-  border-bottom: 1px solid #FFFFFF
+  color: #FFFFFF
 }
 
 .ace-merbivore .ace_marker-layer .ace_selection {
@@ -108,10 +103,6 @@
 
 .ace-merbivore .ace_entity.ace_other.ace_attribute-name {
   color: #FFFF89
-}
-
-.ace-merbivore .ace_markup.ace_underline {
-  text-decoration: underline
 }
 
 .ace-merbivore .ace_indent-guide {

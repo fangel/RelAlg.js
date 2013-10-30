@@ -8,7 +8,7 @@ var GroovyHighlightRules = require("./groovy_highlight_rules").GroovyHighlightRu
 
 var Mode = function() {
     JavaScriptMode.call(this);
-    this.$tokenizer = new Tokenizer(new GroovyHighlightRules().getRules());
+    this.HighlightRules = GroovyHighlightRules;
 };
 oop.inherits(Mode, JavaScriptMode);
 

@@ -8,8 +8,7 @@ var JavaHighlightRules = require("./java_highlight_rules").JavaHighlightRules;
 
 var Mode = function() {
     JavaScriptMode.call(this);
-    
-    this.$tokenizer = new Tokenizer(new JavaHighlightRules().getRules());
+    this.HighlightRules = JavaHighlightRules;
 };
 oop.inherits(Mode, JavaScriptMode);
 

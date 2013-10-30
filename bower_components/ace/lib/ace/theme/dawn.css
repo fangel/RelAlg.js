@@ -14,12 +14,7 @@
 }
 
 .ace-dawn .ace_cursor {
-  border-left: 2px solid #000000
-}
-
-.ace-dawn .ace_overwrite-cursors .ace_cursor {
-  border-left: 0px;
-  border-bottom: 1px solid #000000
+  color: #000000
 }
 
 .ace-dawn .ace_marker-layer .ace_selection {
@@ -94,7 +89,7 @@
   border-color: #080808
 }
 
-.ace-dawn .ace_markup.ace_list,
+.ace-dawn .ace_list,
 .ace-dawn .ace_support.ace_function {
   color: #693A17
 }
@@ -121,11 +116,7 @@
   color: #234A97
 }
 
-.ace-dawn .ace_markup.ace_underline {
-  text-decoration: underline
-}
-
-.ace-dawn .ace_markup.ace_heading {
+.ace-dawn .ace_heading {
   color: #19356D
 }
 
