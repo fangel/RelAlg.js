@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/fangel/RelAlg.js.git"
   },
-  "license": "BSD",
+  "license": "MIT",
   "directories": {
     "lib": "./lib/relalg",
     "bin": "./bin"
