@@ -6,7 +6,7 @@ Feel free to contact me if you have any issues or ideas for further work.
 
 ## Usage
 
-*RelAlg.js* is now in version 0.2.0, and consists of a web-application and a command-line interface. The web-application can be seen at [http://fangel.github.io/RelAlg.js](http://fangel.github.io/RelAlg.js), and the CLI can be installed using `npm install relalg.js`.
+*RelAlg.js* is now in version 0.2.1, and consists of a web-application and a command-line interface. The web-application can be seen at [http://fangel.github.io/RelAlg.js](http://fangel.github.io/RelAlg.js), and the CLI can be installed using `npm install relalg.js`.
 
 *RelAlg.js* consists of a main library (`lib/relalg`) that contains a parser, a static type-checker and a evaluation tool. Then a Boostrap/Flight powered web-application (`lib/relalg/web`) and a Node.js REPL-style CLI (`lib/relalg/cli`).
 

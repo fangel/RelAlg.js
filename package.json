@@ -1,6 +1,6 @@
 {
-  "name": "RelAlg.js",
-  "version": "0.2.0",
+  "name": "relalg.js",
+  "version": "0.2.1",
   "preferGlobal": true,
   "author": {
     "name": "Morten Fangel",
